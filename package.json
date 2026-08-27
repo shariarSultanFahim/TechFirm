@@ -1,0 +1,57 @@
+{
+  "name": "fullstack-turborepo-nest-next-starter",
+  "version": "1.0.0",
+  "private": true,
+  "packageManager": "npm@11.4.2",
+  "description": "Production-ready Turborepo monorepo starter featuring Next.js 16 web frontend, Next.js 16 admin dashboard, and NestJS + MongoDB backend with RBAC auth.",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "turbo dev",
+    "dev:web": "turbo dev --filter=@repo/web",
+    "dev:dashboard": "turbo dev --filter=@repo/dashboard",
+    "dev:api": "turbo dev --filter=@repo/api",
+    "build": "turbo build",
+    "build:web": "turbo build --filter=@repo/web",
+    "build:dashboard": "turbo build --filter=@repo/dashboard",
+    "build:api": "turbo build --filter=@repo/api",
+    "lint": "turbo lint",
+    "lint:web": "turbo lint --filter=@repo/web",
+    "lint:dashboard": "turbo lint --filter=@repo/dashboard",
+    "lint:api": "turbo lint --filter=@repo/api",
+    "typecheck": "turbo typecheck",
+    "typecheck:web": "turbo typecheck --filter=@repo/web",
+    "typecheck:dashboard": "turbo typecheck --filter=@repo/dashboard",
+    "typecheck:api": "turbo typecheck --filter=@repo/api",
+    "seed": "npm run seed --workspace=@repo/api",
+    "clean": "turbo clean",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^20.1.0",
+    "@commitlint/config-conventional": "^20.0.0",
+    "@ianvs/prettier-plugin-sort-imports": "^4.7.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.6",
+    "prettier": "^3.6.2",
+    "prettier-plugin-tailwindcss": "^0.7.1",
+    "turbo": "^2.4.4",
+    "typescript": "^5.7.3"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx,mjs,cjs}": [
+      "prettier --write"
+    ],
+    "*.{css,md,json}": [
+      "prettier --write"
+    ]
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=9.0.0"
+  }
+}
