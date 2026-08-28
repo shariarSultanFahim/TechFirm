@@ -5,6 +5,7 @@ import {
   Stat98Icon
 } from "@/assets/icons";
 import { Button } from "@/components/ui/button";
+import { PillButton } from "@/components/ui/pill-button";
 import { SectionHeader } from "@/components/widgets";
 import Image from "next/image";
 import Link from "next/link";
@@ -79,17 +80,13 @@ export function ServicesSection() {
           />
 
           <div className="shrink-0 pb-1">
-            <Button
+            <PillButton
+              href="#services"
               variant="primary"
-              size="pill-lg"
-              className="gap-3 shadow-md hover:shadow-lg"
-              asChild
+              size="lg"
             >
-              <Link href="#services">
-                <span>View All Services</span>
-                <CheckBadgeIcon />
-              </Link>
-            </Button>
+              View All Services
+            </PillButton>
           </div>
         </div>
 

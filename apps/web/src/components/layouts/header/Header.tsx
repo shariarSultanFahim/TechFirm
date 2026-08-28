@@ -18,6 +18,7 @@ import {
   X
 } from "lucide-react";
 import { siteConfig } from "@/config/site";
+import { PillButton } from "@/components/ui/pill-button";
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -386,17 +387,14 @@ export function Header() {
             </Link>
 
             {/* Pill CTA Button - Shown on screens 1024px+ (lg) */}
-            <Link
+            <PillButton
               href="/contact"
-              className="hidden lg:inline-flex items-center gap-2.5 xl:gap-3 pl-4 pr-1.5 py-1.5 xl:pl-6 xl:pr-2 xl:py-2 rounded-full border border-primary text-foreground hover:bg-primary/5 transition-all group shrink-0"
+              variant="outline"
+              size="default"
+              className="hidden lg:inline-flex"
             >
-              <span className="text-xs xl:text-sm font-bold tracking-tight text-foreground group-hover:text-primary transition-colors whitespace-nowrap">
-                Get Started Now
-              </span>
-              <div className="w-6 h-6 xl:w-7 xl:h-7 rounded-full bg-primary/15 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all">
-                <Check className="w-3.5 h-3.5 xl:w-4 xl:h-4 stroke-[2.5]" />
-              </div>
-            </Link>
+              Get Started Now
+            </PillButton>
 
             {/* Mobile/Tablet Menu Toggle - Shown below 1024px (<lg) */}
             <button

@@ -1,6 +1,7 @@
 export * from "./animated-theme-toggler";
 export * from "./badge";
 export * from "./button";
+export * from "./pill-button";
 export * from "./card";
 export * from "./form";
 export * from "./input";
