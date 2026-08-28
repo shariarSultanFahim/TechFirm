@@ -6,7 +6,7 @@ import { ArrowDownRight } from "lucide-react";
 import { caseStudies, type CaseStudy } from "./portfolio-data";
 import { PortfolioLogo } from "./portfolio-logos";
 
-function LightCaseCard({ item }: { item: CaseStudy }) {
+export function LightCaseCard({ item }: { item: CaseStudy }) {
   return (
     <Link
       href={`/portfolio/${item.slug}`}
@@ -56,7 +56,7 @@ function LightCaseCard({ item }: { item: CaseStudy }) {
   );
 }
 
-function DarkCaseCard({ item }: { item: CaseStudy }) {
+export function DarkCaseCard({ item }: { item: CaseStudy }) {
   return (
     <Link
       href={`/portfolio/${item.slug}`}
