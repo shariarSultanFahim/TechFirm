@@ -17,6 +17,19 @@ async function bootstrap() {
   const globalPrefix = "api/v1";
   app.setGlobalPrefix(globalPrefix);
 
+  // Backward compatibility middleware: rewrite /api/* (without v1) to /api/v1/*
+  app.use((req: any, _res: any, next: any) => {
+    if (
+      req.url &&
+      req.url.startsWith("/api/") &&
+      !req.url.startsWith("/api/v1/") &&
+      !req.url.startsWith("/api/docs")
+    ) {
+      req.url = req.url.replace(/^\/api\//, "/api/v1/");
+    }
+    next();
+  });
+
   // CORS Configuration
   const defaultAllowedOrigins = [
     "http://localhost:3000",

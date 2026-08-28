@@ -1,10 +1,16 @@
-/**
- * Shared UI Primitives Export Entrypoint
- */
-export * from "./components/button";
 export * from "./components/badge";
-export * from "./components/section-heading";
+export * from "./components/button";
 export * from "./components/navbar";
 export * from "./components/footer";
-
-export const UI_VERSION = "1.0.0";
+export * from "./components/top-utility-bar";
+export * from "./components/section-heading";
+export * from "./components/stat-counter";
+export * from "./components/icon-feature-card";
+export * from "./components/process-step";
+export * from "./components/pricing-card";
+export * from "./components/testimonial-card";
+export * from "./components/faq-accordion-item";
+export * from "./components/case-study-card";
+export * from "./components/team-member-card";
+export * from "./components/blog-post-card";
+export * from "./components/dark-cta-band";

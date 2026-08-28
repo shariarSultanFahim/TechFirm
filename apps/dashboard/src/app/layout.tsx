@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { headers } from "next/headers";
 import { AdminShell } from "@/components/admin-shell";
+import { QueryProvider } from "@/providers/QueryProvider";
 import "@/styles/tailwind.css";
 
 const geistSans = Geist({
@@ -38,13 +39,15 @@ export default async function RootLayout({
         suppressHydrationWarning
         className={`${geistSans.variable} ${geistMono.variable} h-full antialiased font-sans bg-background text-foreground`}
       >
-        <AdminShell
-          userRole={userRole}
-          userName={userName}
-          userEmail={userEmail}
-        >
-          {children}
-        </AdminShell>
+        <QueryProvider>
+          <AdminShell
+            userRole={userRole}
+            userName={userName}
+            userEmail={userEmail}
+          >
+            {children}
+          </AdminShell>
+        </QueryProvider>
       </body>
     </html>
   );

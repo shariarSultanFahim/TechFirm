@@ -1,40 +1,54 @@
 import * as React from "react";
 
-export interface SectionHeadingProps
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, "title"> {
-  badge?: React.ReactNode;
-  title: React.ReactNode;
-  description?: React.ReactNode;
+export interface SectionHeadingProps {
+  badge?: string;
+  title: string;
+  description?: string;
   align?: "left" | "center" | "right";
+  dark?: boolean;
+  className?: string;
 }
 
-export const SectionHeading = React.forwardRef<HTMLDivElement, SectionHeadingProps>(
-  ({ className = "", badge, title, description, align = "left", ...props }, ref) => {
-    const alignClasses = {
-      left: "text-left items-start",
-      center: "text-center items-center mx-auto",
-      right: "text-right items-end ml-auto"
-    }[align];
+export function SectionHeading({
+  badge,
+  title,
+  description,
+  align = "center",
+  dark = false,
+  className = ""
+}: SectionHeadingProps) {
+  const alignmentClass =
+    align === "left"
+      ? "text-left items-start"
+      : align === "right"
+        ? "text-right items-end"
+        : "text-center items-center";
 
-    return (
-      <div
-        ref={ref}
-        data-align={align}
-        className={`ui-section-heading flex flex-col gap-2 ${alignClasses} ${className}`}
-        {...props}
+  return (
+    <div className={`flex flex-col ${alignmentClass} max-w-3xl ${align === "center" ? "mx-auto" : ""} mb-12 ${className}`}>
+      {badge && (
+        <span
+          className={`inline-block px-3.5 py-1 text-xs font-semibold rounded-full uppercase tracking-wider mb-3 ${
+            dark
+              ? "bg-primary/20 text-primary border border-primary/30"
+              : "bg-accent text-accent-foreground border border-accent-foreground/20"
+          }`}
+        >
+          {badge}
+        </span>
+      )}
+      <h2
+        className={`text-3xl md:text-4xl font-extrabold tracking-tight leading-tight mb-4 ${
+          dark ? "text-white" : "text-foreground"
+        }`}
       >
-        {badge && <div className="ui-section-heading-badge mb-1">{badge}</div>}
-        <h2 className="ui-section-heading-title text-2xl md:text-3xl font-bold tracking-tight">
-          {title}
-        </h2>
-        {description && (
-          <p className="ui-section-heading-desc text-muted-foreground text-sm md:text-base max-w-2xl">
-            {description}
-          </p>
-        )}
-      </div>
-    );
-  }
-);
-
-SectionHeading.displayName = "SectionHeading";
+        {title}
+      </h2>
+      {description && (
+        <p className={`text-base md:text-lg leading-relaxed ${dark ? "text-gray-300" : "text-muted-foreground"}`}>
+          {description}
+        </p>
+      )}
+    </div>
+  );
+}
