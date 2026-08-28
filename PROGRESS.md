@@ -132,13 +132,6 @@
 
 ---
 
-## Verification & Quality Gates
-
-- [x] `npm run typecheck` (All packages passing with 0 errors) - 🟢
-- [x] `npm run lint` (All packages passing with 0 errors) - 🟢
-
----
-
 ## Dashboard Code Standards Retrofit Pass (Modular Architecture & Standards) — 🟢 ALL 10 ROUTES COMPLETED
 
 Every route in `apps/dashboard` has been retrofitted from monolithic pages into decomposed modular architectures with reusable primitives, generic `<DataTable />`, centralized TanStack Query hooks, `react-hook-form` + Zod schemas, generic `<ConfirmDialog />`, and mobile-responsive viewport safeguards.
@@ -155,3 +148,32 @@ Every route in `apps/dashboard` has been retrofitted from monolithic pages into 
 | **8. `/users`**        | `use-users.ts`, `use-user-mutations.ts`                       | `users-table.tsx`, `user-form.tsx`, `user-form-dialog.tsx`, `user-columns.tsx`, `user-row-actions.tsx`                                    | Yes (`meta.totalPages`)                | Yes (Create, Update, Delete) | Yes                          | 🟢 DONE |
 | **9. `/site-config`**  | `use-site-config.ts`, `use-site-config-mutations.ts`          | `site-config-form.tsx` (tabbed singleton form)                                                                                            | N/A (Singleton Config)                 | Yes (Update)                 | Yes                          | 🟢 DONE |
 | **10. `/overview`**    | Aggregates all centralized query hooks                        | `overview-hero-banner.tsx`, `overview-stat-grid.tsx`, `overview-quick-links.tsx`                                                          | N/A (Overview Metrics)                 | N/A (Read-only aggregation)  | Yes                          | 🟢 DONE |
+
+---
+
+## Dashboard Theming & Typography Pass (CSS Variables & Weight Hierarchy) — 🟢 ALL 10 ROUTES COMPLETED
+
+All 10 dashboard routes and shared primitives have been audited and updated to strictly use TechFirm brand CSS variables (`--primary`, `--sidebar*`, `--card`, `--muted`, `--border`, `--destructive`, etc.), 0 residual hardcoded hex codes outside `globals.css`, and a balanced typography hierarchy (`font-medium` for form labels/buttons/data cell titles, `font-normal` for body/data rows, reserving `font-bold` exclusively for page titles and emphasized counters).
+
+| Target Area / Route     | Part A: Semantic CSS Variables Only                                              | Part B: Typography Hierarchy (Restricted Bolds)                          | Zero Hex Grep (`#[0-9a-fA-F]{3,8}`) | Status  |
+| :---------------------- | :------------------------------------------------------------------------------- | :----------------------------------------------------------------------- | :---------------------------------- | :------ |
+| **Theme Foundations**   | `globals.css` / `tailwind.css` mapped to TechFirm brand tokens                   | `font-sans` with base `font-normal` and standard scale in `globals.css`  | 0 outside CSS token definitions     | 🟢 DONE |
+| **Layout & Primitives** | `app-sidebar.tsx`, `admin-shell.tsx`, `DataTable`, `ConfirmDialog`, `PageHeader` | Adjusted sidebar active states, button weights, and table cell headers   | Clean                               | 🟢 DONE |
+| **1. `/login`**         | Semantic dark surfaces and inputs (`bg-card`, `bg-muted/50`)                     | Headline `font-bold`, labels `font-medium`, body `font-normal`           | Clean                               | 🟢 DONE |
+| **2. `/overview`**      | Metric cards using semantic badges (`text-destructive`, `text-primary`)          | Values `font-bold font-mono`, labels `font-medium`, helper `font-normal` | Clean                               | 🟢 DONE |
+| **3. `/plans`**         | Replaced arbitrary colors with semantic variants & badges                        | Data titles `font-medium`, labels `font-medium`, body `font-normal`      | Clean                               | 🟢 DONE |
+| **4. `/testimonials`**  | Replaced arbitrary hex gradients with semantic tailwind colors                   | Quotes `font-normal italic`, reviewer name `font-medium`                 | Clean                               | 🟢 DONE |
+| **5. `/faqs`**          | Category pill selectors using semantic background tokens                         | Question `font-medium`, answer `font-normal`, labels `font-medium`       | Clean                               | 🟢 DONE |
+| **6. `/team`**          | Presets & social icon links using semantic tokens                                | Role `font-medium`, name `font-medium`, inputs `font-normal`             | Clean                               | 🟢 DONE |
+| **7. `/posts`**         | Cover presets & editor using semantic borders & backgrounds                      | Article titles `font-medium`, labels `font-medium`, body `font-normal`   | Clean                               | 🟢 DONE |
+| **8. `/portfolio`**     | Result metric chips using semantic token badges                                  | Project title `font-medium`, metrics `font-medium`, text `font-normal`   | Clean                               | 🟢 DONE |
+| **9. `/messages`**      | Status badges using semantic variants (`bg-destructive/10`, etc.)                | Sender `font-medium`, message preview `font-normal`                      | Clean                               | 🟢 DONE |
+| **10. `/users`**        | RBAC badges & selector cards using semantic primary tokens                       | User name `font-medium`, role descriptions `font-normal`                 | Clean                               | 🟢 DONE |
+| **11. `/site-config`**  | Tab navigation & form inputs using semantic tokens                               | Section headers `font-medium`, field labels `font-medium`                | Clean                               | 🟢 DONE |
+
+---
+
+## Verification & Quality Gates
+
+- [x] `npm run typecheck` (All 8 packages passing with 0 errors) - 🟢
+- [x] `npm run lint` (All 8 packages passing with 0 errors) - 🟢
