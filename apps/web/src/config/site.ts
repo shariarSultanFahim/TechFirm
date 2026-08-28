@@ -70,12 +70,8 @@ export const siteConfig: TechfirmSiteConfig = {
       // ]
     },
     {
-      title: "Projects",
+      title: "Portfolio",
       href: "/portfolio",
-      children: [
-        { title: "Our Portfolio", href: "/portfolio", description: "Explore our recent client case studies." },
-        { title: "Portfolio Details", href: "/portfolio/maximizing-efficiency-coffee-success", description: "Deep dive case study analysis." }
-      ]
     },
     {
       title: "Blog",
