@@ -26,13 +26,20 @@ export function useCurrentUser() {
 export function useLogout() {
   return useMutation({
     mutationFn: async () => {
-      return await post("/auth/logout");
+      try {
+        await post("/auth/logout");
+      } catch {
+        // Continue logout cleanup even if network or server errors occur
+      }
     },
-    onSuccess: () => {
+    onSettled: () => {
+      if (typeof document !== "undefined") {
+        document.cookie =
+          "accessToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; SameSite=Lax";
+        document.cookie =
+          "refreshToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; SameSite=Lax";
+      }
       toast.success("Signed out successfully");
-      window.location.href = "/login";
-    },
-    onError: () => {
       window.location.href = "/login";
     }
   });

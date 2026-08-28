@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Image from "next/image";
+import { useSearchParams } from "next/navigation";
 
 import { useMutation } from "@tanstack/react-query";
 import { AlertCircle, ArrowRight, CheckCircle2, Lock, Mail } from "lucide-react";
@@ -14,8 +15,16 @@ import { LoginInput, loginSchema } from "@repo/validators";
 import logoImg from "@/assets/logo-short.png";
 import { post } from "@/lib/api";
 
-export default function AdminLoginPage() {
+function LoginForm() {
+  const searchParams = useSearchParams();
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const err = searchParams.get("error");
+    if (err === "unauthorized_role") {
+      setError("Access denied. Only users with the 'admin' role can access this console.");
+    }
+  }, [searchParams]);
 
   const {
     register,
@@ -31,10 +40,25 @@ export default function AdminLoginPage() {
 
   const mutation = useMutation({
     mutationFn: async (data: LoginInput) => {
-      return await post<{ data?: { accessToken?: string } }>("/auth/login", data);
+      return await post<{
+        data?: { user?: { role: string; email: string }; accessToken?: string };
+      }>("/auth/login", data);
     },
     onSuccess: (response) => {
+      const user = response?.data?.user;
       const accessToken = response?.data?.accessToken;
+
+      if (user && user.role !== "admin") {
+        if (typeof document !== "undefined") {
+          document.cookie =
+            "accessToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; SameSite=Lax";
+        }
+        const msg = `Access denied for '${user.email}'. Only users with the 'admin' role can access the management console.`;
+        setError(msg);
+        toast.error(msg);
+        return;
+      }
+
       if (accessToken && typeof document !== "undefined") {
         const isSecure = window.location.protocol === "https:";
         document.cookie = `accessToken=${accessToken}; path=/; max-age=${7 * 24 * 60 * 60}; SameSite=Lax${isSecure ? "; Secure" : ""}`;
@@ -132,5 +156,19 @@ export default function AdminLoginPage() {
         </form>
       </div>
     </div>
+  );
+}
+
+export default function AdminLoginPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="bg-background text-muted-foreground flex min-h-screen items-center justify-center p-4 text-sm">
+          Loading login...
+        </div>
+      }
+    >
+      <LoginForm />
+    </Suspense>
   );
 }
