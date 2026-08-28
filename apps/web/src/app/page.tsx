@@ -3,7 +3,8 @@ import {
   CloudControlPanelSection,
   HostingPlanSection,
   ReviewsSection,
-  ServicesSection
+  ServicesSection,
+  PricingSection
 } from "@/components/home";
 
 export default function HomePage() {
@@ -23,6 +24,9 @@ export default function HomePage() {
 
       {/* 5. Our Services & Key Statistics */}
       <ServicesSection />
+
+      {/* 6. Pricing Plans */}
+      <PricingSection />
     </main>
   );
 }
