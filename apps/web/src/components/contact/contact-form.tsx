@@ -2,74 +2,74 @@
 
 import { useState } from "react";
 
-import { AlertCircle, CheckCircle2, Send } from "lucide-react";
+import { AlertCircle, CheckCircle2, Loader2, Send } from "lucide-react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+
+import { contactFormSchema, type ContactFormData } from "@/lib/validations/contact";
+
+import { useSubmitContactMessage } from "@/hooks/use-contact";
 
 import { PillButton } from "@/components/ui/pill-button";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api/v1";
+const SERVICE_OPTIONS = [
+  { value: "cloud-hosting", label: "Cloud Server & Managed Hosting" },
+  { value: "cyber-security", label: "Zero-Trust Cybersecurity Audit" },
+  { value: "managed-it", label: "24/7 Managed IT & Infrastructure" },
+  { value: "devops", label: "DevOps & Cloud Architecture" },
+  { value: "custom", label: "Enterprise Custom Project" }
+] as const;
 
 export function ContactForm() {
   const [submitted, setSubmitted] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [submissionError, setSubmissionError] = useState<string | null>(null);
 
-  // Form fields
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [service, setService] = useState("cloud-hosting");
-  const [message, setMessage] = useState("");
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting }
+  } = useForm<ContactFormData>({
+    resolver: zodResolver(contactFormSchema),
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      phone: "",
+      service: "cloud-hosting",
+      message: ""
+    }
+  });
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setErrorMessage(null);
+  const submitMutation = useSubmitContactMessage();
 
-    const fullName = `${firstName.trim()} ${lastName.trim()}`.trim() || "Prospective Client";
-    const subject = `Consultation Request: ${service}`;
+  const onSubmit = async (data: ContactFormData) => {
+    setSubmissionError(null);
+    const fullName = `${data.firstName.trim()} ${data.lastName.trim()}`.trim();
+    const serviceLabel =
+      SERVICE_OPTIONS.find((s) => s.value === data.service)?.label || data.service;
+    const subject = `Consultation Request: ${serviceLabel}`;
 
     try {
-      const res = await fetch(`${API_BASE_URL}/contact-messages`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          name: fullName,
-          email: email.trim(),
-          phone: phone.trim() || undefined,
-          service,
-          subject,
-          message: message.trim()
-        })
+      await submitMutation.mutateAsync({
+        name: fullName,
+        email: data.email.trim(),
+        phone: data.phone?.trim() || undefined,
+        service: data.service,
+        subject,
+        message: data.message.trim()
       });
-
-      if (!res.ok) {
-        const errorJson = await res.json().catch(() => null);
-        throw new Error(errorJson?.message || "Failed to transmit message. Please try again.");
-      }
-
       setSubmitted(true);
     } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : "Failed to transmit inquiry";
-      setErrorMessage(msg);
-      // Fallback: allow smooth user flow even if backend is in dev mode
-      setSubmitted(true);
-    } finally {
-      setLoading(false);
+      const msg = err instanceof Error ? err.message : "Failed to send inquiry. Please try again.";
+      setSubmissionError(msg);
     }
   };
 
   const handleReset = () => {
+    reset();
     setSubmitted(false);
-    setFirstName("");
-    setLastName("");
-    setEmail("");
-    setPhone("");
-    setService("cloud-hosting");
-    setMessage("");
-    setErrorMessage(null);
+    setSubmissionError(null);
   };
 
   if (submitted) {
@@ -96,6 +96,8 @@ export function ContactForm() {
     );
   }
 
+  const isLoading = isSubmitting || submitMutation.isPending;
+
   return (
     <div className="rounded-3xl border border-[#EDE8F5] bg-white p-7 shadow-xs sm:p-10">
       <div className="mb-8 text-left">
@@ -107,14 +109,14 @@ export function ContactForm() {
         </p>
       </div>
 
-      {errorMessage && (
+      {submissionError && (
         <div className="border-destructive/20 bg-destructive/5 text-destructive mb-4 flex items-center gap-2 rounded-xl border p-3.5 text-xs">
           <AlertCircle className="h-4 w-4 shrink-0" />
-          <span>{errorMessage}</span>
+          <span>{submissionError}</span>
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-4 text-left">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 text-left">
         {/* Name Fields */}
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div>
@@ -123,23 +125,40 @@ export function ContactForm() {
             </label>
             <input
               type="text"
-              required
               placeholder="e.g. John"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-              className="focus:border-primary w-full rounded-2xl border border-[#EDE8F5] bg-[#F9FAFB] px-4 py-3.5 text-xs text-[#141432] placeholder-gray-400 shadow-2xs transition-all focus:bg-white focus:outline-hidden sm:text-sm"
+              disabled={isLoading}
+              {...register("firstName")}
+              className={`w-full rounded-2xl border bg-[#F9FAFB] px-4 py-3.5 text-xs text-[#141432] placeholder-gray-400 shadow-2xs transition-all focus:bg-white focus:outline-hidden sm:text-sm ${
+                errors.firstName
+                  ? "border-destructive focus:border-destructive"
+                  : "focus:border-primary border-[#EDE8F5]"
+              }`}
             />
+            {errors.firstName && (
+              <p className="text-destructive mt-1 text-[11px] font-medium">
+                {errors.firstName.message}
+              </p>
+            )}
           </div>
+
           <div>
             <label className="mb-1.5 block text-xs font-semibold text-[#141432]">Last Name *</label>
             <input
               type="text"
-              required
               placeholder="e.g. Smith"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-              className="focus:border-primary w-full rounded-2xl border border-[#EDE8F5] bg-[#F9FAFB] px-4 py-3.5 text-xs text-[#141432] placeholder-gray-400 shadow-2xs transition-all focus:bg-white focus:outline-hidden sm:text-sm"
+              disabled={isLoading}
+              {...register("lastName")}
+              className={`w-full rounded-2xl border bg-[#F9FAFB] px-4 py-3.5 text-xs text-[#141432] placeholder-gray-400 shadow-2xs transition-all focus:bg-white focus:outline-hidden sm:text-sm ${
+                errors.lastName
+                  ? "border-destructive focus:border-destructive"
+                  : "focus:border-primary border-[#EDE8F5]"
+              }`}
             />
+            {errors.lastName && (
+              <p className="text-destructive mt-1 text-[11px] font-medium">
+                {errors.lastName.message}
+              </p>
+            )}
           </div>
         </div>
 
@@ -151,13 +170,22 @@ export function ContactForm() {
             </label>
             <input
               type="email"
-              required
               placeholder="john@company.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="focus:border-primary w-full rounded-2xl border border-[#EDE8F5] bg-[#F9FAFB] px-4 py-3.5 text-xs text-[#141432] placeholder-gray-400 shadow-2xs transition-all focus:bg-white focus:outline-hidden sm:text-sm"
+              disabled={isLoading}
+              {...register("email")}
+              className={`w-full rounded-2xl border bg-[#F9FAFB] px-4 py-3.5 text-xs text-[#141432] placeholder-gray-400 shadow-2xs transition-all focus:bg-white focus:outline-hidden sm:text-sm ${
+                errors.email
+                  ? "border-destructive focus:border-destructive"
+                  : "focus:border-primary border-[#EDE8F5]"
+              }`}
             />
+            {errors.email && (
+              <p className="text-destructive mt-1 text-[11px] font-medium">
+                {errors.email.message}
+              </p>
+            )}
           </div>
+
           <div>
             <label className="mb-1.5 block text-xs font-semibold text-[#141432]">
               Phone Number
@@ -165,10 +193,15 @@ export function ContactForm() {
             <input
               type="tel"
               placeholder="+1 (555) 000-0000"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
+              disabled={isLoading}
+              {...register("phone")}
               className="focus:border-primary w-full rounded-2xl border border-[#EDE8F5] bg-[#F9FAFB] px-4 py-3.5 text-xs text-[#141432] placeholder-gray-400 shadow-2xs transition-all focus:bg-white focus:outline-hidden sm:text-sm"
             />
+            {errors.phone && (
+              <p className="text-destructive mt-1 text-[11px] font-medium">
+                {errors.phone.message}
+              </p>
+            )}
           </div>
         </div>
 
@@ -178,17 +211,21 @@ export function ContactForm() {
             Service Required *
           </label>
           <select
-            required
-            value={service}
-            onChange={(e) => setService(e.target.value)}
+            disabled={isLoading}
+            {...register("service")}
             className="focus:border-primary w-full cursor-pointer rounded-2xl border border-[#EDE8F5] bg-[#F9FAFB] px-4 py-3.5 text-xs text-[#141432] shadow-2xs transition-all focus:bg-white focus:outline-hidden sm:text-sm"
           >
-            <option value="cloud-hosting">Cloud Server & Managed Hosting</option>
-            <option value="cyber-security">Zero-Trust Cybersecurity Audit</option>
-            <option value="managed-it">24/7 Managed IT & Infrastructure</option>
-            <option value="devops">DevOps & Cloud Architecture</option>
-            <option value="custom">Enterprise Custom Project</option>
+            {SERVICE_OPTIONS.map((opt) => (
+              <option key={opt.value} value={opt.value}>
+                {opt.label}
+              </option>
+            ))}
           </select>
+          {errors.service && (
+            <p className="text-destructive mt-1 text-[11px] font-medium">
+              {errors.service.message}
+            </p>
+          )}
         </div>
 
         {/* Message */}
@@ -197,24 +234,39 @@ export function ContactForm() {
             Project Overview & Goals *
           </label>
           <textarea
-            required
             rows={4}
+            disabled={isLoading}
             placeholder="Tell us about your current infrastructure, challenges, and timeline..."
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            className="focus:border-primary w-full resize-none rounded-2xl border border-[#EDE8F5] bg-[#F9FAFB] px-4 py-3.5 text-xs text-[#141432] placeholder-gray-400 shadow-2xs transition-all focus:bg-white focus:outline-hidden sm:text-sm"
+            {...register("message")}
+            className={`w-full resize-none rounded-2xl border bg-[#F9FAFB] px-4 py-3.5 text-xs text-[#141432] placeholder-gray-400 shadow-2xs transition-all focus:bg-white focus:outline-hidden sm:text-sm ${
+              errors.message
+                ? "border-destructive focus:border-destructive"
+                : "focus:border-primary border-[#EDE8F5]"
+            }`}
           />
+          {errors.message && (
+            <p className="text-destructive mt-1 text-[11px] font-medium">
+              {errors.message.message}
+            </p>
+          )}
         </div>
 
         {/* Submit Button */}
         <div className="pt-3">
           <PillButton
+            type="submit"
             variant="primary"
             size="lg"
-            disabled={loading}
-            icon={<Send className="h-4 w-4" />}
+            disabled={isLoading}
+            icon={
+              isLoading ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <Send className="h-4 w-4" />
+              )
+            }
           >
-            {loading ? "Transmitting Request..." : "Submit Inquiry"}
+            {isLoading ? "Transmitting Request..." : "Submit Inquiry"}
           </PillButton>
         </div>
       </form>

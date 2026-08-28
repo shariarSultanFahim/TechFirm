@@ -1,29 +1,29 @@
 import * as React from "react";
 import Link from "next/link";
+
 import { Check } from "lucide-react";
 import { cva, type VariantProps } from "class-variance-authority";
+
 import { cn } from "@/lib/utils";
 
 const pillButtonVariants = cva(
-  "inline-flex items-center rounded-full transition-all duration-300 group shrink-0 cursor-pointer select-none",
+  "group inline-flex shrink-0 cursor-pointer items-center rounded-full transition-all duration-300 select-none",
   {
     variants: {
       variant: {
-        outline:
-          "border border-primary text-foreground hover:bg-primary/5 active:scale-[0.98]",
+        outline: "border-primary text-foreground hover:bg-primary/5 border active:scale-[0.98]",
         primary:
-          "bg-[#864FFE] hover:bg-[#7238EE] text-white shadow-md hover:shadow-lg active:scale-[0.98] border border-transparent",
+          "border border-transparent bg-[#864FFE] text-white shadow-md hover:bg-[#7238EE] hover:shadow-lg active:scale-[0.98]",
         solid:
-          "bg-[#864FFE] hover:bg-[#7238EE] text-white shadow-md hover:shadow-lg active:scale-[0.98] border border-transparent",
+          "border border-transparent bg-[#864FFE] text-white shadow-md hover:bg-[#7238EE] hover:shadow-lg active:scale-[0.98]",
         white:
-          "bg-white border border-[#EDE8F5] text-[#141432] hover:border-primary hover:text-primary shadow-xs active:scale-[0.98]",
-        dark:
-          "bg-[#191924] border border-[#2D2D3F] text-white hover:bg-[#252535] active:scale-[0.98]"
+          "hover:border-primary hover:text-primary border border-[#EDE8F5] bg-white text-[#141432] shadow-xs active:scale-[0.98]",
+        dark: "border border-[#2D2D3F] bg-[#191924] text-white hover:bg-[#252535] active:scale-[0.98]"
       },
       size: {
-        sm: "pl-3.5 pr-1.5 py-1 text-xs gap-2",
-        default: "pl-4 pr-1.5 py-1.5 xl:pl-6 xl:pr-2 xl:py-2 text-xs xl:text-sm gap-2.5 xl:gap-3",
-        lg: "pl-6 sm:pl-7 pr-2 sm:pr-2.5 py-2 sm:py-2.5 text-sm sm:text-base gap-3 sm:gap-3.5"
+        sm: "gap-2 py-1 pr-1.5 pl-3.5 text-xs",
+        default: "gap-2.5 py-1.5 pr-1.5 pl-4 text-xs xl:gap-3 xl:py-2 xl:pr-2 xl:pl-6 xl:text-sm",
+        lg: "gap-3 py-2 pr-2 pl-6 text-sm sm:gap-3.5 sm:py-2.5 sm:pr-2.5 sm:pl-7 sm:text-base"
       }
     },
     defaultVariants: {
@@ -34,25 +34,20 @@ const pillButtonVariants = cva(
 );
 
 const iconBadgeVariants = cva(
-  "rounded-full flex items-center justify-center transition-all duration-300 shrink-0",
+  "flex shrink-0 items-center justify-center rounded-full transition-all duration-300",
   {
     variants: {
       variant: {
-        outline:
-          "bg-primary/15 text-primary group-hover:bg-primary group-hover:text-white",
-        primary:
-          "bg-white text-primary group-hover:scale-105 shadow-2xs",
-        solid:
-          "bg-white text-primary group-hover:scale-105 shadow-2xs",
-        white:
-          "bg-primary/15 text-primary group-hover:bg-primary group-hover:text-white",
-        dark:
-          "bg-white/10 text-white group-hover:bg-primary group-hover:text-white"
+        outline: "bg-primary/15 text-primary group-hover:bg-primary group-hover:text-white",
+        primary: "text-primary bg-white shadow-2xs group-hover:scale-105",
+        solid: "text-primary bg-white shadow-2xs group-hover:scale-105",
+        white: "bg-primary/15 text-primary group-hover:bg-primary group-hover:text-white",
+        dark: "group-hover:bg-primary bg-white/10 text-white group-hover:text-white"
       },
       size: {
-        sm: "w-5 h-5",
-        default: "w-6 h-6 xl:w-7 xl:h-7",
-        lg: "w-7 h-7 sm:w-8 sm:h-8"
+        sm: "h-5 w-5",
+        default: "h-6 w-6 xl:h-7 xl:w-7",
+        lg: "h-7 w-7 sm:h-8 sm:w-8"
       }
     },
     defaultVariants: {
@@ -63,8 +58,7 @@ const iconBadgeVariants = cva(
 );
 
 export interface PillButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof pillButtonVariants> {
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof pillButtonVariants> {
   href?: string;
   target?: string;
   rel?: string;
@@ -80,6 +74,7 @@ export const PillButton = React.forwardRef<HTMLButtonElement, PillButtonProps>(
       className,
       variant = "outline",
       size = "default",
+      type = "button",
       href,
       target,
       rel,
@@ -99,19 +94,14 @@ export const PillButton = React.forwardRef<HTMLButtonElement, PillButtonProps>(
             "font-bold tracking-tight whitespace-nowrap transition-colors",
             variant === "outline" && "text-foreground group-hover:text-primary",
             (variant === "primary" || variant === "solid") && "text-white",
-            variant === "white" && "text-[#141432] group-hover:text-primary",
+            variant === "white" && "group-hover:text-primary text-[#141432]",
             variant === "dark" && "text-white",
             labelClassName
           )}
         >
           {children}
         </span>
-        <div
-          className={cn(
-            iconBadgeVariants({ variant, size }),
-            badgeClassName
-          )}
-        >
+        <div className={cn(iconBadgeVariants({ variant, size }), badgeClassName)}>
           {icon !== undefined ? (
             icon
           ) : (
@@ -119,10 +109,10 @@ export const PillButton = React.forwardRef<HTMLButtonElement, PillButtonProps>(
               className={cn(
                 "stroke-[2.5]",
                 size === "sm"
-                  ? "w-3 h-3"
+                  ? "h-3 w-3"
                   : size === "lg"
-                    ? "w-4 h-4 sm:w-4.5 sm:h-4.5"
-                    : "w-3.5 h-3.5 xl:w-4 xl:h-4",
+                    ? "h-4 w-4 sm:h-4.5 sm:w-4.5"
+                    : "h-3.5 w-3.5 xl:h-4 xl:w-4",
                 iconClassName
               )}
             />
@@ -147,7 +137,7 @@ export const PillButton = React.forwardRef<HTMLButtonElement, PillButtonProps>(
     return (
       <button
         ref={ref}
-        type="button"
+        type={type}
         className={cn(pillButtonVariants({ variant, size, className }))}
         {...props}
       >
