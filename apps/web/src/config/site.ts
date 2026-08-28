@@ -45,7 +45,14 @@ export const siteConfig: TechfirmSiteConfig = {
     address: "Graaf Florisstraat 22-A, 3021 CH Rotterdam"
   },
   navigation: [
-    { title: "Home", href: "/" },
+    {
+      title: "Home",
+      href: "/",
+      children: [
+        { title: "Home Main", href: "/", description: "Modern IT solutions & technology landing page." },
+        { title: "IT Solutions", href: "/#services", description: "Enterprise software and cloud architecture." }
+      ]
+    },
     {
       title: "Pages",
       href: "/about",
@@ -74,7 +81,14 @@ export const siteConfig: TechfirmSiteConfig = {
         { title: "Portfolio Details", href: "/portfolio/maximizing-efficiency-coffee-success", description: "Deep dive case study analysis." }
       ]
     },
-    { title: "News", href: "/blog" },
+    {
+      title: "News",
+      href: "/blog",
+      children: [
+        { title: "Blog Grid", href: "/blog", description: "Latest industry news and technology insights." },
+        { title: "Blog Standard", href: "/blog", description: "Featured in-depth technical analysis." }
+      ]
+    },
     { title: "Contact", href: "/contact" }
   ]
 } as const;

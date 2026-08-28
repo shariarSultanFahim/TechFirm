@@ -1,2 +1,2 @@
-// Re-export shared UI widgets from @repo/ui
+export * from "./section-header";
 export * from "@repo/ui";
