@@ -1,4 +1,5 @@
 import * as React from "react";
+
 import { ArrowUpRight } from "lucide-react";
 
 export interface CaseStudyItem {
@@ -34,8 +35,10 @@ export function CaseStudyCard({
 
   return (
     <div
-      className={`group rounded-3xl overflow-hidden border transition-all duration-300 hover:shadow-xl flex flex-col justify-between ${
-        dark ? "bg-dark-card border-dark-border text-white" : "bg-card border-border text-foreground shadow-sm"
+      className={`group flex flex-col justify-between overflow-hidden rounded-3xl border transition-all duration-300 hover:shadow-xl ${
+        dark
+          ? "bg-dark-card border-dark-border text-white"
+          : "bg-card border-border text-foreground shadow-sm"
       }`}
     >
       <div>
@@ -44,35 +47,39 @@ export function CaseStudyCard({
             <img
               src={displayImage}
               alt={title}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
-            <div className="absolute top-4 left-4 bg-primary text-primary-foreground text-xs font-bold py-1 px-3 rounded-full">
+            <div className="bg-primary text-primary-foreground absolute top-4 left-4 rounded-full px-3 py-1 text-xs font-bold">
               {category}
             </div>
           </div>
         ) : (
-          <div className="h-48 bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center p-6 text-primary">
-            <span className="text-sm font-semibold uppercase tracking-wider">{category}</span>
+          <div className="text-primary flex h-48 items-center justify-center bg-gradient-to-br from-gray-800 to-gray-900 p-6">
+            <span className="text-sm font-semibold tracking-wider uppercase">{category}</span>
           </div>
         )}
 
         <div className="p-6 md:p-8">
-          <div className="text-xs text-primary font-semibold uppercase tracking-wider mb-2">
+          <div className="text-primary mb-2 text-xs font-semibold tracking-wider uppercase">
             Client: {client}
           </div>
-          <h3 className="text-xl md:text-2xl font-bold mb-3 tracking-tight group-hover:text-primary transition-colors">
+          <h3 className="group-hover:text-primary mb-3 text-xl font-bold tracking-tight transition-colors md:text-2xl">
             {title}
           </h3>
-          <p className={`text-sm leading-relaxed mb-6 ${dark ? "text-gray-300" : "text-muted-foreground"}`}>
+          <p
+            className={`mb-6 text-sm leading-relaxed ${dark ? "text-gray-300" : "text-muted-foreground"}`}
+          >
             {displaySummary}
           </p>
 
           {metrics && metrics.length > 0 && (
-            <div className="grid grid-cols-2 gap-3 pt-4 border-t border-border/50 mb-6">
+            <div className="border-border/50 mb-6 grid grid-cols-2 gap-3 border-t pt-4">
               {metrics.map((m, idx) => (
                 <div key={idx}>
-                  <div className="text-lg font-bold font-mono text-primary">{m.value}</div>
-                  <div className={`text-xs ${dark ? "text-gray-400" : "text-muted-foreground"}`}>{m.label}</div>
+                  <div className="text-primary font-mono text-lg font-bold">{m.value}</div>
+                  <div className={`text-xs ${dark ? "text-gray-400" : "text-muted-foreground"}`}>
+                    {m.label}
+                  </div>
                 </div>
               ))}
             </div>
@@ -80,12 +87,12 @@ export function CaseStudyCard({
         </div>
       </div>
 
-      <div className="p-6 md:p-8 pt-0">
+      <div className="p-6 pt-0 md:p-8">
         <a
           href={`/portfolio/${slug}`}
-          className="inline-flex items-center gap-2 font-bold text-sm text-primary group-hover:translate-x-1 transition-transform"
+          className="text-primary inline-flex items-center gap-2 text-sm font-bold transition-transform group-hover:translate-x-1"
         >
-          View Case Study <ArrowUpRight className="w-4 h-4" />
+          View Case Study <ArrowUpRight className="h-4 w-4" />
         </a>
       </div>
     </div>

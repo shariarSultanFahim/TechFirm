@@ -1,8 +1,4 @@
-import {
-  ConflictException,
-  Injectable,
-  NotFoundException
-} from "@nestjs/common";
+import { ConflictException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { FilterQuery, Model } from "mongoose";
 import * as bcrypt from "bcryptjs";
@@ -13,9 +9,7 @@ import { User, UserDocument } from "./schemas/user.schema";
 
 @Injectable()
 export class UsersService {
-  constructor(
-    @InjectModel(User.name) private readonly userModel: Model<UserDocument>
-  ) {}
+  constructor(@InjectModel(User.name) private readonly userModel: Model<UserDocument>) {}
 
   async create(createUserDto: CreateUserDto): Promise<UserDocument> {
     const existing = await this.userModel.findOne({ email: createUserDto.email.toLowerCase() });
@@ -36,14 +30,7 @@ export class UsersService {
   }
 
   async findAll(query: QueryUserDto) {
-    const {
-      page = 1,
-      limit = 10,
-      search,
-      role,
-      sortBy = "createdAt",
-      sortOrder = "desc"
-    } = query;
+    const { page = 1, limit = 10, search, role, sortBy = "createdAt", sortOrder = "desc" } = query;
 
     const filter: FilterQuery<UserDocument> = {};
 

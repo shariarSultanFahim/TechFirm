@@ -1,8 +1,9 @@
 import type { ComponentType, SVGProps } from "react";
+
 import AarexLogo from "@/assets/portfolio/aarex/aarex-logo.svg";
+import AbcLogo from "@/assets/portfolio/abc/abc-logo.svg";
 import AcceLogo from "@/assets/portfolio/acce/acce-logo.svg";
 import ArcLogo from "@/assets/portfolio/arc/arc-logo.svg";
-import AbcLogo from "@/assets/portfolio/abc/abc-logo.svg";
 import FreaLogo from "@/assets/portfolio/frea/frea-logo.svg";
 import RazeLogo from "@/assets/portfolio/raze/raze-logo.svg";
 

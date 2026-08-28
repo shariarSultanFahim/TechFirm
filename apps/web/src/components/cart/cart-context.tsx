@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState, useMemo } from "react";
+import React, { createContext, useContext, useMemo, useState } from "react";
 
 export interface CartItem {
   id: string;
@@ -60,9 +60,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     setItems((prev) => {
       const existing = prev.find((i) => i.id === newItem.id);
       if (existing) {
-        return prev.map((i) =>
-          i.id === newItem.id ? { ...i, quantity: i.quantity + 1 } : i
-        );
+        return prev.map((i) => (i.id === newItem.id ? { ...i, quantity: i.quantity + 1 } : i));
       }
       return [...prev, { ...newItem, quantity: 1 }];
     });
@@ -74,16 +72,17 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   };
 
   const updateQuantity = (id: string, delta: number) => {
-    setItems((prev) =>
-      prev
-        .map((item) => {
-          if (item.id === id) {
-            const nextQty = item.quantity + delta;
-            return nextQty > 0 ? { ...item, quantity: nextQty } : null;
-          }
-          return item;
-        })
-        .filter(Boolean) as CartItem[]
+    setItems(
+      (prev) =>
+        prev
+          .map((item) => {
+            if (item.id === id) {
+              const nextQty = item.quantity + delta;
+              return nextQty > 0 ? { ...item, quantity: nextQty } : null;
+            }
+            return item;
+          })
+          .filter(Boolean) as CartItem[]
     );
   };
 
@@ -91,10 +90,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     setItems([]);
   };
 
-  const totalCount = useMemo(
-    () => items.reduce((acc, item) => acc + item.quantity, 0),
-    [items]
-  );
+  const totalCount = useMemo(() => items.reduce((acc, item) => acc + item.quantity, 0), [items]);
 
   const subtotal = useMemo(
     () => items.reduce((acc, item) => acc + item.price * item.quantity, 0),

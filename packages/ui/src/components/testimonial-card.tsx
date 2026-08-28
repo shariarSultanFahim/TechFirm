@@ -1,4 +1,5 @@
 import * as React from "react";
+
 import { Star } from "lucide-react";
 
 export interface TestimonialItem {
@@ -37,32 +38,46 @@ export function TestimonialCard({
 
   return (
     <div
-      className={`p-8 rounded-2xl border flex flex-col justify-between transition-all duration-300 hover:shadow-md ${
-        dark ? "bg-dark-card border-dark-border text-white" : "bg-card border-border text-foreground shadow-sm"
+      className={`flex flex-col justify-between rounded-2xl border p-8 transition-all duration-300 hover:shadow-md ${
+        dark
+          ? "bg-dark-card border-dark-border text-white"
+          : "bg-card border-border text-foreground shadow-sm"
       }`}
     >
       <div>
-        <div className="flex gap-1 mb-4">
+        <div className="mb-4 flex gap-1">
           {Array.from({ length: rating }).map((_, i) => (
-            <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
+            <Star key={i} className="h-4 w-4 fill-amber-400 text-amber-400" />
           ))}
         </div>
-        <p className={`text-base leading-relaxed italic mb-6 ${dark ? "text-gray-200" : "text-muted-foreground"}`}>
+        <p
+          className={`mb-6 text-base leading-relaxed italic ${dark ? "text-gray-200" : "text-muted-foreground"}`}
+        >
           &ldquo;{displayQuote}&rdquo;
         </p>
       </div>
 
       <div className="flex items-center gap-3">
         {displayAvatar ? (
-          <img src={displayAvatar} alt={displayAuthor} className="w-12 h-12 rounded-full object-cover border-2 border-primary" />
+          <img
+            src={displayAvatar}
+            alt={displayAuthor}
+            className="border-primary h-12 w-12 rounded-full border-2 object-cover"
+          />
         ) : (
-          <div className="w-12 h-12 rounded-full bg-accent text-accent-foreground flex items-center justify-center font-bold text-base">
+          <div className="bg-accent text-accent-foreground flex h-12 w-12 items-center justify-center rounded-full text-base font-bold">
             {displayAuthor.charAt(0)}
           </div>
         )}
         <div>
-          <div className={`font-bold text-sm ${dark ? "text-white" : "text-foreground"}`}>{displayAuthor}</div>
-          {displayRole && <div className={`text-xs ${dark ? "text-gray-400" : "text-muted-foreground"}`}>{displayRole}</div>}
+          <div className={`text-sm font-bold ${dark ? "text-white" : "text-foreground"}`}>
+            {displayAuthor}
+          </div>
+          {displayRole && (
+            <div className={`text-xs ${dark ? "text-gray-400" : "text-muted-foreground"}`}>
+              {displayRole}
+            </div>
+          )}
         </div>
       </div>
     </div>

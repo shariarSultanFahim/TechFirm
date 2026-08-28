@@ -1,7 +1,4 @@
-import {
-  Injectable,
-  UnauthorizedException
-} from "@nestjs/common";
+import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { JwtService } from "@nestjs/jwt";
 import * as bcrypt from "bcryptjs";
@@ -23,9 +20,11 @@ export class AuthService {
     private readonly configService: ConfigService
   ) {
     this.accessSecret =
-      this.configService.get<string>("JWT_ACCESS_SECRET") || "default_access_secret_for_dev_only_change_in_prod";
+      this.configService.get<string>("JWT_ACCESS_SECRET") ||
+      "default_access_secret_for_dev_only_change_in_prod";
     this.refreshSecret =
-      this.configService.get<string>("JWT_REFRESH_SECRET") || "default_refresh_secret_for_dev_only_change_in_prod";
+      this.configService.get<string>("JWT_REFRESH_SECRET") ||
+      "default_refresh_secret_for_dev_only_change_in_prod";
     this.accessExpiresIn = this.configService.get<string>("JWT_ACCESS_EXPIRES_IN") || "15m";
     this.refreshExpiresIn = this.configService.get<string>("JWT_REFRESH_EXPIRES_IN") || "7d";
   }
@@ -126,7 +125,8 @@ export class AuthService {
 
   private getCookieOptions(maxAgeMs: number): CookieOptions {
     const isProduction = this.configService.get<string>("NODE_ENV") === "production";
-    const sameSite = (this.configService.get<string>("COOKIE_SAME_SITE") as "lax" | "strict" | "none") || "lax";
+    const sameSite =
+      (this.configService.get<string>("COOKIE_SAME_SITE") as "lax" | "strict" | "none") || "lax";
 
     return {
       httpOnly: true,
@@ -149,7 +149,8 @@ export class AuthService {
 
   clearAuthCookies(res: Response) {
     const isProduction = this.configService.get<string>("NODE_ENV") === "production";
-    const sameSite = (this.configService.get<string>("COOKIE_SAME_SITE") as "lax" | "strict" | "none") || "lax";
+    const sameSite =
+      (this.configService.get<string>("COOKIE_SAME_SITE") as "lax" | "strict" | "none") || "lax";
 
     const clearOptions: CookieOptions = {
       httpOnly: true,

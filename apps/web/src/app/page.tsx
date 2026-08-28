@@ -1,17 +1,17 @@
 import {
-  HeroSection,
   CloudControlPanelSection,
+  FaqSection,
+  HeroSection,
   HostingPlanSection,
+  PricingSection,
   ReviewsSection,
   ServicesSection,
-  PricingSection,
-  FaqSection,
   TechfarmSection
 } from "@/components/home";
 
 export default function HomePage() {
   return (
-    <main className="w-full flex flex-col bg-background overflow-hidden">
+    <main className="bg-background flex w-full flex-col overflow-hidden">
       {/* 1. Hero Banner with Domain Search & Server Graphics */}
       <HeroSection />
 

@@ -1,4 +1,5 @@
 import * as React from "react";
+
 import { ArrowRight, PhoneCall } from "lucide-react";
 
 export interface DarkCtaBandProps {
@@ -21,39 +22,39 @@ export function DarkCtaBand({
   secondaryCtaHref = "/pricing"
 }: DarkCtaBandProps) {
   return (
-    <section className="py-20 bg-dark-bg text-white relative overflow-hidden">
-      <div className="absolute -right-24 -bottom-24 w-96 h-96 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute -left-24 -top-24 w-96 h-96 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
+    <section className="bg-dark-bg relative overflow-hidden py-20 text-white">
+      <div className="bg-primary/10 pointer-events-none absolute -right-24 -bottom-24 h-96 w-96 rounded-full blur-3xl" />
+      <div className="bg-primary/5 pointer-events-none absolute -top-24 -left-24 h-96 w-96 rounded-full blur-3xl" />
 
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+      <div className="relative z-10 mx-auto max-w-5xl px-4 text-center sm:px-6 lg:px-8">
         {badge && (
-          <span className="inline-block px-4 py-1 text-xs font-bold rounded-full uppercase tracking-wider bg-primary/20 text-primary border border-primary/30 mb-6">
+          <span className="bg-primary/20 text-primary border-primary/30 mb-6 inline-block rounded-full border px-4 py-1 text-xs font-bold tracking-wider uppercase">
             {badge}
           </span>
         )}
 
-        <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight mb-6 leading-tight max-w-3xl mx-auto">
+        <h2 className="mx-auto mb-6 max-w-3xl text-3xl leading-tight font-extrabold tracking-tight md:text-5xl">
           {title}
         </h2>
 
-        <p className="text-base md:text-lg text-gray-300 max-w-2xl mx-auto mb-10 leading-relaxed">
+        <p className="mx-auto mb-10 max-w-2xl text-base leading-relaxed text-gray-300 md:text-lg">
           {description}
         </p>
 
-        <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
+        <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
           <a
             href={primaryCtaHref}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary text-primary-foreground font-bold rounded-xl text-base hover:bg-primary-deep hover:text-white transition-all shadow-lg hover:shadow-primary/20"
+            className="bg-primary text-primary-foreground hover:bg-primary-deep hover:shadow-primary/20 inline-flex w-full items-center justify-center gap-2 rounded-xl px-8 py-4 text-base font-bold shadow-lg transition-all hover:text-white sm:w-auto"
           >
-            {primaryCtaText} <ArrowRight className="w-5 h-5" />
+            {primaryCtaText} <ArrowRight className="h-5 w-5" />
           </a>
 
           {secondaryCtaText && (
             <a
               href={secondaryCtaHref}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-dark-card text-white font-bold rounded-xl text-base border border-dark-border hover:bg-dark-border transition-all"
+              className="bg-dark-card border-dark-border hover:bg-dark-border inline-flex w-full items-center justify-center gap-2 rounded-xl border px-8 py-4 text-base font-bold text-white transition-all sm:w-auto"
             >
-              <PhoneCall className="w-4 h-4 text-primary" /> {secondaryCtaText}
+              <PhoneCall className="text-primary h-4 w-4" /> {secondaryCtaText}
             </a>
           )}
         </div>

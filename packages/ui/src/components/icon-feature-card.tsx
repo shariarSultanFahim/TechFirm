@@ -1,4 +1,5 @@
 import * as React from "react";
+
 import { ArrowRight } from "lucide-react";
 
 export interface IconFeatureCardProps {
@@ -20,20 +21,22 @@ export function IconFeatureCard({
 }: IconFeatureCardProps) {
   return (
     <div
-      className={`group relative p-8 rounded-2xl border transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between ${
+      className={`group relative flex flex-col justify-between rounded-2xl border p-8 transition-all duration-300 hover:-translate-y-1.5 ${
         dark
           ? "bg-dark-card border-dark-border hover:border-primary/50 text-white"
-          : "bg-card border-border hover:border-primary hover:shadow-lg text-foreground"
+          : "bg-card border-border hover:border-primary text-foreground hover:shadow-lg"
       }`}
     >
       <div>
-        <div className="w-14 h-14 rounded-xl bg-accent text-accent-foreground flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300">
+        <div className="bg-accent text-accent-foreground group-hover:bg-primary group-hover:text-primary-foreground mb-6 flex h-14 w-14 items-center justify-center rounded-xl transition-colors duration-300">
           {icon}
         </div>
-        <h3 className="text-xl font-bold mb-3 tracking-tight group-hover:text-primary transition-colors">
+        <h3 className="group-hover:text-primary mb-3 text-xl font-bold tracking-tight transition-colors">
           {title}
         </h3>
-        <p className={`text-sm leading-relaxed mb-6 ${dark ? "text-gray-300" : "text-muted-foreground"}`}>
+        <p
+          className={`mb-6 text-sm leading-relaxed ${dark ? "text-gray-300" : "text-muted-foreground"}`}
+        >
           {description}
         </p>
       </div>
@@ -41,9 +44,9 @@ export function IconFeatureCard({
       {href && (
         <a
           href={href}
-          className="inline-flex items-center gap-2 text-sm font-semibold text-primary group-hover:translate-x-1 transition-transform"
+          className="text-primary inline-flex items-center gap-2 text-sm font-semibold transition-transform group-hover:translate-x-1"
         >
-          {actionText} <ArrowRight className="w-4 h-4" />
+          {actionText} <ArrowRight className="h-4 w-4" />
         </a>
       )}
     </div>

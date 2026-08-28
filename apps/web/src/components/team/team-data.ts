@@ -31,7 +31,8 @@ export const teamMembersData: TeamMemberDetails[] = [
     name: "Megan Palms",
     role: "Online Director",
     badgeRole: "ONLINE DIRECTOR",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop",
     bio: "Are you busy putting out IT fires instead of focusing on your core business? If your technology is draining resources rather than optimizing them, TechFirm can get you back on track. A professionally managed services provider can give you the decisive edge to keep your technology running flawlessly.",
     competencies: [
       "Data Security",
@@ -67,7 +68,8 @@ export const teamMembersData: TeamMemberDetails[] = [
     name: "Michael Carter",
     role: "Senior Designer",
     badgeRole: "SENIOR DESIGNER",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop",
     bio: "Are you busy putting out IT fires instead of focusing on your core business? If your technology is draining resources rather than optimizing them, TechFirm can get you back on track. A professionally managed services provider can give you the decisive edge to keep your technology running flawlessly.",
     competencies: [
       "Data Security",
@@ -103,7 +105,8 @@ export const teamMembersData: TeamMemberDetails[] = [
     name: "David Thompson",
     role: "Senior Designer",
     badgeRole: "SENIOR DESIGNER",
-    image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1000&auto=format&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1000&auto=format&fit=crop",
     bio: "Are you busy putting out IT fires instead of focusing on your core business? If your technology is draining resources rather than optimizing them, TechFirm can get you back on track. A professionally managed services provider can give you the decisive edge to keep your technology running flawlessly.",
     competencies: [
       "Data Security",
@@ -139,7 +142,8 @@ export const teamMembersData: TeamMemberDetails[] = [
     name: "James Anderson",
     role: "Senior Designer",
     badgeRole: "SENIOR DESIGNER",
-    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1000&auto=format&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1000&auto=format&fit=crop",
     bio: "Are you busy putting out IT fires instead of focusing on your core business? If your technology is draining resources rather than optimizing them, TechFirm can get you back on track.",
     competencies: [
       "Data Security",
@@ -169,7 +173,8 @@ export const teamMembersData: TeamMemberDetails[] = [
     name: "Robert Mitchell",
     role: "Senior Designer",
     badgeRole: "SENIOR DESIGNER",
-    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1000&auto=format&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1000&auto=format&fit=crop",
     bio: "Are you busy putting out IT fires instead of focusing on your core business? If your technology is draining resources rather than optimizing them, TechFirm can get you back on track.",
     competencies: [
       "Data Security",
@@ -199,7 +204,8 @@ export const teamMembersData: TeamMemberDetails[] = [
     name: "David Smith",
     role: "Senior Designer",
     badgeRole: "SENIOR DESIGNER",
-    image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=1000&auto=format&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=1000&auto=format&fit=crop",
     bio: "Are you busy putting out IT fires instead of focusing on your core business? If your technology is draining resources rather than optimizing them, TechFirm can get you back on track.",
     competencies: [
       "Data Security",
@@ -229,7 +235,8 @@ export const teamMembersData: TeamMemberDetails[] = [
     name: "Matthew Scott",
     role: "Senior Designer",
     badgeRole: "SENIOR DESIGNER",
-    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1000&auto=format&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1000&auto=format&fit=crop",
     bio: "Are you busy putting out IT fires instead of focusing on your core business? If your technology is draining resources rather than optimizing them, TechFirm can get you back on track.",
     competencies: [
       "Data Security",
@@ -259,7 +266,8 @@ export const teamMembersData: TeamMemberDetails[] = [
     name: "Daniel Walker",
     role: "Senior Designer",
     badgeRole: "SENIOR DESIGNER",
-    image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=1000&auto=format&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=1000&auto=format&fit=crop",
     bio: "Are you busy putting out IT fires instead of focusing on your core business? If your technology is draining resources rather than optimizing them, TechFirm can get you back on track.",
     competencies: [
       "Data Security",
@@ -289,7 +297,8 @@ export const teamMembersData: TeamMemberDetails[] = [
     name: "William Harris",
     role: "Senior Designer",
     badgeRole: "SENIOR DESIGNER",
-    image: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?q=80&w=1000&auto=format&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?q=80&w=1000&auto=format&fit=crop",
     bio: "Are you busy putting out IT fires instead of focusing on your core business? If your technology is draining resources rather than optimizing them, TechFirm can get you back on track.",
     competencies: [
       "Data Security",
@@ -318,8 +327,6 @@ export const teamMembersData: TeamMemberDetails[] = [
 
 export function getTeamMember(slug: string): TeamMemberDetails {
   return (
-    teamMembersData.find(
-      (m) => m.id.toLowerCase() === slug.toLowerCase()
-    ) || teamMembersData[0]!
+    teamMembersData.find((m) => m.id.toLowerCase() === slug.toLowerCase()) || teamMembersData[0]!
   );
 }

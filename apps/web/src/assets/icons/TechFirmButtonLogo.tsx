@@ -1,13 +1,12 @@
 import React from "react";
 
-export function TechFirmButtonLogo({ className = "w-[240px] sm:w-[270px] h-auto" }: { className?: string }) {
+export function TechFirmButtonLogo({
+  className = "w-[240px] sm:w-[270px] h-auto"
+}: {
+  className?: string;
+}) {
   return (
-    <svg
-      className={className}
-      viewBox="0 0 270 88"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <svg className={className} viewBox="0 0 270 88" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g filter="url(#filter0_i_3_24820)">
         <rect width="270" height="88" rx="44" fill="#150E3D" />
       </g>
@@ -42,12 +41,7 @@ export function TechFirmButtonLogo({ className = "w-[240px] sm:w-[270px] h-auto"
           colorInterpolationFilters="sRGB"
         >
           <feFlood floodOpacity="0" result="BackgroundImageFix" />
-          <feBlend
-            mode="normal"
-            in="SourceGraphic"
-            in2="BackgroundImageFix"
-            result="shape"
-          />
+          <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
           <feColorMatrix
             in="SourceAlpha"
             type="matrix"
@@ -56,21 +50,9 @@ export function TechFirmButtonLogo({ className = "w-[240px] sm:w-[270px] h-auto"
           />
           <feOffset dx="-5" dy="4" />
           <feGaussianBlur stdDeviation="15.45" />
-          <feComposite
-            in2="hardAlpha"
-            operator="arithmetic"
-            k2="-1"
-            k3="1"
-          />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.8 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="shape"
-            result="effect1_innerShadow_3_24820"
-          />
+          <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
+          <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.8 0" />
+          <feBlend mode="normal" in2="shape" result="effect1_innerShadow_3_24820" />
         </filter>
       </defs>
     </svg>

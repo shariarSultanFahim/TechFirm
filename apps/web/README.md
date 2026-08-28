@@ -62,10 +62,10 @@ The frontend ships a full **multi-theme + dark/light mode** system built on top 
 
 ### How it works
 
-| Layer | Provider | Responsibility |
-| --- | --- | --- |
-| Dark / Light toggle | `ThemeProvider` (`next-themes`) | Adds/removes the `.dark` class on `<html>` |
-| Color theme preset | `ThemePresetProvider` | Injects a `<style>` tag with CSS variable overrides for both `:root` (light) and `.dark` |
+| Layer               | Provider                        | Responsibility                                                                           |
+| ------------------- | ------------------------------- | ---------------------------------------------------------------------------------------- |
+| Dark / Light toggle | `ThemeProvider` (`next-themes`) | Adds/removes the `.dark` class on `<html>`                                               |
+| Color theme preset  | `ThemePresetProvider`           | Injects a `<style>` tag with CSS variable overrides for both `:root` (light) and `.dark` |
 
 The two layers are **independent** — you can switch the color preset while staying in dark mode, or toggle dark/light while keeping the same color theme.
 
@@ -132,11 +132,11 @@ function ThemeSwitcher() {
 
 This app is part of an AI-agent-ready monorepo. The canonical coding rules are maintained at the **repo root**:
 
-| File | Agent |
-| --- | --- |
-| `../../.agent/instructions.md` | Antigravity / Claude Code |
-| `../../.cursor/rules` | Cursor IDE |
-| `../../.github/copilot-instructions.md` | GitHub Copilot |
+| File                                    | Agent                     |
+| --------------------------------------- | ------------------------- |
+| `../../.agent/instructions.md`          | Antigravity / Claude Code |
+| `../../.cursor/rules`                   | Cursor IDE                |
+| `../../.github/copilot-instructions.md` | GitHub Copilot            |
 
 Frontend-specific rules enforced by the instructions:
 

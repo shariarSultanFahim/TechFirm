@@ -1,6 +1,7 @@
 # Cursor Rules — TechFirm Turborepo Monorepo
 
 This is a full-stack Turborepo monorepo with:
+
 - **`apps/web`** — Next.js 16 App Router public frontend (TypeScript, Tailwind CSS v4, shadcn/ui, TanStack Query)
 - **`apps/dashboard`** — Next.js 16 App Router **admin** frontend, intended for a separate subdomain (TypeScript, Tailwind CSS v4, shadcn/ui `sidebar-04` base, TanStack Query)
 - **`apps/api`** — **NestJS** backend (TypeScript, **Mongoose/MongoDB**, `nestjs-zod`, JWT via `@nestjs/passport`, `@nestjs/swagger`)
@@ -72,19 +73,19 @@ This is a full-stack Turborepo monorepo with:
 
 ## 3. Naming Conventions
 
-| Entity | Convention | Example |
-|---|---|---|
-| Files & folders | `kebab-case` | `auth.service.ts`, `user-list/` |
-| React components | `PascalCase` | `UserList.tsx` |
-| shadcn/ui files | `kebab-case` | `button.tsx` |
-| Hook files | `kebab-case`, `use-` prefix | `use-auth.ts` |
-| Hook functions | `camelCase`, `use` prefix | `useAuth()` |
-| Nest modules/providers | `PascalCase` class, Nest suffix | `AuthService`, `AuthController`, `UsersModule` |
-| Nest decorators (custom) | `PascalCase` | `@Roles()`, `@CurrentUser()` |
-| Mongoose schema classes | `PascalCase`, no suffix | `User`, `Plan`, `Post` |
-| Mongoose schema files | `kebab-case`, `.schema.ts` suffix | `user.schema.ts` |
-| Constants | `SCREAMING_SNAKE_CASE` | `MAX_FILE_SIZE` |
-| Zod schemas | `camelCase` + `Schema` suffix | `createUserSchema` |
+| Entity                   | Convention                        | Example                                        |
+| ------------------------ | --------------------------------- | ---------------------------------------------- |
+| Files & folders          | `kebab-case`                      | `auth.service.ts`, `user-list/`                |
+| React components         | `PascalCase`                      | `UserList.tsx`                                 |
+| shadcn/ui files          | `kebab-case`                      | `button.tsx`                                   |
+| Hook files               | `kebab-case`, `use-` prefix       | `use-auth.ts`                                  |
+| Hook functions           | `camelCase`, `use` prefix         | `useAuth()`                                    |
+| Nest modules/providers   | `PascalCase` class, Nest suffix   | `AuthService`, `AuthController`, `UsersModule` |
+| Nest decorators (custom) | `PascalCase`                      | `@Roles()`, `@CurrentUser()`                   |
+| Mongoose schema classes  | `PascalCase`, no suffix           | `User`, `Plan`, `Post`                         |
+| Mongoose schema files    | `kebab-case`, `.schema.ts` suffix | `user.schema.ts`                               |
+| Constants                | `SCREAMING_SNAKE_CASE`            | `MAX_FILE_SIZE`                                |
+| Zod schemas              | `camelCase` + `Schema` suffix     | `createUserSchema`                             |
 
 ---
 
@@ -114,6 +115,7 @@ This is a full-stack Turborepo monorepo with:
 ## 5. Error Handling
 
 ### Backend (`apps/api`)
+
 - Services throw `ApiError(statusCode, message)` for domain errors — never
   a plain `Error` or a raw `HttpException` thrown directly from a service.
 - Global `ApiExceptionFilter` (`@Catch()`) converts `ApiError`,
@@ -127,6 +129,7 @@ This is a full-stack Turborepo monorepo with:
   filter's job. Controllers stay thin.
 
 ### Frontend (`apps/web`, `apps/dashboard`)
+
 - Data-fetching errors must surface as toast notifications — never silently
   swallowed.
 - Every `useQuery`/`useMutation` must handle loading and error states
@@ -144,6 +147,7 @@ These conventions apply to **both** Next.js apps unless a rule is scoped
 explicitly to one.
 
 ### Structure
+
 ```
 src/
   app/           # Pages, layouts, route handlers (App Router)
@@ -168,6 +172,7 @@ holds `AdminShell` (sidebar + header, from the shadcn `sidebar-04` base)
 instead of the marketing `Header`/`Footer`.
 
 ### Components
+
 - Every component folder must have `index.ts` re-exporting it.
 - `components/ui` (shadcn/ui) is off-limits — wrap instead of modifying.
   This applies identically in `apps/dashboard` after running
@@ -182,6 +187,7 @@ instead of the marketing `Header`/`Footer`.
   top of the same tokens, but not a different color/type system.
 
 ### Data Fetching
+
 - HTTP requests via helpers in `src/lib/api.ts` (Axios-based), configured
   to send credentials (cookies) on every request.
 - TanStack Query (`useQuery`, `useMutation`) for all server state.
@@ -192,10 +198,12 @@ instead of the marketing `Header`/`Footer`.
   is meant to be database-backed content (see backend §7 module list).
 
 ### State
+
 - React Context for global UI state in `src/providers/`.
 - Avoid `useState` for server state — use TanStack Query.
 
 ### Auth & Route Protection
+
 - `src/middleware.ts` performs the server-side auth/role check for every
   protected route — this is mandatory, a client-side redirect alone is not
   sufficient and will not pass review.
@@ -206,6 +214,7 @@ instead of the marketing `Header`/`Footer`.
   marketing pages require no auth check.
 
 ### Environment
+
 - `@t3-oss/env-nextjs` + Zod validation in `src/env.ts`, in both apps.
 - Import env values only from `src/env.ts`.
 - Client vars must have `NEXT_PUBLIC_` prefix.
@@ -214,11 +223,13 @@ instead of the marketing `Header`/`Footer`.
   `admin.localhost:3001` in dev).
 
 ### Routing & Cookies
+
 - App Router conventions: `page.tsx`, `layout.tsx`, `loading.tsx`, `error.tsx`.
 - Server cookies: `cookies()` from `next/headers`.
 - Client cookies: helpers from `src/lib/cookie-client.ts`.
 
 ### Themes & Fonts
+
 - Theme CSS variables managed by `ThemePresetProvider` via injected
   `<style>` tag (`apps/web`).
 - `apps/dashboard` reuses the same design tokens (colors, type scale) but
@@ -230,16 +241,19 @@ instead of the marketing `Header`/`Footer`.
   `@import`.
 
 ### Accessibility
+
 - Every interactive element has an accessible label.
 - Use ARIA attributes where semantic HTML is insufficient.
 - Meaningful images wrapped in `<figure>` with `<figcaption>`.
 
 ### Icons
+
 - `lucide-react` only. No mixing of icon libraries (this includes
   `apps/dashboard`'s use of shadcn `sidebar-04`, which ships with
   `lucide-react` by default — do not swap it for another icon set).
 
 ### Utilities
+
 - Date → `src/lib/date.ts`
 - Numbers/currency → `Intl` API
 - Slugs → `@sindresorhus/slugify` (used for `posts.slug` generation)
@@ -247,6 +261,7 @@ instead of the marketing `Header`/`Footer`.
 - Constants → `src/constants/` in `SCREAMING_SNAKE_CASE`
 
 ### Figma-derived pages (`apps/web`)
+
 - When building a page against a Figma frame (via the connected Figma MCP
   server), prefer exact values pulled from the Figma node (color, spacing,
   type) over visual approximation from a screenshot.
@@ -260,6 +275,7 @@ instead of the marketing `Header`/`Footer`.
 ## 7. Backend Rules — `apps/api`
 
 ### Structure
+
 ```
 src/
   common/
@@ -285,7 +301,9 @@ src/
 ```
 
 ### Module Pattern
+
 Each feature module contains:
+
 1. **`schemas/<module>.schema.ts`** — Mongoose schema via `@Schema()` /
    `@Prop()` decorators, exporting the class and its `HydratedDocument` type.
 2. **`dto/create-<module>.dto.ts` / `update-<module>.dto.ts`** — built with
@@ -301,6 +319,7 @@ Each feature module contains:
    throws `ApiError` on domain failures.
 
 ### Validation — `nestjs-zod`
+
 - DTOs are Zod schemas wrapped via `createZodDto()`, not `class-validator`
   decorated classes — this repo standardizes on Zod end-to-end so
   `packages/validators` schemas can be shared verbatim between `apps/web`
@@ -312,6 +331,7 @@ Each feature module contains:
   not add per-route validation pipes.
 
 ### OpenAPI / Swagger Documentation
+
 - Docs are generated via `@nestjs/swagger`'s `DocumentBuilder` +
   `SwaggerModule`, configured in `main.ts` — **not** hand-written JSDoc
   comments on controllers.
@@ -322,10 +342,12 @@ Each feature module contains:
   by default in development, gated by `ENABLE_API_DOCS=true` in production.
 
 ### Routing & Versioning
+
 - All routes prefixed `/api/v1` via a global route prefix in `main.ts`
   (not per-controller `@Controller('v1/...')` strings).
 
 ### Response Format
+
 ```ts
 // Success (via global TransformInterceptor)
 { success: true, statusCode: 200, message: "...", data: {...} | null, pagination?: {...} }
@@ -333,11 +355,13 @@ Each feature module contains:
 // Error (via global ApiExceptionFilter)
 { success: false, message: "...", errorMessages: [{ path, message }], stack?: "..." }
 ```
+
 This contract is unchanged from the Express/Prisma era — `apps/web` and
 `apps/dashboard` API clients depend on it, so it must not drift during or
 after the Nest migration.
 
 ### Database & Mongoose
+
 - Inject models via `@InjectModel(User.name) private userModel: Model<UserDocument>`
   — never instantiate a Mongoose model or open a connection manually inside
   a service.
@@ -354,6 +378,7 @@ after the Nest migration.
   collections.
 
 ### Auth & Authorization
+
 - JWT: short-lived access token + long-lived refresh token, both issued as
   httpOnly cookies from `AuthController` — never returned in the JSON body.
 - `JwtAuthGuard` (via `@nestjs/passport` + `passport-jwt`) verifies the
@@ -364,12 +389,14 @@ after the Nest migration.
   rotates the token pair rather than only extending the access token.
 
 ### Logging
+
 - Use Nest's built-in `Logger` (or a Winston adapter if one is already
   wired) for structured logs — no ad hoc `console.log`.
 - Never log sensitive data (passwords, tokens, PII).
 - Development: `debug`/`log` level; Production: `warn`/`error` only.
 
 ### Config
+
 - All env values loaded via `@nestjs/config` in `config/configuration.ts`
   and accessed through the injected `ConfigService` — never
   `process.env` accessed directly inside a service or controller.

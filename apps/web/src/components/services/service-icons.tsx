@@ -1,5 +1,6 @@
 import type { ComponentType, SVGProps } from "react";
 
+import CardTexture from "@/assets/service-solution/everything-you-get-with-techfarm-card/card-top-right-testure.svg";
 // Feature Icons
 import Frame0 from "@/assets/service-solution/everything-you-get-with-techfarm-card/Frame-0.svg";
 import Frame1 from "@/assets/service-solution/everything-you-get-with-techfarm-card/Frame-1.svg";
@@ -7,8 +8,6 @@ import Frame2 from "@/assets/service-solution/everything-you-get-with-techfarm-c
 import Frame3 from "@/assets/service-solution/everything-you-get-with-techfarm-card/Frame-3.svg";
 import Frame4 from "@/assets/service-solution/everything-you-get-with-techfarm-card/Frame-4.svg";
 import Frame5 from "@/assets/service-solution/everything-you-get-with-techfarm-card/Frame-5.svg";
-import CardTexture from "@/assets/service-solution/everything-you-get-with-techfarm-card/card-top-right-testure.svg";
-
 // Work Process SVGs
 import BgTopLeft from "@/assets/service-solution/work-process/bg-top-left.svg";
 import BgTopRight from "@/assets/service-solution/work-process/bg-top-right.svg";

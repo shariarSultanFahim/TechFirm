@@ -2,10 +2,10 @@ import type { StaticImageData } from "next/image";
 
 // Portfolio Image Assets
 import aarexImg from "@/assets/portfolio/aarex/aarex.png";
+import abcImg from "@/assets/portfolio/abc/abc.png";
 import acceImg from "@/assets/portfolio/acce/acce.png";
 import arcCardBg from "@/assets/portfolio/arc/arc-card-bg.png";
 import arcImg from "@/assets/portfolio/arc/arc.png";
-import abcImg from "@/assets/portfolio/abc/abc.png";
 import freaImg from "@/assets/portfolio/frea/frea.png";
 import razeCardBg from "@/assets/portfolio/raze/raze-card-bg.png";
 import razeImg from "@/assets/portfolio/raze/raze.png";
@@ -61,15 +61,18 @@ export const caseStudies: CaseStudy[] = [
       },
       {
         title: "Your Team Productive",
-        description: "Our managed services include round-the-clock monitoring of your key infrastructure, computer."
+        description:
+          "Our managed services include round-the-clock monitoring of your key infrastructure, computer."
       },
       {
         title: "Predictable Costs 24/7",
-        description: "We doesn't charge you more when your network is down or a server fails. Our flat-rate fee programs."
+        description:
+          "We doesn't charge you more when your network is down or a server fails. Our flat-rate fee programs."
       },
       {
         title: "Our Team is Ready to Help",
-        description: "Part of what makes our managed services so exceptional is that we are always available."
+        description:
+          "Part of what makes our managed services so exceptional is that we are always available."
       }
     ]
   },
@@ -95,7 +98,8 @@ export const caseStudies: CaseStudy[] = [
     results: [
       {
         title: "99.999% SLA",
-        description: "Zero downtime achieved throughout Black Friday and Cyber Week peak load surges."
+        description:
+          "Zero downtime achieved throughout Black Friday and Cyber Week peak load surges."
       },
       {
         title: "10x Throughput",

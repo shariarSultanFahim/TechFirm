@@ -25,27 +25,31 @@ export function SectionHeading({
         : "text-center items-center";
 
   return (
-    <div className={`flex flex-col ${alignmentClass} max-w-3xl ${align === "center" ? "mx-auto" : ""} mb-12 ${className}`}>
+    <div
+      className={`flex flex-col ${alignmentClass} max-w-3xl ${align === "center" ? "mx-auto" : ""} mb-12 ${className}`}
+    >
       {badge && (
         <span
-          className={`inline-block px-3.5 py-1 text-xs font-semibold rounded-full uppercase tracking-wider mb-3 ${
+          className={`mb-3 inline-block rounded-full px-3.5 py-1 text-xs font-semibold tracking-wider uppercase ${
             dark
-              ? "bg-primary/20 text-primary border border-primary/30"
-              : "bg-accent text-accent-foreground border border-accent-foreground/20"
+              ? "bg-primary/20 text-primary border-primary/30 border"
+              : "bg-accent text-accent-foreground border-accent-foreground/20 border"
           }`}
         >
           {badge}
         </span>
       )}
       <h2
-        className={`text-3xl md:text-4xl font-extrabold tracking-tight leading-tight mb-4 ${
+        className={`mb-4 text-3xl leading-tight font-extrabold tracking-tight md:text-4xl ${
           dark ? "text-white" : "text-foreground"
         }`}
       >
         {title}
       </h2>
       {description && (
-        <p className={`text-base md:text-lg leading-relaxed ${dark ? "text-gray-300" : "text-muted-foreground"}`}>
+        <p
+          className={`text-base leading-relaxed md:text-lg ${dark ? "text-gray-300" : "text-muted-foreground"}`}
+        >
           {description}
         </p>
       )}

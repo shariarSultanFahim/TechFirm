@@ -1,4 +1,5 @@
 import axios, { AxiosError, AxiosRequestConfig } from "axios";
+
 import { env } from "@/env";
 
 export const api = axios.create({

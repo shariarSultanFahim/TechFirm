@@ -1,13 +1,17 @@
 import type { ReactNode } from "react";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+
 import { GoogleAnalytics } from "@next/third-parties/google";
+
 import { seoConfig } from "@/config/seo";
 import { siteConfig } from "@/config/site";
 import { env } from "@/env";
+
 import { Footer, Header } from "@/components/layouts";
 import { Toaster } from "@/ui";
 import { Providers } from "@/providers";
+
 import "@/tailwind";
 
 const geistSans = Geist({

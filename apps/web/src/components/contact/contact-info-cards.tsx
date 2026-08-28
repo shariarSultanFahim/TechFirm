@@ -1,5 +1,7 @@
-import { Phone, Mail, MapPin, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
+
+import { ArrowUpRight, Mail, MapPin, Phone } from "lucide-react";
+
 import { siteConfig } from "@/config/site";
 
 const contactMethods = [
@@ -31,7 +33,7 @@ const contactMethods = [
 
 export function ContactInfoCards() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-7 w-full mb-12 sm:mb-16">
+    <div className="mb-12 grid w-full grid-cols-1 gap-6 sm:mb-16 sm:gap-7 md:grid-cols-3">
       {contactMethods.map((method) => {
         const Icon = method.icon;
         return (
@@ -40,30 +42,30 @@ export function ContactInfoCards() {
             href={method.href}
             target={method.href.startsWith("http") ? "_blank" : undefined}
             rel={method.href.startsWith("http") ? "noopener noreferrer" : undefined}
-            className="rounded-3xl border border-[#EDE8F5] bg-white p-7 sm:p-8 shadow-xs hover:shadow-xl hover:border-primary/40 transition-all duration-300 group flex flex-col justify-between select-none"
+            className="hover:border-primary/40 group flex flex-col justify-between rounded-3xl border border-[#EDE8F5] bg-white p-7 shadow-xs transition-all duration-300 select-none hover:shadow-xl sm:p-8"
           >
             <div>
-              <div className="flex items-center justify-between mb-6">
+              <div className="mb-6 flex items-center justify-between">
                 <div
-                  className={`w-12 h-12 rounded-2xl ${method.iconBg} flex items-center justify-center transition-transform duration-300 group-hover:scale-110 shadow-2xs`}
+                  className={`h-12 w-12 rounded-2xl ${method.iconBg} flex items-center justify-center shadow-2xs transition-transform duration-300 group-hover:scale-110`}
                 >
-                  <Icon className="w-6 h-6" />
+                  <Icon className="h-6 w-6" />
                 </div>
-                <div className="w-8 h-8 rounded-full bg-[#F3F4F6] text-[#141432] group-hover:bg-primary group-hover:text-white flex items-center justify-center transition-colors">
-                  <ArrowUpRight className="w-4 h-4" />
+                <div className="group-hover:bg-primary flex h-8 w-8 items-center justify-center rounded-full bg-[#F3F4F6] text-[#141432] transition-colors group-hover:text-white">
+                  <ArrowUpRight className="h-4 w-4" />
                 </div>
               </div>
 
-              <h3 className="text-lg sm:text-xl font-bold text-[#141432] tracking-tight group-hover:text-primary transition-colors mb-2">
+              <h3 className="group-hover:text-primary mb-2 text-lg font-bold tracking-tight text-[#141432] transition-colors sm:text-xl">
                 {method.title}
               </h3>
-              <p className="text-xs sm:text-sm text-[#5C5C6E] leading-relaxed mb-6 font-medium">
+              <p className="mb-6 text-xs leading-relaxed font-medium text-[#5C5C6E] sm:text-sm">
                 {method.description}
               </p>
             </div>
 
-            <div className="pt-4 border-t border-[#EDE8F5]">
-              <span className="text-sm sm:text-base font-bold text-primary tracking-tight">
+            <div className="border-t border-[#EDE8F5] pt-4">
+              <span className="text-primary text-sm font-bold tracking-tight sm:text-base">
                 {method.contact}
               </span>
             </div>

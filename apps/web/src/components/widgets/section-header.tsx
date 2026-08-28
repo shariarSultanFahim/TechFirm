@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+
 import { Zap } from "lucide-react";
 
 export interface SectionHeaderProps {
@@ -35,12 +36,12 @@ export function SectionHeader({
       {/* Top Badge */}
       {badge && (
         <div
-          className={`inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#CDF5F8] text-[#5C5C5C] text-[11px] font-semibold uppercase tracking-wider shadow-2xs w-fit ${badgeClassName}`}
+          className={`inline-flex w-fit items-center gap-1.5 rounded-full bg-[#CDF5F8] px-4 py-1.5 text-[11px] font-semibold tracking-wider text-[#5C5C5C] uppercase shadow-2xs ${badgeClassName}`}
         >
           {badgeIcon !== undefined ? (
             badgeIcon
           ) : (
-            <Zap className="w-3.5 h-3.5 fill-current text-[#5C5C5C]" />
+            <Zap className="h-3.5 w-3.5 fill-current text-[#5C5C5C]" />
           )}
           <span>{badge}</span>
         </div>
@@ -48,7 +49,7 @@ export function SectionHeader({
 
       {/* Main Title */}
       <h2
-        className={`text-3xl sm:text-4xl lg:text-[44px] font-bold text-[#141432] tracking-tight leading-[1.18] ${titleClassName}`}
+        className={`text-3xl leading-[1.18] font-bold tracking-tight text-[#141432] sm:text-4xl lg:text-[44px] ${titleClassName}`}
       >
         {title}
       </h2>
@@ -56,7 +57,7 @@ export function SectionHeader({
       {/* Optional Description */}
       {description && (
         <p
-          className={`text-sm sm:text-base text-muted-foreground font-medium leading-relaxed ${descriptionClassName}`}
+          className={`text-muted-foreground text-sm leading-relaxed font-medium sm:text-base ${descriptionClassName}`}
         >
           {description}
         </p>

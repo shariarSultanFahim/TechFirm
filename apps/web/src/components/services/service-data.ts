@@ -59,8 +59,7 @@ export const servicesData: ServiceDetail[] = [
     results: [
       {
         title: "IT Service for You",
-        description:
-          "We know that every businesses' needs are completely different from the next."
+        description: "We know that every businesses' needs are completely different from the next."
       },
       {
         title: "Your Team Productive",
@@ -115,8 +114,7 @@ export const servicesData: ServiceDetail[] = [
     results: [
       {
         title: "IT Service for You",
-        description:
-          "We know that every businesses' needs are completely different from the next."
+        description: "We know that every businesses' needs are completely different from the next."
       },
       {
         title: "Your Team Productive",
@@ -171,8 +169,7 @@ export const servicesData: ServiceDetail[] = [
     results: [
       {
         title: "IT Service for You",
-        description:
-          "We know that every businesses' needs are completely different from the next."
+        description: "We know that every businesses' needs are completely different from the next."
       },
       {
         title: "Your Team Productive",
@@ -227,8 +224,7 @@ export const servicesData: ServiceDetail[] = [
     results: [
       {
         title: "IT Service for You",
-        description:
-          "We know that every businesses' needs are completely different from the next."
+        description: "We know that every businesses' needs are completely different from the next."
       },
       {
         title: "Your Team Productive",
@@ -283,8 +279,7 @@ export const servicesData: ServiceDetail[] = [
     results: [
       {
         title: "IT Service for You",
-        description:
-          "We know that every businesses' needs are completely different from the next."
+        description: "We know that every businesses' needs are completely different from the next."
       },
       {
         title: "Your Team Productive",
@@ -339,8 +334,7 @@ export const servicesData: ServiceDetail[] = [
     results: [
       {
         title: "IT Service for You",
-        description:
-          "We know that every businesses' needs are completely different from the next."
+        description: "We know that every businesses' needs are completely different from the next."
       },
       {
         title: "Your Team Productive",

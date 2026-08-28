@@ -1,5 +1,7 @@
 import * as React from "react";
+
 import { Mail } from "lucide-react";
+
 import { LinkedinIcon, TwitterIcon } from "./social-icons";
 
 export interface TeamMemberItem {
@@ -44,8 +46,10 @@ export function TeamMemberCard({
 
   return (
     <div
-      className={`group rounded-3xl overflow-hidden border transition-all duration-300 hover:shadow-lg flex flex-col justify-between ${
-        dark ? "bg-dark-card border-dark-border text-white" : "bg-card border-border text-foreground shadow-sm"
+      className={`group flex flex-col justify-between overflow-hidden rounded-3xl border transition-all duration-300 hover:shadow-lg ${
+        dark
+          ? "bg-dark-card border-dark-border text-white"
+          : "bg-card border-border text-foreground shadow-sm"
       }`}
     >
       <div>
@@ -54,48 +58,64 @@ export function TeamMemberCard({
             <img
               src={displayImage}
               alt={name}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
           ) : (
-            <div className="w-full h-full flex items-center justify-center bg-accent text-accent-foreground text-4xl font-black">
+            <div className="bg-accent text-accent-foreground flex h-full w-full items-center justify-center text-4xl font-black">
               {name.charAt(0)}
             </div>
           )}
         </div>
 
         <div className="p-6">
-          <h3 className="text-xl font-bold tracking-tight mb-1 group-hover:text-primary transition-colors">
+          <h3 className="group-hover:text-primary mb-1 text-xl font-bold tracking-tight transition-colors">
             {slug ? <a href={`/team/${slug}`}>{name}</a> : name}
           </h3>
-          <div className="text-xs font-semibold text-primary uppercase tracking-wider mb-3">{role}</div>
+          <div className="text-primary mb-3 text-xs font-semibold tracking-wider uppercase">
+            {role}
+          </div>
           {bio && (
-            <p className={`text-sm line-clamp-2 leading-relaxed mb-4 ${dark ? "text-gray-300" : "text-muted-foreground"}`}>
+            <p
+              className={`mb-4 line-clamp-2 text-sm leading-relaxed ${dark ? "text-gray-300" : "text-muted-foreground"}`}
+            >
               {bio}
             </p>
           )}
         </div>
       </div>
 
-      <div className="p-6 pt-0 flex items-center justify-between border-t border-border/40">
+      <div className="border-border/40 flex items-center justify-between border-t p-6 pt-0">
         <div className="flex items-center gap-3">
           {linkedinUrl && (
-            <a href={linkedinUrl} className="text-muted-foreground hover:text-primary transition-colors" aria-label="LinkedIn">
-              <LinkedinIcon className="w-4 h-4" />
+            <a
+              href={linkedinUrl}
+              className="text-muted-foreground hover:text-primary transition-colors"
+              aria-label="LinkedIn"
+            >
+              <LinkedinIcon className="h-4 w-4" />
             </a>
           )}
           {twitterUrl && (
-            <a href={twitterUrl} className="text-muted-foreground hover:text-primary transition-colors" aria-label="Twitter">
-              <TwitterIcon className="w-4 h-4" />
+            <a
+              href={twitterUrl}
+              className="text-muted-foreground hover:text-primary transition-colors"
+              aria-label="Twitter"
+            >
+              <TwitterIcon className="h-4 w-4" />
             </a>
           )}
           {emailUrl && (
-            <a href={`mailto:${emailUrl}`} className="text-muted-foreground hover:text-primary transition-colors" aria-label="Email">
-              <Mail className="w-4 h-4" />
+            <a
+              href={`mailto:${emailUrl}`}
+              className="text-muted-foreground hover:text-primary transition-colors"
+              aria-label="Email"
+            >
+              <Mail className="h-4 w-4" />
             </a>
           )}
         </div>
         {slug && (
-          <a href={`/team/${slug}`} className="text-xs font-bold text-primary hover:underline">
+          <a href={`/team/${slug}`} className="text-primary text-xs font-bold hover:underline">
             Profile &rarr;
           </a>
         )}

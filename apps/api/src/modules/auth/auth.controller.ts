@@ -35,10 +35,7 @@ export class AuthController {
   @HttpCode(HttpStatus.CREATED)
   @ApiOperation({ summary: "Register a new user account" })
   @SwaggerApiResponse({ status: 201, description: "User registered successfully" })
-  async register(
-    @Body() registerDto: RegisterDto,
-    @Res({ passthrough: true }) response: Response
-  ) {
+  async register(@Body() registerDto: RegisterDto, @Res({ passthrough: true }) response: Response) {
     const { user, tokens } = await this.authService.register(registerDto);
     this.authService.setAuthCookies(response, tokens.accessToken, tokens.refreshToken);
 
@@ -53,10 +50,7 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: "Authenticate user and issue auth cookies" })
   @SwaggerApiResponse({ status: 200, description: "Logged in successfully" })
-  async login(
-    @Body() loginDto: LoginDto,
-    @Res({ passthrough: true }) response: Response
-  ) {
+  async login(@Body() loginDto: LoginDto, @Res({ passthrough: true }) response: Response) {
     const { user, tokens } = await this.authService.login(loginDto);
     this.authService.setAuthCookies(response, tokens.accessToken, tokens.refreshToken);
 
@@ -72,10 +66,7 @@ export class AuthController {
   @ApiCookieAuth()
   @ApiOperation({ summary: "Refresh access token using refreshToken cookie" })
   @SwaggerApiResponse({ status: 200, description: "Tokens refreshed successfully" })
-  async refresh(
-    @Req() request: Request,
-    @Res({ passthrough: true }) response: Response
-  ) {
+  async refresh(@Req() request: Request, @Res({ passthrough: true }) response: Response) {
     const refreshToken = request.cookies?.refreshToken;
     if (!refreshToken) {
       throw new UnauthorizedException("No refresh token found in request cookies");
@@ -96,10 +87,7 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: "Logout user and invalidate authentication cookies" })
   @SwaggerApiResponse({ status: 200, description: "Logged out successfully" })
-  async logout(
-    @CurrentUser("id") userId: string,
-    @Res({ passthrough: true }) response: Response
-  ) {
+  async logout(@CurrentUser("id") userId: string, @Res({ passthrough: true }) response: Response) {
     await this.authService.logout(userId);
     this.authService.clearAuthCookies(response);
 

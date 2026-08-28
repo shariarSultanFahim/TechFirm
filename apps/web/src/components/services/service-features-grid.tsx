@@ -1,51 +1,47 @@
 "use client";
 
 import Link from "next/link";
+
 import { SectionHeader } from "@/components/widgets";
-import { FeatureIcon, CardTexture } from "./service-icons";
+
+import { CardTexture, FeatureIcon } from "./service-icons";
 
 const features = [
   {
     id: "problem-resolutions",
     icon: "frame-0",
     title: "Problem Resolutions",
-    description:
-      "Affixed pretend account ten natural. Need eat week even yet that. Incommode."
+    description: "Affixed pretend account ten natural. Need eat week even yet that. Incommode."
   },
   {
     id: "data-analytics",
     icon: "frame-1",
     title: "Data Analytics",
-    description:
-      "Affixed pretend account ten natural. Need eat week even yet that. Incommode."
+    description: "Affixed pretend account ten natural. Need eat week even yet that. Incommode."
   },
   {
     id: "increase-income",
     icon: "frame-2",
     title: "Increase Income",
-    description:
-      "Affixed pretend account ten natural. Need eat week even yet that. Incommode."
+    description: "Affixed pretend account ten natural. Need eat week even yet that. Incommode."
   },
   {
     id: "analytics-options",
     icon: "frame-3",
     title: "Analytics options",
-    description:
-      "Affixed pretend account ten natural. Need eat week even yet that. Incommode."
+    description: "Affixed pretend account ten natural. Need eat week even yet that. Incommode."
   },
   {
     id: "generated-income",
     icon: "frame-4",
     title: "Generated Income",
-    description:
-      "Affixed pretend account ten natural. Need eat week even yet that. Incommode."
+    description: "Affixed pretend account ten natural. Need eat week even yet that. Incommode."
   },
   {
     id: "smart-integration",
     icon: "frame-5",
     title: "Smart Integration",
-    description:
-      "Affixed pretend account ten natural. Need eat week even yet that. Incommode."
+    description: "Affixed pretend account ten natural. Need eat week even yet that. Incommode."
   }
 ];
 
@@ -62,31 +58,31 @@ export function ServiceFeaturesGrid() {
       />
 
       {/* 6 Features Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+      <div className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3">
         {features.map((feature) => (
           <Link
             key={feature.id}
             href={`/services/${feature.id}`}
-            className="relative rounded-3xl bg-white p-8 sm:p-9 border border-[#EDE8F5] shadow-2xs hover:shadow-xl hover:border-primary/40 transition-all duration-300 group overflow-hidden flex flex-col justify-between select-none min-h-[240px]"
+            className="hover:border-primary/40 group relative flex min-h-[240px] flex-col justify-between overflow-hidden rounded-3xl border border-[#EDE8F5] bg-white p-8 shadow-2xs transition-all duration-300 select-none hover:shadow-xl sm:p-9"
           >
             {/* Top-Right Dotted Matrix Texture */}
-            <div className="absolute top-0 right-0 pointer-events-none opacity-80 group-hover:opacity-100 transition-opacity">
-              <CardTexture className="w-36 h-36" />
+            <div className="pointer-events-none absolute top-0 right-0 opacity-80 transition-opacity group-hover:opacity-100">
+              <CardTexture className="h-36 w-36" />
             </div>
 
             {/* Icon */}
             <div className="relative z-10 mb-8">
-              <div className="w-12 h-12 flex items-center transition-transform duration-300 group-hover:scale-110">
-                <FeatureIcon name={feature.icon} className="w-10 h-10 object-contain" />
+              <div className="flex h-12 w-12 items-center transition-transform duration-300 group-hover:scale-110">
+                <FeatureIcon name={feature.icon} className="h-10 w-10 object-contain" />
               </div>
             </div>
 
             {/* Content */}
             <div className="relative z-10 text-left">
-              <h3 className="text-lg sm:text-xl font-bold text-[#141432] group-hover:text-primary transition-colors mb-3 leading-snug">
+              <h3 className="group-hover:text-primary mb-3 text-lg leading-snug font-bold text-[#141432] transition-colors sm:text-xl">
                 {feature.title}
               </h3>
-              <p className="text-xs sm:text-sm text-[#5C5C6E] leading-relaxed font-medium">
+              <p className="text-xs leading-relaxed font-medium text-[#5C5C6E] sm:text-sm">
                 {feature.description}
               </p>
             </div>

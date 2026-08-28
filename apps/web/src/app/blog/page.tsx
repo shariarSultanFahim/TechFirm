@@ -1,15 +1,16 @@
-import { SectionHeader } from "@/components/widgets";
 import { BlogGrid } from "@/components/blog";
+import { SectionHeader } from "@/components/widgets";
 
 export const metadata = {
   title: "The TechFirm Blog — Insights & Technology News",
-  description: "Read expert articles, tutorials, and cloud technology insights from the TechFirm engineering team."
+  description:
+    "Read expert articles, tutorials, and cloud technology insights from the TechFirm engineering team."
 };
 
 export default function BlogPage() {
   return (
     <main className="w-full bg-white py-16 sm:py-20 lg:py-24">
-      <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Reusable Section Header with landing page theming */}
         <SectionHeader
           align="center"

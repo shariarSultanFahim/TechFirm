@@ -17,7 +17,7 @@ export const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
     return (
       <header
         ref={ref}
-        className={`ui-navbar sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur ${className}`}
+        className={`ui-navbar bg-background/95 sticky top-0 z-40 w-full border-b backdrop-blur ${className}`}
         {...props}
       >
         <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-8">
@@ -25,13 +25,13 @@ export const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
           <div className="ui-navbar-logo flex items-center gap-2">{logo}</div>
 
           {/* Desktop Nav Links */}
-          <nav className="ui-navbar-links hidden md:flex items-center gap-6 text-sm font-medium">
+          <nav className="ui-navbar-links hidden items-center gap-6 text-sm font-medium md:flex">
             {links}
           </nav>
 
           {/* Action / CTA Slot & Mobile Toggle */}
           <div className="flex items-center gap-3">
-            <div className="ui-navbar-actions hidden sm:flex items-center gap-2">{actions}</div>
+            <div className="ui-navbar-actions hidden items-center gap-2 sm:flex">{actions}</div>
 
             {/* Mobile Hamburger Button */}
             <button
@@ -39,7 +39,7 @@ export const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
               onClick={toggleMenu}
               aria-expanded={isMenuOpen}
               aria-label="Toggle navigation menu"
-              className="ui-navbar-toggle md:hidden inline-flex items-center justify-center p-2 rounded-md hover:bg-muted text-foreground"
+              className="ui-navbar-toggle hover:bg-muted text-foreground inline-flex items-center justify-center rounded-md p-2 md:hidden"
             >
               <svg
                 className="h-6 w-6"
@@ -52,7 +52,11 @@ export const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
                 {isMenuOpen ? (
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                 ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+                  />
                 )}
               </svg>
             </button>
@@ -61,13 +65,13 @@ export const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
 
         {/* Mobile Navigation Drawer / Slot */}
         {isMenuOpen && (
-          <div className="ui-navbar-mobile md:hidden border-b bg-background px-4 py-4 space-y-4">
+          <div className="ui-navbar-mobile bg-background space-y-4 border-b px-4 py-4 md:hidden">
             {mobileMenu ? (
               mobileMenu({ isOpen: isMenuOpen, close: closeMenu })
             ) : (
               <div className="flex flex-col gap-4">
                 <div className="flex flex-col gap-2">{links}</div>
-                <div className="pt-2 border-t flex flex-col gap-2">{actions}</div>
+                <div className="flex flex-col gap-2 border-t pt-2">{actions}</div>
               </div>
             )}
           </div>

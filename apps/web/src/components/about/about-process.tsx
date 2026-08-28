@@ -1,13 +1,12 @@
 "use client";
 
 import Link from "next/link";
+
 import { ArrowDownRight } from "lucide-react";
+
 import { SectionHeader } from "@/components/widgets";
-import {
-  SafeStableIcon,
-  CloudAccelIcon,
-  MailReceptionIcon
-} from "./about-icons";
+
+import { CloudAccelIcon, MailReceptionIcon, SafeStableIcon } from "./about-icons";
 
 const processSteps = [
   {
@@ -48,11 +47,11 @@ export function AboutProcess() {
       />
 
       {/* 3 Step Connected Workflow */}
-      <div className="relative grid grid-cols-1 md:grid-cols-3 gap-12 sm:gap-8 items-start">
+      <div className="relative grid grid-cols-1 items-start gap-12 sm:gap-8 md:grid-cols-3">
         {/* Curved Dotted Connecting Line for Desktop */}
-        <div className="hidden md:block absolute top-12 left-1/6 right-1/6 h-12 pointer-events-none z-0">
+        <div className="pointer-events-none absolute top-12 right-1/6 left-1/6 z-0 hidden h-12 md:block">
           <svg
-            className="w-full h-full"
+            className="h-full w-full"
             viewBox="0 0 700 60"
             fill="none"
             preserveAspectRatio="none"
@@ -72,24 +71,24 @@ export function AboutProcess() {
           return (
             <div
               key={step.step}
-              className="relative z-10 flex flex-col items-center text-center space-y-4 max-w-xs mx-auto group select-none"
+              className="group relative z-10 mx-auto flex max-w-xs flex-col items-center space-y-4 text-center select-none"
             >
               {/* Icon Graphic */}
-              <div className="w-16 h-16 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                <Icon className="w-14 h-14 object-contain" />
+              <div className="flex h-16 w-16 items-center justify-center transition-transform duration-300 group-hover:scale-110">
+                <Icon className="h-14 w-14 object-contain" />
               </div>
 
               {/* Step Badge */}
-              <span className="inline-block px-4 py-1 rounded-full bg-[#141432] text-white text-xs font-bold shadow-2xs">
+              <span className="inline-block rounded-full bg-[#141432] px-4 py-1 text-xs font-bold text-white shadow-2xs">
                 {step.step}
               </span>
 
               {/* Content */}
               <div className="space-y-2">
-                <h3 className="text-lg sm:text-xl font-bold text-[#141432] group-hover:text-primary transition-colors">
+                <h3 className="group-hover:text-primary text-lg font-bold text-[#141432] transition-colors sm:text-xl">
                   {step.title}
                 </h3>
-                <p className="text-xs sm:text-sm text-[#5C5C6E] leading-relaxed font-medium">
+                <p className="text-xs leading-relaxed font-medium text-[#5C5C6E] sm:text-sm">
                   {step.description}
                 </p>
               </div>
@@ -98,10 +97,10 @@ export function AboutProcess() {
               <div className="pt-2">
                 <Link
                   href={step.href}
-                  className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-[#141432] group-hover:text-primary transition-colors cursor-pointer"
+                  className="group-hover:text-primary inline-flex cursor-pointer items-center gap-1.5 text-xs font-bold text-[#141432] transition-colors sm:text-sm"
                 >
                   <span>Explore More</span>
-                  <ArrowDownRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:translate-y-0.5 transition-transform" />
+                  <ArrowDownRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:translate-y-0.5" />
                 </Link>
               </div>
             </div>

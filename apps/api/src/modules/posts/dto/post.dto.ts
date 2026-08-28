@@ -39,7 +39,10 @@ export class CreatePostDto {
   @IsOptional()
   slug?: string;
 
-  @ApiProperty({ example: "Exploring how distributed edge clouds and automated orchestration shape modern web applications." })
+  @ApiProperty({
+    example:
+      "Exploring how distributed edge clouds and automated orchestration shape modern web applications."
+  })
   @IsString()
   @IsNotEmpty()
   excerpt: string;

@@ -1,178 +1,220 @@
-# 🚀 Next.js 16 + NestJS + MongoDB Turborepo Monorepo
+# 🚀 TechFirm — Full-Stack Monorepo Assessment
 
-A production-ready full-stack monorepo starter powered by **[Turborepo](https://turbo.build/repo)**, featuring **Next.js 16 (React 19, Tailwind CSS 4, Shadcn/UI)** on the public frontend (`apps/web`), **Next.js 16 Admin Dashboard** (`apps/dashboard` - subdomain-bound), and a **NestJS + MongoDB (Mongoose)** backend (`apps/api`) with secure `httpOnly` cookie-based JWT authentication and server-side Role-Based Access Control (RBAC).
+A production-grade full-stack monorepo built for a technical assessment, featuring a **Public Web Application** (`apps/web`), a dedicated **Admin Management Dashboard** (`apps/dashboard`), and a scalable **NestJS + MongoDB REST API** (`apps/api`) orchestrated with **Turborepo**.
 
 ---
 
-## 🏗️ Monorepo Architecture
+## 🌐 Live Deployments
 
-```
-.
-├── apps/
-│   ├── web/                         # Next.js 16 Public App (@repo/web - Port 3000)
-│   │   ├── src/
-│   │   │   ├── app/account/         # 🔒 Protected user route placeholder
-│   │   │   ├── lib/api-client.ts    # 🌐 Typed fetch API client (credentials: 'include')
-│   │   │   └── middleware.ts        # 🛡️ Server-side auth & token validation
-│   │   └── package.json
-│   │
-│   ├── dashboard/                   # Next.js 16 Admin App (@repo/dashboard - Port 3001)
-│   │   ├── src/
-│   │   │   ├── app/(protected)/     # 🔒 Protected admin routes (Overview, Users)
-│   │   │   ├── components/          # 🖥️ AdminShell (sidebar nav + top bar + slot)
-│   │   │   ├── lib/api-client.ts    # 🌐 Typed fetch API client
-│   │   │   └── middleware.ts        # 🛡️ Server-side Admin RBAC enforcement
-│   │   └── package.json
-│   │
-│   └── api/                         # NestJS + MongoDB Backend (@repo/api - Port 5000)
-│       ├── src/
-│       │   ├── common/              # Interceptors, Filters, Guards, Decorators
-│       │   ├── modules/
-│       │   │   ├── auth/            # 🔐 Register, Login, Refresh, Logout, Me
-│       │   │   └── users/           # 👥 User Schema, Service, Controller & DTOs
-│       │   ├── scripts/seed.ts      # 🌱 Database seed script (Admin & User accounts)
-│       │   ├── app.module.ts
-│       │   └── main.ts              # Global pipes, prefix (/api/v1), Swagger docs
-│       └── package.json
-│
-├── packages/
-│   ├── tsconfig/                    # @repo/tsconfig (base, nextjs, react-library configs)
-│   ├── eslint-config/               # @repo/eslint-config (ESLint rules)
-│   ├── types/                       # @repo/types (UserRole enum, IUser, ApiResponse contracts)
-│   ├── validators/                  # @repo/validators (Zod validation schemas)
-│   └── ui/                          # @repo/ui (Button, Badge, SectionHeading, Navbar, Footer)
-│
-├── package.json                     # Root npm workspaces manifest & scripts
-├── turbo.json                       # Turborepo task pipeline & caching
-└── README.md                        # Root documentation
+> [!NOTE]
+> The backend is hosted on Render's free tier. If the service is asleep, **please allow 30–50 seconds for the initial cold start** by opening the backend URL or loading the app.
+
+| Component                  | Platform | Live URL                                                                                 |
+| :------------------------- | :------- | :--------------------------------------------------------------------------------------- |
+| **Public Website**         | Vercel   | [https://techfirm.vercel.app](https://techfirm.vercel.app)                               |
+| **Admin Dashboard**        | Vercel   | [https://admin-techfirm.vercel.app](https://admin-techfirm.vercel.app)                   |
+| **Backend REST API**       | Render   | [https://techfirm-api.onrender.com](https://techfirm-api.onrender.com)                   |
+| **Interactive Swagger UI** | Render   | [https://techfirm-api.onrender.com/api/docs](https://techfirm-api.onrender.com/api/docs) |
+
+### 🔐 Demo Credentials (Admin Console)
+
+- **URL**: [https://admin-techfirm.vercel.app/login](https://admin-techfirm.vercel.app/login)
+- **Email**: `admin@techfirm.com`
+- **Password**: `Admin123!`
+
+---
+
+## 💻 Local Development Setup
+
+Follow these steps to clone and run all 3 applications locally on your machine.
+
+### Prerequisites
+
+- **Node.js**: `v20.0.0` or higher ([Download](https://nodejs.org/))
+- **npm**: `v9.0.0` or higher
+- **MongoDB**: Local MongoDB instance (`mongodb://localhost:27017`) or free [MongoDB Atlas](https://www.mongodb.com/atlas) connection URI.
+
+---
+
+### Step 1: Clone the Repository
+
+```bash
+git clone https://github.com/shariarSultanFahim/TechFirm.git
+cd TechFirm
 ```
 
 ---
 
-## ⚡ Quick Start
-
-### 1. Prerequisites
-
-- **Node.js**: `v20.x` or later (v22 recommended)
-- **npm**: `v9.x` or later
-- **MongoDB**: Local MongoDB instance running on `mongodb://localhost:27017` (or MongoDB Atlas connection string)
-
-### 2. Installation
-
-Install all workspace dependencies:
+### Step 2: Install Monorepo Dependencies
 
 ```bash
 npm install
 ```
 
-### 3. Environment Configuration
+---
 
-Copy environment template files:
+### Step 3: Configure Environment Variables
+
+Create the `.env` files for each application based on their `.env.example` templates:
+
+#### 1. Backend (`apps/api/.env`)
 
 ```bash
-# Backend (.env)
-cp apps/api/.env.example apps/api/.env
-
-# Admin Dashboard (.env.local)
-cp apps/dashboard/.env.example apps/dashboard/.env.local
+# In apps/api/.env
+PORT=5000
+NODE_ENV=development
+MONGODB_URI=mongodb://localhost:27017/fullstack_assessment_db
+JWT_ACCESS_SECRET=your_super_secret_jwt_access_key_min_32_chars_123456
+JWT_ACCESS_EXPIRES_IN=1d
+JWT_REFRESH_SECRET=your_super_secret_jwt_refresh_key_min_32_chars_123456
+JWT_REFRESH_EXPIRES_IN=7d
+COOKIE_SAME_SITE=lax
+ALLOWED_ORIGINS=http://localhost:3000,http://localhost:3001,http://admin.localhost:3001
+CORS_ORIGINS=http://localhost:3000,http://localhost:3001,http://admin.localhost:3001
+ENABLE_API_DOCS=true
 ```
 
-### 4. Seed Database
+#### 2. Public Web (`apps/web/.env`)
 
-Run the database seed script to populate the local database with pre-configured `admin` and `user` accounts:
+```bash
+# In apps/web/.env
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
+NEXT_PUBLIC_API_URL=http://localhost:5000/api/v1
+```
+
+#### 3. Admin Dashboard (`apps/dashboard/.env`)
+
+```bash
+# In apps/dashboard/.env
+NEXT_PUBLIC_SITE_URL=http://localhost:3001
+NEXT_PUBLIC_APP_URL=http://localhost:3001
+NEXT_PUBLIC_API_URL=http://localhost:5000/api/v1
+NEXT_PUBLIC_WEB_URL=http://localhost:3000
+```
+
+---
+
+### Step 4: Seed the Database
+
+Run the automated seeder script to populate your database with plans, team members, blog posts, testimonials, FAQs, and the default admin user:
 
 ```bash
 npm run seed
 ```
 
-### 5. Start Development
+---
 
-Run all applications in parallel with live reload:
+### Step 5: Start All Applications
+
+Run the Turbo development command from the repository root:
 
 ```bash
 npm run dev
 ```
 
-| Service | Dev URL | Subdomain / Target | Purpose |
-| :--- | :--- | :--- | :--- |
-| **Public Web** | [http://localhost:3000](http://localhost:3000) | `example.com` | Public landing, marketing & client portal |
-| **Admin Dashboard** | [http://localhost:3001](http://localhost:3001) | `admin.localhost:3001` | Dedicated administrative control room |
-| **NestJS API** | [http://localhost:5000](http://localhost:5000) | `/api/v1` prefix | REST API & Database engine |
-| **Swagger UI** | [http://localhost:5000/api/docs](http://localhost:5000/api/docs) | Interactive Docs | API explorer and schema tester |
-| **OpenAPI Spec** | [http://localhost:5000/api/docs.json](http://localhost:5000/api/docs.json) | JSON Spec | Raw OpenAPI 3.0 document |
+The services will start simultaneously:
+
+- 🌐 **Public Website**: [http://localhost:3000](http://localhost:3000)
+- 🖥️ **Admin Dashboard**: [http://localhost:3001](http://localhost:3001)
+- ⚙️ **Backend API**: [http://localhost:5000/api/v1](http://localhost:5000/api/v1)
+- 📖 **Swagger Documentation**: [http://localhost:5000/api/docs](http://localhost:5000/api/docs)
 
 ---
 
-## 🔐 Auth & Role-Based Access Control (RBAC) Architecture
+## 🏗️ Architecture & Monorepo Structure
 
-### 1. Token Lifecycle & Storage
-- **Access Token**: Short-lived JWT (`15m` default), contains `{ sub, email, name, role }`.
-- **Refresh Token**: Long-lived JWT (`7d` default), hashed in MongoDB for session validation and token rotation.
-- **Zero LocalStorage Policy**: Both tokens are issued strictly as **`httpOnly`, `sameSite: 'lax'`, `secure: production`** cookies (`accessToken` and `refreshToken`). Neither token is exposed to client-side JavaScript, preventing XSS-based credential theft.
-
-### 2. Guard Chain & Server-Side Enforcement
 ```
-Incoming Request
-       │
-       ▼
-[Next.js Server-Side Middleware]
-  ├── Verify accessToken cookie presence
-  ├── Inspect payload expiration & role claim
-  └── For /dashboard: Strictly require role === 'admin'
-       │
-       ▼ (Passes)
-[Next.js Server Component Page] (e.g. /account or /overview)
-       │
-       ▼ (Fetches Backend)
-[NestJS Global Route Prefix: /api/v1]
-  ├── CookieParser parses httpOnly cookies
-  ├── JwtAuthGuard (Passport JwtStrategy extracts cookie / bearer)
-  ├── RolesGuard (@Roles('admin' | 'user')) enforces granular permissions
-  └── Controller / Service execution
+fullstack-turborepo-starter-kit/
+├── apps/
+│   ├── web/                     # Public Next.js 16 Website (Port 3000)
+│   │   ├── src/app/             # App Router pages (Home, Services, Portfolio, Blog, Contact, etc.)
+│   │   ├── src/components/      # UI sections, video modals, search overlays, inquiry form
+│   │   └── src/hooks/           # TanStack Query hooks consuming REST API
+│   │
+│   ├── dashboard/               # Next.js 16 Admin Dashboard (Port 3001)
+│   │   ├── src/app/(protected)/ # Data tables & CRUD (Plans, Team, Posts, Portfolio, FAQs, Testimonials, Messages)
+│   │   ├── src/components/      # AppSidebar with unread message badge, dynamic breadcrumbs, dialogs
+│   │   └── src/hooks/           # TanStack Query & Mutation hooks (with optimistic updates & 30s background sync)
+│   │
+│   └── api/                     # NestJS 11 + MongoDB REST API (Port 5000)
+│       ├── src/modules/         # Auth (RBAC), Users, Plans, Posts, Portfolio, FAQs, Testimonials, ContactMessages
+│       ├── src/common/          # JWT Guards, Role Guards, Exception Filters, Transform Interceptors
+│       └── src/scripts/seed.ts  # Database seeder with mock data and admin account
+│
+└── packages/
+    ├── types/                   # @repo/types - Shared TypeScript interfaces & API contracts
+    ├── validators/              # @repo/validators - Shared Zod validation schemas
+    ├── ui/                      # @repo/ui - Shared UI component library (shadcn/ui + Tailwind v4)
+    ├── tsconfig/                # @repo/tsconfig - Base TypeScript configurations
+    └── eslint-config/           # @repo/eslint-config - ESLint shared rules
 ```
 
-### 3. Auth Endpoints Matrix (`/api/v1/auth`)
+---
 
-| Endpoint | Method | Access Level | Description |
-| :--- | :--- | :--- | :--- |
-| `/api/v1/auth/register` | `POST` | Public | Creates user, hashes password, sets auth cookies. |
-| `/api/v1/auth/login` | `POST` | Public | Validates credentials, sets `accessToken` & `refreshToken` cookies. |
-| `/api/v1/auth/refresh` | `POST` | Public (Cookie) | Reads `refreshToken` cookie, verifies against DB hash, rotates tokens. |
-| `/api/v1/auth/logout` | `POST` | Authenticated | Clears DB refresh token and sets `maxAge: 0` on auth cookies. |
-| `/api/v1/auth/me` | `GET` | Authenticated | Returns current authenticated user context (`{ id, email, name, role }`). |
+## ⚡ Tech Stack
 
-### 4. Pre-Seeded Testing Accounts
-
-Run `npm run seed` to initialize:
-
-| Account Type | Email | Password | Role | Permitted Access |
-| :--- | :--- | :--- | :--- | :--- |
-| **Admin** | `admin@example.com` | `Admin123!` | `admin` | Full access (`web/account`, `dashboard/overview`, `/api/v1/users`) |
-| **Standard User** | `user@example.com` | `User123!` | `user` | Standard portal only (`web/account`); blocked from `dashboard/*` |
+- **Monorepo Engine**: [Turborepo](https://turbo.build/repo) + npm workspaces
+- **Frontend Frameworks**: [Next.js 16](https://nextjs.org/) (App Router, Server & Client Components) + [React 19](https://react.dev/)
+- **Styling & UI**: [Tailwind CSS v4](https://tailwindcss.com/), [shadcn/ui](https://ui.shadcn.com/), Lucide Icons, Sonner Toasts
+- **Data Fetching & State**: [TanStack Query v5](https://tanstack.com/query/latest), React Hook Form, Zod
+- **Backend Framework**: [NestJS 11](https://nestjs.com/) (Modular Architecture, Dependency Injection)
+- **Database & ODM**: [MongoDB Atlas](https://www.mongodb.com/atlas) with [Mongoose 8](https://mongoosejs.com/)
+- **Authentication & Security**: `httpOnly` secure cookies, JWT (Access & Refresh tokens), RBAC guards, Helmet, CORS allowlisting
+- **API Documentation**: OpenAPI 3.0 / [Swagger UI](https://swagger.io/tools/swagger-ui/)
 
 ---
 
-## 🎨 Shared UI Primitives (`@repo/ui`)
+## 🚀 Key Features Implemented
 
-Minimal structural primitives available in `packages/ui`:
-- **`Button`**: Supports `primary`, `secondary`, `outline`, `ghost` variants across `light`/`dark` modes and responsive sizing (`sm`, `md`, `lg`).
-- **`Badge`**: Status indicator with `default`, `secondary`, `outline`, `success`, `warning`, `destructive` states.
-- **`SectionHeading`**: Structural heading wrapper with slots for `badge`, `title`, `description`, and alignment (`left`, `center`, `right`).
-- **`Navbar`**: Responsive layout header with slots for `logo`, `links`, `actions`/CTA, and wired mobile toggle drawer.
-- **`Footer`**: Multi-column responsive layout footer with slots for `brand`, navigation `links`, and `bottom` copyright bar.
+1. **Public Web Application (`apps/web`)**:
+   - **Hero & Interactive Services**: Dynamic service catalog, tabbed solutions, interactive stat counters.
+   - **Plans & Pricing**: Monthly/Annual pricing toggle with feature comparison matrix.
+   - **Dynamic Portfolio & Case Studies**: Categorized showcase with custom slug detail pages.
+   - **TechFirm Blog**: Article feeds, tag filtering, reading time estimates, and rich detail views.
+   - **Video Testimonial Bento**: Interactive video testimonial player modal.
+   - **API-Driven Contact System**: Real-time validated inquiry form with instant submission to backend.
+   - **Global Search**: Modal search dialog for quick navigation across services and articles.
+
+2. **Admin Dashboard (`apps/dashboard`)**:
+   - **Role-Based Access Control (RBAC)**: Secure server-side middleware restriction to `admin` role.
+   - **AppSidebar & Dynamic Header**: Auto-collapsing responsive sidebar (optimized for <=1024px displays), dynamic shadcn Breadcrumb header, `/auth/me` user profile card, and real-time unread messages badge.
+   - **Full Management CRUD Slices**:
+     - 💳 **Plans & Pricing**: Tier configuration, price points, feature lists, popular badges.
+     - 👥 **Team Members**: Bios, roles, social links, status toggles.
+     - 📝 **Blog Posts**: Markdown/Rich content publishing, excerpt management, cover images.
+     - 💼 **Portfolio Case Studies**: Metric highlights, client info, industry classification.
+     - 💬 **Testimonials**: Rating control, video modal URL management.
+     - ❓ **FAQs**: Categorized Q&A builder.
+     - ✉️ **Contact Messages & Inquiries**: Real-time table tracking incoming leads with read/unread flags.
+     - ⚙️ **Site Config**: Global contact details, announcement bar, social URLs.
+
+3. **Backend API (`apps/api`)**:
+   - Strictly versioned REST endpoints under `/api/v1/`.
+   - Global standard response wrapper: `{ success: true, statusCode: 200, message: "...", data: ... }`.
+   - Centralized validation pipes and formatted error responses.
+   - Self-documenting Swagger UI at `/api/docs`.
 
 ---
 
-## 📜 Available Scripts
+## 🛠️ Monorepo Scripts Reference
 
-| Script | Command | Description |
-| :--- | :--- | :--- |
-| `npm run dev` | `turbo dev` | Run all applications concurrently in watch mode |
-| `npm run dev:web` | `turbo dev --filter=@repo/web` | Run public Next.js app only (Port 3000) |
-| `npm run dev:dashboard` | `turbo dev --filter=@repo/dashboard` | Run admin Next.js app only (Port 3001) |
-| `npm run dev:api` | `turbo dev --filter=@repo/api` | Run NestJS backend only (Port 5000) |
-| `npm run build` | `turbo build` | Build all applications for production |
-| `npm run seed` | `npm run seed --workspace=@repo/api` | Seed MongoDB with admin and test user accounts |
-| `npm run typecheck` | `turbo typecheck` | Run TypeScript typechecking across all workspaces |
-| `npm run lint` | `turbo lint` | Run ESLint across all workspaces |
-| `npm run clean` | `turbo clean` | Clean build artifacts (`.next`, `dist`) |
+All commands can be executed from the monorepo root:
+
+| Command                 | Description                                                            |
+| :---------------------- | :--------------------------------------------------------------------- |
+| `npm run dev`           | Starts all apps (`web`, `dashboard`, `api`) concurrently in watch mode |
+| `npm run dev:web`       | Starts only the Next.js public website                                 |
+| `npm run dev:dashboard` | Starts only the Next.js admin dashboard                                |
+| `npm run dev:api`       | Starts only the NestJS backend                                         |
+| `npm run build`         | Builds all packages and apps for production                            |
+| `npm run typecheck`     | Validates TypeScript across all 6 workspaces with `tsc --noEmit`       |
+| `npm run lint`          | Runs ESLint across all projects                                        |
+| `npm run format`        | Formats the entire codebase using Prettier                             |
+| `npm run seed`          | Seeds the MongoDB database with initial sample data and admin user     |
+| `npm run clean`         | Cleans build artifacts (`.next`, `dist`, `.turbo`)                     |
+
+---
+
+## 📄 License & Attribution
+
+This project was developed by **Shariar Sultan Fahim** as part of a Full-Stack Assessment.

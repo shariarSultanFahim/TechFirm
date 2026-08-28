@@ -21,8 +21,8 @@ const companyLogos = [
 
 export function TrustedCompanies() {
   return (
-    <div className="w-full pt-10 sm:pt-14 pb-4 text-center">
-      <p className="text-xs sm:text-sm font-semibold text-[#5C5C6E] tracking-tight mb-8">
+    <div className="w-full pt-10 pb-4 text-center sm:pt-14">
+      <p className="mb-8 text-xs font-semibold tracking-tight text-[#5C5C6E] sm:text-sm">
         Trusted by industry leaders:
       </p>
 
@@ -30,13 +30,9 @@ export function TrustedCompanies() {
         {companyLogos.map((logo) => (
           <div
             key={logo.name}
-            className="flex items-center justify-center grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition-all duration-300 select-none cursor-pointer"
+            className="flex cursor-pointer items-center justify-center opacity-80 grayscale transition-all duration-300 select-none hover:opacity-100 hover:grayscale-0"
           >
-            <Image
-              src={logo.src}
-              alt={logo.name}
-              className="h-4 sm:h-5 w-auto object-contain"
-            />
+            <Image src={logo.src} alt={logo.name} className="h-4 w-auto object-contain sm:h-5" />
           </div>
         ))}
       </div>

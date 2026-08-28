@@ -17,7 +17,7 @@ export const metadata = {
 export default function AboutPage() {
   return (
     <main className="w-full bg-white py-14 sm:py-20 lg:py-24">
-      <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* 1. Header Section */}
         <SectionHeader
           align="center"
@@ -46,7 +46,7 @@ export default function AboutPage() {
       <AboutVideoSection />
 
       {/* 8. Pricing Plans */}
-      <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <PricingSection />
       </div>
     </main>

@@ -8,15 +8,15 @@
   --card-foreground: #141432;
   --popover: #ffffff;
   --popover-foreground: #141432;
-  --primary: #864FFE;
+  --primary: #864ffe;
   --primary-foreground: #ffffff;
-  --primary-deep: #7033F5;
+  --primary-deep: #7033f5;
   --secondary: #f3f4f6;
   --secondary-foreground: #141432;
   --muted: #f8f9fa;
   --muted-foreground: #6b7280;
   --accent: #f5f3ff;
-  --accent-foreground: #864FFE;
+  --accent-foreground: #864ffe;
   --dark-bg: #12121c;
   --dark-card: #1c1c28;
   --dark-border: #2d2d3d;
@@ -24,11 +24,14 @@
   --destructive-foreground: #ffffff;
   --border: #e5e7eb;
   --input: #e5e7eb;
-  --ring: #864FFE;
+  --ring: #864ffe;
   --radius: 0.75rem;
 
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-sans:
+    var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, sans-serif;
+  --font-mono:
+    var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
 @theme inline {

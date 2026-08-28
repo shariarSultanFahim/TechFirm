@@ -29,9 +29,7 @@ import {
 @ApiTags("Contact Messages")
 @Controller("contact-messages")
 export class ContactMessagesController {
-  constructor(
-    private readonly messagesService: ContactMessagesService
-  ) {}
+  constructor(private readonly messagesService: ContactMessagesService) {}
 
   @Post()
   @ApiOperation({ summary: "Submit a new contact message (Public)" })
@@ -93,10 +91,7 @@ export class ContactMessagesController {
   @Roles(UserRole.ADMIN)
   @ApiOperation({ summary: "Update message status / mark read (Admin only)" })
   @SwaggerApiResponse({ status: 200, description: "Message updated successfully" })
-  async update(
-    @Param("id") id: string,
-    @Body() updateDto: UpdateContactMessageDto
-  ) {
+  async update(@Param("id") id: string, @Body() updateDto: UpdateContactMessageDto) {
     const updated = await this.messagesService.update(id, updateDto);
     return {
       message: "Message updated successfully",

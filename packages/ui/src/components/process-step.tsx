@@ -9,16 +9,20 @@ export interface ProcessStepProps {
 
 export function ProcessStep({ number, title, description, dark = false }: ProcessStepProps) {
   return (
-    <div className="relative flex flex-col items-center text-center p-6 group">
+    <div className="group relative flex flex-col items-center p-6 text-center">
       <div className="relative mb-6">
-        <div className="w-16 h-16 rounded-2xl bg-accent text-accent-foreground flex items-center justify-center text-2xl font-black font-mono border-2 border-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300 shadow-md">
+        <div className="bg-accent text-accent-foreground border-primary group-hover:bg-primary group-hover:text-primary-foreground flex h-16 w-16 items-center justify-center rounded-2xl border-2 font-mono text-2xl font-black shadow-md transition-all duration-300">
           {number}
         </div>
       </div>
-      <h3 className={`text-xl font-bold mb-2 tracking-tight ${dark ? "text-white" : "text-foreground"}`}>
+      <h3
+        className={`mb-2 text-xl font-bold tracking-tight ${dark ? "text-white" : "text-foreground"}`}
+      >
         {title}
       </h3>
-      <p className={`text-sm leading-relaxed max-w-xs ${dark ? "text-gray-300" : "text-muted-foreground"}`}>
+      <p
+        className={`max-w-xs text-sm leading-relaxed ${dark ? "text-gray-300" : "text-muted-foreground"}`}
+      >
         {description}
       </p>
     </div>

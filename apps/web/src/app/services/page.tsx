@@ -1,10 +1,9 @@
 import Image from "next/image";
-import { SectionHeader } from "@/components/widgets";
-import {
-  ServiceFeaturesGrid,
-  ServiceWorkProcess
-} from "@/components/services";
+
 import heroImg from "@/assets/service-solution/hero-img.png";
+
+import { ServiceFeaturesGrid, ServiceWorkProcess } from "@/components/services";
+import { SectionHeader } from "@/components/widgets";
 
 export const metadata = {
   title: "Services & Solutions — TechFirm",
@@ -15,7 +14,7 @@ export const metadata = {
 export default function ServicesPage() {
   return (
     <main className="w-full bg-white py-14 sm:py-20 lg:py-24">
-      <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* 1. Header Section */}
         <SectionHeader
           align="center"
@@ -25,7 +24,7 @@ export default function ServicesPage() {
         />
 
         {/* 2. Hero Feature Image */}
-        <div className="relative w-full aspect-[16/9] sm:aspect-[21/9] rounded-3xl overflow-hidden shadow-lg border border-[#EDE8F5] mb-8 bg-neutral-100">
+        <div className="relative mb-8 aspect-[16/9] w-full overflow-hidden rounded-3xl border border-[#EDE8F5] bg-neutral-100 shadow-lg sm:aspect-[21/9]">
           <Image
             src={heroImg}
             alt="Services & Solutions Team"

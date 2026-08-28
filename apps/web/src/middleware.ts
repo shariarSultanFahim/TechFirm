@@ -29,8 +29,7 @@ export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const token = request.cookies.get("accessToken")?.value;
 
-  const isProtectedPath =
-    pathname.startsWith("/account") || pathname.startsWith("/dashboard");
+  const isProtectedPath = pathname.startsWith("/account") || pathname.startsWith("/dashboard");
 
   if (isProtectedPath) {
     if (!token) {

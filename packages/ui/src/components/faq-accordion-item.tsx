@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+
 import { ChevronDown } from "lucide-react";
 
 export interface FaqItem {
@@ -31,18 +32,20 @@ export function FaqAccordionItem({
 
   return (
     <div
-      className={`border rounded-2xl overflow-hidden transition-all duration-200 mb-4 ${
-        dark ? "bg-dark-card border-dark-border text-white" : "bg-card border-border text-foreground shadow-sm"
+      className={`mb-4 overflow-hidden rounded-2xl border transition-all duration-200 ${
+        dark
+          ? "bg-dark-card border-dark-border text-white"
+          : "bg-card border-border text-foreground shadow-sm"
       }`}
     >
       <button
         onClick={toggle}
-        className="w-full py-5 px-6 flex items-center justify-between text-left font-bold text-base md:text-lg hover:text-primary transition-colors cursor-pointer"
+        className="hover:text-primary flex w-full cursor-pointer items-center justify-between px-6 py-5 text-left text-base font-bold transition-colors md:text-lg"
         aria-expanded={open}
       >
         <span>{question}</span>
         <ChevronDown
-          className={`w-5 h-5 text-primary flex-shrink-0 transition-transform duration-300 ${
+          className={`text-primary h-5 w-5 flex-shrink-0 transition-transform duration-300 ${
             open ? "rotate-180" : ""
           }`}
         />
@@ -50,7 +53,7 @@ export function FaqAccordionItem({
 
       {open && (
         <div
-          className={`px-6 pb-5 text-sm md:text-base leading-relaxed ${
+          className={`px-6 pb-5 text-sm leading-relaxed md:text-base ${
             dark ? "text-gray-300" : "text-muted-foreground"
           }`}
         >

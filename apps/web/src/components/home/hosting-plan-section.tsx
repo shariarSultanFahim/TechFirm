@@ -1,5 +1,9 @@
 "use client";
 
+import { useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+
 import bgTextureImg from "@/assets/hosting-plan/bg-texture.png";
 import {
   CloudIcon,
@@ -9,11 +13,9 @@ import {
   ServerIcon,
   WordpressIcon
 } from "@/assets/icons";
-import { SectionHeader } from "@/components/widgets";
+
 import { Button } from "@/components/ui";
-import Image from "next/image";
-import Link from "next/link";
-import { useState } from "react";
+import { SectionHeader } from "@/components/widgets";
 
 const hostingPlans = [
   {
@@ -66,20 +68,20 @@ export function HostingPlanSection() {
   };
 
   return (
-    <section className="relative w-full bg-[#F9FAFB] py-16 sm:py-20 lg:py-24 overflow-hidden">
+    <section className="relative w-full overflow-hidden bg-[#F9FAFB] py-16 sm:py-20 lg:py-24">
       {/* Background Texture Graphic on the Right */}
-      <div className="absolute top-0 right-0 w-[550px] lg:w-[750px] h-full pointer-events-none opacity-50 select-none z-0 overflow-hidden flex items-start justify-end">
+      <div className="pointer-events-none absolute top-0 right-0 z-0 flex h-full w-[550px] items-start justify-end overflow-hidden opacity-50 select-none lg:w-[750px]">
         <Image
           src={bgTextureImg}
           alt="Hosting plan background texture"
-          className="w-full h-auto object-contain object-right-top"
+          className="h-auto w-full object-contain object-right-top"
           priority
         />
       </div>
 
-      <div className="container max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+      <div className="relative z-10 container mx-auto max-w-7xl px-4 sm:px-6">
         {/* Section Header: Reusable SectionHeader & Carousel Arrows */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 sm:mb-16">
+        <div className="mb-12 flex flex-col justify-between gap-6 sm:mb-16 md:flex-row md:items-end">
           <SectionHeader
             badge="60% OFF CLOUD HOSTING"
             title={
@@ -96,24 +98,24 @@ export function HostingPlanSection() {
             <button
               type="button"
               onClick={handlePrev}
-              className="w-12 h-12 rounded-full bg-white shadow-md border border-border/40 flex items-center justify-center text-[#141432] hover:bg-muted hover:text-primary transition-all cursor-pointer shadow-2xs hover:scale-105 active:scale-95"
+              className="border-border/40 hover:bg-muted hover:text-primary flex h-12 w-12 cursor-pointer items-center justify-center rounded-full border bg-white text-[#141432] shadow-2xs shadow-md transition-all hover:scale-105 active:scale-95"
               aria-label="Previous plan"
             >
-              <LeftArrowIcon className="w-4 h-4" />
+              <LeftArrowIcon className="h-4 w-4" />
             </button>
             <button
               type="button"
               onClick={handleNext}
-              className="w-12 h-12 rounded-full bg-white shadow-md border border-border/40 flex items-center justify-center text-[#141432] hover:bg-muted hover:text-primary transition-all cursor-pointer shadow-2xs hover:scale-105 active:scale-95"
+              className="border-border/40 hover:bg-muted hover:text-primary flex h-12 w-12 cursor-pointer items-center justify-center rounded-full border bg-white text-[#141432] shadow-2xs shadow-md transition-all hover:scale-105 active:scale-95"
               aria-label="Next plan"
             >
-              <RightArrowIcon className="w-4 h-4" />
+              <RightArrowIcon className="h-4 w-4" />
             </button>
           </div>
         </div>
 
         {/* Outer White Card Strip / Hosting Plan Cards */}
-        <div className="bg-white rounded-xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
+        <div className="grid grid-cols-1 items-stretch gap-6 rounded-xl bg-white sm:grid-cols-2 lg:grid-cols-4">
           {hostingPlans.map((plan) => {
             const Icon = plan.IconComponent;
 
@@ -122,33 +124,25 @@ export function HostingPlanSection() {
                 /* Featured Dark VPS Hosting Card */
                 <div
                   key={plan.id}
-                  className="rounded-2xl bg-[#141233] p-7 text-white shadow-2xl flex flex-col justify-between border border-white/10 relative z-10 transition-all hover:shadow-primary/10"
+                  className="hover:shadow-primary/10 relative z-10 flex flex-col justify-between rounded-2xl border border-white/10 bg-[#141233] p-7 text-white shadow-2xl transition-all"
                 >
                   <div>
                     {/* SVG Icon */}
-                    <div className="w-14 h-14 mb-6 flex  items-center">
-                      <Icon className="w-12 h-12 " />
+                    <div className="mb-6 flex h-14 w-14 items-center">
+                      <Icon className="h-12 w-12" />
                     </div>
 
-                    <p className="text-xs font-bold text-[#c4b5fd] tracking-wide">
+                    <p className="text-xs font-bold tracking-wide text-[#c4b5fd]">
                       Starts at {plan.price}
                     </p>
 
-                    <h3 className="text-xl font-bold text-white mt-2 mb-3">
-                      {plan.title}
-                    </h3>
+                    <h3 className="mt-2 mb-3 text-xl font-bold text-white">{plan.title}</h3>
 
-                    <p className="text-xs text-gray-300 leading-relaxed">
-                      {plan.description}
-                    </p>
+                    <p className="text-xs leading-relaxed text-gray-300">{plan.description}</p>
                   </div>
 
                   <div className="pt-8">
-                    <Button
-                      variant="primary"
-                      size="pill-sm"
-                      asChild
-                    >
+                    <Button variant="primary" size="pill-sm" asChild>
                       <Link href={plan.href}>Learn More</Link>
                     </Button>
                   </div>
@@ -160,23 +154,21 @@ export function HostingPlanSection() {
               /* Standard Light Hosting Plan Card */
               <div
                 key={plan.id}
-                className="rounded-2xl p-6 flex flex-col justify-between transition-all hover:bg-muted/30"
+                className="hover:bg-muted/30 flex flex-col justify-between rounded-2xl p-6 transition-all"
               >
                 <div>
                   {/* SVG Icon */}
-                  <div className="w-14 h-14 mb-6 flex items-center">
-                    <Icon className="w-12 h-12" />
+                  <div className="mb-6 flex h-14 w-14 items-center">
+                    <Icon className="h-12 w-12" />
                   </div>
 
-                  <p className="text-xs font-bold text-primary tracking-wide">
+                  <p className="text-primary text-xs font-bold tracking-wide">
                     Starts at {plan.price}
                   </p>
 
-                  <h3 className="text-xl font-bold text-[#141432] mt-2 mb-3">
-                    {plan.title}
-                  </h3>
+                  <h3 className="mt-2 mb-3 text-xl font-bold text-[#141432]">{plan.title}</h3>
 
-                  <p className="text-xs text-muted-foreground leading-relaxed">
+                  <p className="text-muted-foreground text-xs leading-relaxed">
                     {plan.description}
                   </p>
                 </div>
@@ -185,7 +177,7 @@ export function HostingPlanSection() {
                   <Button
                     variant="outline"
                     size="pill-sm"
-                    className="border-border text-[#141432] hover:border-primary hover:text-primary hover:bg-primary/5"
+                    className="border-border hover:border-primary hover:text-primary hover:bg-primary/5 text-[#141432]"
                     asChild
                   >
                     <Link href={plan.href}>Learn More</Link>

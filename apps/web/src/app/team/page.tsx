@@ -1,15 +1,16 @@
-import { SectionHeader } from "@/components/widgets";
 import { TeamGrid } from "@/components/team";
+import { SectionHeader } from "@/components/widgets";
 
 export const metadata = {
   title: "Meet Our Team — TechFirm",
-  description: "Meet our expert team members, cloud engineers, architects, and designers driving innovation at TechFirm."
+  description:
+    "Meet our expert team members, cloud engineers, architects, and designers driving innovation at TechFirm."
 };
 
 export default function TeamPage() {
   return (
     <main className="w-full bg-white py-16 sm:py-20 lg:py-24">
-      <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <SectionHeader
           align="center"
