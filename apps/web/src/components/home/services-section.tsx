@@ -20,6 +20,7 @@ interface ServiceCardData {
   description: string;
   buttonText: string;
   buttonHref: string;
+  buttonTextColor: string;
   image: any;
   bgColor: string;
   borderColor: string;
@@ -33,6 +34,7 @@ const serviceCards: ServiceCardData[] = [
       "Monitoring and analyzing conversions effectively is essential for understanding how users interact.",
     buttonText: "Read More →",
     buttonHref: "#",
+    buttonTextColor: "text-[#E64D4D]",
     image: serviceImg1,
     bgColor: "bg-[#FFF8F3]",
     borderColor: "border-[#FBE6D6]"
@@ -44,6 +46,7 @@ const serviceCards: ServiceCardData[] = [
       "Instantaneous data insights and analytics refer to the real-time processing and interpretation of data.",
     buttonText: "Read More →",
     buttonHref: "#",
+    buttonTextColor: "text-[#35A3FF]",
     image: serviceImg2,
     bgColor: "bg-[#F0F9FF]",
     borderColor: "border-[#E0F2FE]"
@@ -55,6 +58,7 @@ const serviceCards: ServiceCardData[] = [
       "Sales strategy and management techniques are essential components for driving business growth and achieving revenue targets.",
     buttonText: "Read More →",
     buttonHref: "#",
+    buttonTextColor: "text-[#4018C5]",
     image: serviceImg3,
     bgColor: "bg-[#F5F3FF]",
     borderColor: "border-[#EDE9FE]"
@@ -90,24 +94,26 @@ export function ServicesSection() {
         </div>
 
         {/* 3 Service Feature Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
           {serviceCards.map((card) => (
             <div
               key={card.id}
-              className={`flex flex-col justify-between rounded-xl p-7 sm:p-9 border transition-all duration-300 hover:shadow-xl hover:-translate-y-1.5 ${card.bgColor} ${card.borderColor}`}
+              className={`flex flex-col justify-between h-full rounded-xl p-7 sm:p-9 border transition-all duration-300 hover:shadow-xl hover:-translate-y-1.5 ${card.bgColor} ${card.borderColor}`}
             >
               {/* Card Header & Content */}
-              <div>
-                <h3 className="text-xl sm:text-2xl font-bold text-[#141432] leading-snug tracking-tight mb-3">
-                  {card.title}
-                </h3>
-                <p className="text-sm text-[#5C5C5C] leading-relaxed mb-6 font-medium">
-                  {card.description}
-                </p>
+              <div className="flex flex-col flex-1 justify-between">
+                <div>
+                  <h3 className="text-xl sm:text-2xl font-bold text-[#141432] leading-snug tracking-tight mb-3 min-h-[56px] sm:min-h-[64px]">
+                    {card.title}
+                  </h3>
+                  <p className="text-sm text-[#5C5C5C] leading-relaxed mb-6 font-medium min-h-[60px] sm:min-h-[72px]">
+                    {card.description}
+                  </p>
+                </div>
                 <Button
                   variant="white"
                   size="pill-sm"
-                  className="rounded-full px-5 py-2 text-xs font-bold text-[#141432] hover:text-[#864FFE] shadow-xs hover:shadow-md"
+                  className={`w-full rounded-full px-5 py-2 text-xs font-bold ${card.buttonTextColor} shadow-xs hover:shadow-md transition-all`}
                   asChild
                 >
                   <Link href={card.buttonHref}>{card.buttonText}</Link>
@@ -115,7 +121,7 @@ export function ServicesSection() {
               </div>
 
               {/* Card Graphic/Image */}
-              <div className="relative mt-8 flex items-center justify-center overflow-hidden rounded-xl">
+              <div className="relative mt-8 flex items-center justify-center overflow-hidden rounded-xl h-[200px] shrink-0">
                 <Image
                   src={card.image}
                   alt={card.title}
