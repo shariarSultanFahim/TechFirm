@@ -1,2 +1,2 @@
 export * from "./section-header";
-export * from "@repo/ui";
+export * from "./under-development";

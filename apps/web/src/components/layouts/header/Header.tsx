@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { PillButton } from "@/components/ui/pill-button";
+import { siteConfig } from "@/config/site";
 import {
   Check,
   ChevronDown,
@@ -17,8 +16,9 @@ import {
   ShoppingCart,
   X
 } from "lucide-react";
-import { siteConfig } from "@/config/site";
-import { PillButton } from "@/components/ui/pill-button";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -338,12 +338,12 @@ export function Header() {
                   </Link>
 
                   <div className="absolute top-full left-0 pt-2 w-64 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                    <div className="bg-card rounded-2xl p-2 shadow-xl border border-border ring-1 ring-black/5">
+                    <div className="bg-card rounded-lg p-2 shadow-xl border border-border ring-1 ring-black/5">
                       {item.children?.map((child) => (
                         <Link
                           key={child.title}
                           href={child.href}
-                          className="block p-3 rounded-xl hover:bg-accent transition-colors group/item"
+                          className="block p-3 rounded-md hover:bg-accent transition-colors group/item"
                         >
                           <p className="text-sm font-bold text-foreground group-hover/item:text-primary transition-colors">
                             {child.title}

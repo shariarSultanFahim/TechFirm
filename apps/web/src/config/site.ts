@@ -1,5 +1,5 @@
-import type { SiteConfig } from "@/types/site-config";
 import { env } from "@/env";
+import type { SiteConfig } from "@/types/site-config";
 
 export interface TechfirmSiteConfig extends SiteConfig {
   contact: {
@@ -48,10 +48,6 @@ export const siteConfig: TechfirmSiteConfig = {
     {
       title: "Home",
       href: "/",
-      children: [
-        { title: "Home Main", href: "/", description: "Modern IT solutions & technology landing page." },
-        { title: "IT Solutions", href: "/#services", description: "Enterprise software and cloud architecture." }
-      ]
     },
     {
       title: "Pages",
@@ -66,12 +62,12 @@ export const siteConfig: TechfirmSiteConfig = {
     {
       title: "Services",
       href: "/services",
-      children: [
-        { title: "All Services", href: "/services", description: "Comprehensive IT service directory." },
-        { title: "Cloud Integration", href: "/services/cloud-integration", description: "Scalable multi-cloud deployments." },
-        { title: "Cyber Security", href: "/services/cyber-security", description: "Zero-trust identity and threat mitigation." },
-        { title: "Managed IT Services", href: "/services/managed-it", description: "24/7 proactive monitoring and support." }
-      ]
+      // children: [
+      //   { title: "All Services", href: "/services", description: "Comprehensive IT service directory." },
+      //   { title: "Cloud Integration", href: "/services/cloud-integration", description: "Scalable multi-cloud deployments." },
+      //   { title: "Cyber Security", href: "/services/cyber-security", description: "Zero-trust identity and threat mitigation." },
+      //   { title: "Managed IT Services", href: "/services/managed-it", description: "24/7 proactive monitoring and support." }
+      // ]
     },
     {
       title: "Projects",
@@ -82,7 +78,7 @@ export const siteConfig: TechfirmSiteConfig = {
       ]
     },
     {
-      title: "News",
+      title: "Blog",
       href: "/blog",
       children: [
         { title: "Blog Grid", href: "/blog", description: "Latest industry news and technology insights." },
