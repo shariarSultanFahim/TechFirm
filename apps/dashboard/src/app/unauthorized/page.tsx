@@ -1,8 +1,12 @@
 import Link from "next/link";
 
+import { env } from "@/env";
+
 import { Button } from "@/components/ui/button";
 
 export default function UnauthorizedPage() {
+  const publicWebUrl = env.NEXT_PUBLIC_WEB_URL || "/";
+
   return (
     <div className="bg-background text-foreground flex min-h-[60vh] flex-col items-center justify-center px-4 text-center">
       <div className="bg-destructive/10 text-destructive mb-4 rounded-full p-4 text-3xl">🚫</div>
@@ -12,7 +16,7 @@ export default function UnauthorizedPage() {
         to users with the <span className="text-foreground font-medium">admin</span> role.
       </p>
       <div className="flex items-center gap-3">
-        <a href="http://localhost:3000" target="_blank" rel="noopener noreferrer">
+        <a href={publicWebUrl} target="_blank" rel="noopener noreferrer">
           <Button variant="outline" className="text-xs font-medium">
             Visit Public Website
           </Button>

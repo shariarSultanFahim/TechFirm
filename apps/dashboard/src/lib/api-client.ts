@@ -1,7 +1,8 @@
 import { ApiResponse } from "@repo/types";
 
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api/v1";
+import { env } from "@/env";
+
+const API_BASE_URL = env.NEXT_PUBLIC_API_URL;
 
 export interface RequestOptions extends RequestInit {
   params?: Record<string, string | number | boolean | undefined>;
@@ -11,7 +12,11 @@ export class ApiError extends Error {
   statusCode: number;
   errorMessages?: Array<{ path: string | number; message: string }>;
 
-  constructor(message: string, statusCode: number, errorMessages?: Array<{ path: string | number; message: string }>) {
+  constructor(
+    message: string,
+    statusCode: number,
+    errorMessages?: Array<{ path: string | number; message: string }>
+  ) {
     super(message);
     this.name = "ApiError";
     this.statusCode = statusCode;
@@ -62,7 +67,9 @@ export async function apiClient<T = unknown>(
     }));
 
     if (!res.ok || data.success === false) {
-      const err = data as ApiResponse<unknown> & { errorMessages?: Array<{ path: string | number; message: string }> };
+      const err = data as ApiResponse<unknown> & {
+        errorMessages?: Array<{ path: string | number; message: string }>;
+      };
       throw new ApiError(
         err.message || "An error occurred while processing the request",
         res.status,
@@ -75,9 +82,6 @@ export async function apiClient<T = unknown>(
     if (error instanceof ApiError) {
       throw error;
     }
-    throw new ApiError(
-      error instanceof Error ? error.message : "Network error occurred",
-      500
-    );
+    throw new ApiError(error instanceof Error ? error.message : "Network error occurred", 500);
   }
 }

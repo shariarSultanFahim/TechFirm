@@ -4,11 +4,13 @@ import { useQuery } from "@tanstack/react-query";
 
 import { ApiResponse, IPost } from "@repo/types";
 
+import { env } from "@/env";
+
 import { defaultPosts } from "@/lib/posts-data";
 
 export { defaultPosts };
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api/v1";
+const API_BASE_URL = env.NEXT_PUBLIC_API_URL;
 
 export function usePosts(params?: { category?: string; search?: string }) {
   const category = params?.category && params.category !== "All" ? params.category : undefined;

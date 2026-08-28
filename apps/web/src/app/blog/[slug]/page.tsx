@@ -3,11 +3,13 @@ import { notFound } from "next/navigation";
 
 import { IPost } from "@repo/types";
 
+import { env } from "@/env";
+
 import { defaultPosts } from "@/lib/posts-data";
 
 import { BlogDetailView, blogPostsData, getBlogPost } from "@/components/blog";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api/v1";
+const API_BASE_URL = env.NEXT_PUBLIC_API_URL;
 
 async function fetchBlogPost(slug: string): Promise<IPost | null> {
   try {

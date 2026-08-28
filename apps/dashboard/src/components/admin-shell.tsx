@@ -23,6 +23,8 @@ import {
 
 import { ApiResponse } from "@repo/types";
 
+import { env } from "@/env";
+
 import { get } from "@/lib/api";
 
 interface AdminShellProps {
@@ -142,7 +144,7 @@ export function AdminShell({
 
           <div className="space-y-2">
             <a
-              href="http://localhost:3000"
+              href={env.NEXT_PUBLIC_WEB_URL || "/"}
               target="_blank"
               rel="noopener noreferrer"
               className="bg-sidebar-accent hover:bg-sidebar-border text-sidebar-foreground flex w-full items-center justify-center gap-1.5 rounded-lg px-3 py-2 text-xs font-medium transition-colors"

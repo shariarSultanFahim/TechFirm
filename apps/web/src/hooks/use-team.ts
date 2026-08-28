@@ -4,11 +4,13 @@ import { useQuery } from "@tanstack/react-query";
 
 import { ApiResponse, ITeamMember } from "@repo/types";
 
+import { env } from "@/env";
+
 import { defaultTeamMembers } from "@/lib/team-data";
 
 export { defaultTeamMembers };
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api/v1";
+const API_BASE_URL = env.NEXT_PUBLIC_API_URL;
 
 export function useTeam(params?: { search?: string }) {
   const search = params?.search || undefined;

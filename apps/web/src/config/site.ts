@@ -1,5 +1,5 @@
-import { env } from "@/env";
 import type { SiteConfig } from "@/types/site-config";
+import { env } from "@/env";
 
 export interface TechfirmSiteConfig extends SiteConfig {
   contact: {
@@ -19,7 +19,7 @@ export const siteConfig: TechfirmSiteConfig = {
   name: "TechFirm — IT Solution & Technology Agency",
   description:
     "Empowering enterprises with cutting-edge Cloud Solutions, Cyber Security, Managed IT Services, and Agile Software Engineering.",
-  url: env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
+  url: env.NEXT_PUBLIC_SITE_URL,
   author: "TechFirm Global Inc.",
   locale: "en",
   themeColor: "#12121C",
@@ -47,21 +47,33 @@ export const siteConfig: TechfirmSiteConfig = {
   navigation: [
     {
       title: "Home",
-      href: "/",
+      href: "/"
     },
     {
       title: "Pages",
       href: "/about",
       children: [
-        { title: "About Us", href: "/about", description: "Learn about our mission, vision, and team." },
-        { title: "Our Team", href: "/team", description: "Meet our senior architects and engineers." },
-        { title: "Our Pricing Plan", href: "/pricing", description: "Transparent tiered pricing for all business sizes." },
+        {
+          title: "About Us",
+          href: "/about",
+          description: "Learn about our mission, vision, and team."
+        },
+        {
+          title: "Our Team",
+          href: "/team",
+          description: "Meet our senior architects and engineers."
+        },
+        {
+          title: "Our Pricing Plan",
+          href: "/pricing",
+          description: "Transparent tiered pricing for all business sizes."
+        },
         { title: "Our FAQs", href: "/faqs", description: "Frequently asked questions and answers." }
       ]
     },
     {
       title: "Services",
-      href: "/services",
+      href: "/services"
       // children: [
       //   { title: "All Services", href: "/services", description: "Comprehensive IT service directory." },
       //   { title: "Cloud Integration", href: "/services/cloud-integration", description: "Scalable multi-cloud deployments." },
@@ -71,11 +83,11 @@ export const siteConfig: TechfirmSiteConfig = {
     },
     {
       title: "Portfolio",
-      href: "/portfolio",
+      href: "/portfolio"
     },
     {
       title: "Blog",
-      href: "/blog",
+      href: "/blog"
       // children: [
       //   { title: "Blog Grid", href: "/blog", description: "Latest industry news and technology insights." },
       //   { title: "Blog Standard", href: "/blog", description: "Featured in-depth technical analysis." }

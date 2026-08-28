@@ -1,7 +1,9 @@
 import axios, { AxiosError, AxiosRequestConfig } from "axios";
 
+import { env } from "@/env";
+
 export const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api/v1",
+  baseURL: env.NEXT_PUBLIC_API_URL,
   timeout: 15_000,
   withCredentials: true,
   headers: {

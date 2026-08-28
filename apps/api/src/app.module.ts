@@ -21,9 +21,10 @@ import { UsersModule } from "./modules/users/users.module";
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => {
-        const uri =
-          configService.get<string>("MONGODB_URI") ||
-          "mongodb://localhost:27017/fullstack_assessment_db";
+        const uri = configService.get<string>("MONGODB_URI");
+        if (!uri) {
+          throw new Error("MONGODB_URI environment variable is required.");
+        }
         return {
           uri
         };

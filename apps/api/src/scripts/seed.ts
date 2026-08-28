@@ -5,7 +5,11 @@ import mongoose from "mongoose";
 dotenv.config({ path: ".env" });
 dotenv.config({ path: ".env.local" });
 
-const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/fullstack_assessment_db";
+if (!process.env.MONGODB_URI) {
+  throw new Error("❌ MONGODB_URI environment variable is required to run seed script.");
+}
+
+const MONGODB_URI: string = process.env.MONGODB_URI;
 
 const UserSchema = new mongoose.Schema(
   {

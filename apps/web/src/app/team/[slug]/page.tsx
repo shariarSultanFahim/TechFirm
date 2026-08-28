@@ -3,11 +3,13 @@ import { notFound } from "next/navigation";
 
 import { ITeamMember } from "@repo/types";
 
+import { env } from "@/env";
+
 import { defaultTeamMembers } from "@/lib/team-data";
 
 import { getTeamMember, teamMembersData, TeamMemberView } from "@/components/team";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api/v1";
+const API_BASE_URL = env.NEXT_PUBLIC_API_URL;
 
 async function fetchTeamMember(slug: string): Promise<ITeamMember | null> {
   try {

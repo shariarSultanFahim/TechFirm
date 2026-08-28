@@ -4,11 +4,13 @@ import { useQuery } from "@tanstack/react-query";
 
 import { ApiResponse, IPortfolioItem } from "@repo/types";
 
+import { env } from "@/env";
+
 import { defaultPortfolio } from "@/lib/portfolio-data";
 
 export { defaultPortfolio };
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api/v1";
+const API_BASE_URL = env.NEXT_PUBLIC_API_URL;
 
 export function usePortfolio(params?: { category?: string; search?: string }) {
   const category = params?.category && params.category !== "All" ? params.category : undefined;

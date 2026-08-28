@@ -1,7 +1,9 @@
 import { Logger, ValidationPipe } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 import { NestFactory } from "@nestjs/core";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import cookieParser from "cookie-parser";
+
 import { AppModule } from "./app.module";
 import { ApiExceptionFilter } from "./common/filters/api-exception.filter";
 import { TransformInterceptor } from "./common/interceptors/transform.interceptor";
@@ -9,6 +11,7 @@ import { TransformInterceptor } from "./common/interceptors/transform.intercepto
 async function bootstrap() {
   const logger = new Logger("Bootstrap");
   const app = await NestFactory.create(AppModule);
+  const configService = app.get(ConfigService);
 
   // Cookie Parser
   app.use(cookieParser());
@@ -30,20 +33,17 @@ async function bootstrap() {
     next();
   });
 
-  // CORS Configuration
-  const defaultAllowedOrigins = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-    "http://localhost:3001",
-    "http://127.0.0.1:3001",
-    "http://admin.localhost:3001"
-  ];
+  // CORS Configuration via ConfigService
+  const nodeEnv = configService.get<string>("NODE_ENV") || "development";
+  const isDev = nodeEnv !== "production";
 
-  const envOrigins = process.env.CORS_ORIGINS
-    ? process.env.CORS_ORIGINS.split(",").map((o) => o.trim())
-    : [];
+  const rawOrigins =
+    configService.get<string>("ALLOWED_ORIGINS") || configService.get<string>("CORS_ORIGINS") || "";
 
-  const allowedOrigins = Array.from(new Set([...defaultAllowedOrigins, ...envOrigins]));
+  const allowedOrigins = rawOrigins
+    .split(",")
+    .map((o) => o.trim())
+    .filter(Boolean);
 
   app.enableCors({
     origin: (origin, callback) => {
@@ -52,8 +52,7 @@ async function bootstrap() {
 
       if (
         allowedOrigins.includes(origin) ||
-        origin.endsWith(".localhost:3001") ||
-        process.env.NODE_ENV !== "production"
+        (isDev && (origin.includes("localhost") || origin.includes("127.0.0.1")))
       ) {
         return callback(null, true);
       }
@@ -77,8 +76,7 @@ async function bootstrap() {
   app.useGlobalFilters(new ApiExceptionFilter());
 
   // Swagger Documentation Setup
-  const isDev = process.env.NODE_ENV !== "production";
-  const enableSwagger = isDev || process.env.ENABLE_API_DOCS === "true";
+  const enableSwagger = isDev || configService.get<string>("ENABLE_API_DOCS") === "true";
 
   if (enableSwagger) {
     const swaggerConfig = new DocumentBuilder()
@@ -111,11 +109,11 @@ async function bootstrap() {
       res.json(document);
     });
 
-    logger.log("📖 Swagger UI available at: http://localhost:5000/api/docs");
-    logger.log("📄 Raw OpenAPI Spec available at: http://localhost:5000/api/docs.json");
+    logger.log("📖 Swagger UI available at /api/docs");
+    logger.log("📄 Raw OpenAPI Spec available at /api/docs.json");
   }
 
-  const port = process.env.PORT || 5000;
+  const port = configService.get<number>("PORT") || 5000;
   await app.listen(port);
   logger.log(`🚀 NestJS API server running on port: ${port} (prefix: /${globalPrefix})`);
 }

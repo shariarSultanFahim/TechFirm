@@ -5,6 +5,8 @@ import { ExternalLink } from "lucide-react";
 
 import { IPortfolioItem } from "@repo/types";
 
+import { env } from "@/env";
+
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 
@@ -46,7 +48,7 @@ export function getPortfolioColumns(
                 /portfolio/{item.slug}
               </code>
               <a
-                href={`http://localhost:3000/portfolio/${item.slug}`}
+                href={`${env.NEXT_PUBLIC_WEB_URL || ""}/portfolio/${item.slug}`}
                 target="_blank"
                 rel="noreferrer"
                 className="text-muted-foreground hover:text-primary transition-colors"
