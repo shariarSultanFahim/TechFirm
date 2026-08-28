@@ -27,7 +27,7 @@ export function getFaqColumns(
       accessorKey: "question",
       header: "Question",
       cell: ({ row }) => (
-        <span className="text-foreground max-w-xs text-xs font-medium">
+        <span className="text-foreground inline-block max-w-[200px] min-w-[130px] text-xs font-medium break-words">
           {row.original.question}
         </span>
       )
@@ -36,7 +36,7 @@ export function getFaqColumns(
       accessorKey: "answer",
       header: "Answer",
       cell: ({ row }) => (
-        <p className="text-muted-foreground line-clamp-2 max-w-md text-xs font-normal">
+        <p className="text-muted-foreground line-clamp-2 max-w-xs min-w-[180px] text-xs font-normal break-words sm:max-w-md">
           {row.original.answer}
         </p>
       )

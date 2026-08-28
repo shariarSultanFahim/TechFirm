@@ -31,9 +31,9 @@ export function getPlanColumns(
       cell: ({ row }) => {
         const plan = row.original;
         return (
-          <div className="space-y-0.5">
-            <p className="text-foreground flex items-center gap-1.5 text-xs font-medium">
-              {plan.name}
+          <div className="max-w-[200px] min-w-[130px] space-y-0.5">
+            <p className="text-foreground flex flex-wrap items-center gap-1.5 text-xs font-medium">
+              <span>{plan.name}</span>
               {plan.isPopular && (
                 <Badge variant="default" className="px-1.5 py-0 text-[10px] font-medium">
                   Popular
@@ -41,7 +41,7 @@ export function getPlanColumns(
               )}
             </p>
             {plan.description && (
-              <p className="text-muted-foreground line-clamp-1 text-[11px] font-normal">
+              <p className="text-muted-foreground line-clamp-1 text-[11px] font-normal break-words">
                 {plan.description}
               </p>
             )}
@@ -55,7 +55,7 @@ export function getPlanColumns(
       cell: ({ row }) => {
         const plan = row.original;
         return (
-          <div className="flex items-center gap-1.5">
+          <div className="flex min-w-[110px] items-center gap-1.5 whitespace-nowrap">
             <span className="text-foreground text-xs font-semibold">
               {formatPlanPrice(plan.price, plan.billingPeriod)}
             </span>
@@ -72,14 +72,14 @@ export function getPlanColumns(
       cell: ({ row }) => {
         const features = row.original.features || [];
         return (
-          <div className="flex max-w-xs flex-wrap gap-1">
+          <div className="flex max-w-[200px] min-w-[140px] flex-wrap gap-1">
             {features.slice(0, 2).map((f) => (
-              <Badge key={f} variant="secondary" className="py-0 text-[10px] font-medium">
+              <Badge key={f} variant="secondary" className="py-0 text-[10px] font-medium break-all">
                 {f}
               </Badge>
             ))}
             {features.length > 2 && (
-              <span className="text-muted-foreground text-[10px] font-normal">
+              <span className="text-muted-foreground text-[10px] font-normal whitespace-nowrap">
                 +{features.length - 2} more
               </span>
             )}

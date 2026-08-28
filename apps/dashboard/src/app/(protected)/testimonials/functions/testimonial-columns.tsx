@@ -31,16 +31,16 @@ export function getTestimonialColumns(
       cell: ({ row }) => {
         const t = row.original;
         return (
-          <div className="flex items-center gap-3">
-            <Avatar className="border-border h-9 w-9 shrink-0 rounded-full border">
+          <div className="flex max-w-[180px] min-w-[130px] items-center gap-2.5">
+            <Avatar className="border-border h-8 w-8 shrink-0 rounded-full border">
               <AvatarImage src={t.avatar} alt={t.authorName} />
               <AvatarFallback className="text-xs font-medium">
                 {t.authorName.slice(0, 2).toUpperCase()}
               </AvatarFallback>
             </Avatar>
-            <div className="space-y-0.5">
-              <p className="text-foreground text-xs font-medium">{t.authorName}</p>
-              <p className="text-muted-foreground text-[11px] font-normal">
+            <div className="min-w-0 flex-1 space-y-0.5">
+              <p className="text-foreground truncate text-xs font-medium">{t.authorName}</p>
+              <p className="text-muted-foreground truncate text-[11px] font-normal">
                 {t.authorRole} {t.company ? `• ${t.company}` : ""}
               </p>
             </div>
@@ -54,8 +54,8 @@ export function getTestimonialColumns(
       cell: ({ row }) => {
         const t = row.original;
         return (
-          <div className="max-w-md space-y-1.5">
-            <p className="text-foreground/80 line-clamp-2 text-xs font-normal italic">
+          <div className="max-w-xs min-w-[180px] space-y-1.5 sm:max-w-sm">
+            <p className="text-foreground/80 line-clamp-2 text-xs font-normal break-words italic">
               &quot;{t.quote}&quot;
             </p>
             {t.tags && t.tags.length > 0 && (
@@ -63,7 +63,7 @@ export function getTestimonialColumns(
                 {t.tags.map((tag, idx) => (
                   <span
                     key={idx}
-                    className="bg-muted text-muted-foreground rounded-sm px-1.5 py-0.5 text-[10px] font-medium"
+                    className="bg-muted text-muted-foreground rounded-sm px-1.5 py-0.5 text-[10px] font-medium whitespace-nowrap"
                   >
                     {tag}
                   </span>
