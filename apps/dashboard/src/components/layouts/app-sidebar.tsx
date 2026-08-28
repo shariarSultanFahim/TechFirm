@@ -1,12 +1,33 @@
 "use client";
 
 import * as React from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { HeartHandshake, LayoutDashboard, LogOut, UserRoundPen } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import {
+  Briefcase,
+  CreditCard,
+  ExternalLink,
+  FileText,
+  HelpCircle,
+  LayoutDashboard,
+  LogOut,
+  Mail,
+  MessageSquareQuote,
+  Settings,
+  UserCheck,
+  Users,
+  Zap
+} from "lucide-react";
 
+import { ApiResponse } from "@repo/types";
+
+import { get, post } from "@/lib/api";
+
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Sidebar,
   SidebarContent,
@@ -21,128 +42,151 @@ import {
   SidebarRail
 } from "@/components/ui/sidebar";
 
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { Button } from "../ui/button";
-
-const data = {
-  info: {
-    title: "Rise & Impact",
-    subtitle: "Instructor Portal"
-  },
-  navMain: [
-    {
-      title: "",
-      items: [
-        {
-          title: "Overview",
-          url: "/overview",
-          icon: LayoutDashboard
-        }
-      ]
-    }
-  ],
-  navSec: [
-    {
-      title: "Footer",
-      items: [
-        {
-          title: "Profile",
-          url: "#",
-          icon: UserRoundPen
-        },
-        {
-          title: "Support",
-          url: "#",
-          icon: HeartHandshake
-        }
-      ]
-    }
-  ]
-};
+const navItems = [
+  { title: "Overview", url: "/overview", icon: LayoutDashboard },
+  { title: "Site Settings", url: "/site-config", icon: Settings },
+  { title: "Testimonials", url: "/testimonials", icon: MessageSquareQuote },
+  { title: "FAQs", url: "/faqs", icon: HelpCircle },
+  { title: "Team Members", url: "/team", icon: UserCheck },
+  { title: "Plans & Pricing", url: "/plans", icon: CreditCard },
+  { title: "Blog Posts", url: "/posts", icon: FileText },
+  { title: "Portfolio", url: "/portfolio", icon: Briefcase },
+  { title: "Messages", url: "/messages", icon: Mail, isMessage: true },
+  { title: "Users & RBAC", url: "/users", icon: Users }
+];
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const pathname = usePathname();
 
+  const { data: unreadCount = 0 } = useQuery({
+    queryKey: ["unread-count"],
+    queryFn: async () => {
+      try {
+        const res = await get<ApiResponse<{ count: number }>>("/contact-messages/unread-count");
+        return res.data?.count ?? 0;
+      } catch {
+        return 0;
+      }
+    },
+    refetchInterval: 30000
+  });
+
+  const handleLogout = async () => {
+    try {
+      await post("/auth/logout");
+      window.location.href = "/login";
+    } catch {
+      window.location.href = "/login";
+    }
+  };
+
   return (
     <Sidebar variant="inset" collapsible="icon" {...props}>
-      <SidebarHeader>
+      {/* Brand Header */}
+      <SidebarHeader className="border-sidebar-border border-b p-4">
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton size="lg" asChild>
-              <Link href="/">
-                <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-                  <Image src="/logo.png" alt="Logo" width={32} height={32} />
-                </div>
-                <div className="grid flex-1 text-sm leading-tight">
-                  <span className="truncate text-sm font-bold">{data.info.title}</span>
-                  <span className="text-sidebar-foreground/60 truncate text-xs font-semibold">
-                    {data.info.subtitle}
-                  </span>
-                </div>
-              </Link>
-            </SidebarMenuButton>
+            <SidebarMenuButton
+              size="lg"
+              className="hover:bg-sidebar-accent"
+              render={
+                <Link href="/overview" className="flex items-center gap-3">
+                  <div className="bg-primary text-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg shadow-sm">
+                    <Zap className="size-4 fill-current" />
+                  </div>
+                  <div className="grid flex-1 text-left text-sm leading-tight">
+                    <span className="truncate font-black text-white">
+                      Tech<span className="text-primary">Firm</span>
+                    </span>
+                    <span className="text-sidebar-foreground/60 truncate text-[10px] font-bold tracking-wider uppercase">
+                      Admin Console
+                    </span>
+                  </div>
+                </Link>
+              }
+            />
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
+
+      {/* Main Nav Links */}
       <SidebarContent>
-        {data.navMain.map((group) => (
-          <SidebarGroup key={group.title}>
-            <SidebarGroupLabel>{group.title}</SidebarGroupLabel>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                {group.items.map((item) => (
+        <SidebarGroup>
+          <SidebarGroupLabel className="text-muted-foreground px-3 py-2 text-[10px] font-bold tracking-wider uppercase">
+            Management
+          </SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {navItems.map((item) => {
+                const Icon = item.icon;
+                const isActive = pathname === item.url || pathname.startsWith(`${item.url}/`);
+                const showBadge = item.isMessage && unreadCount > 0;
+
+                return (
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton
-                      asChild
-                      isActive={pathname === item.url}
-                      className="data-[active=true]:text-primary-foreground data-[active=true]:bg-white/25 data-[active=true]:shadow-md data-[active=true]:backdrop-blur-sm"
-                    >
-                      <Link href={item.url}>
-                        <item.icon />
-                        <span>{item.title}</span>
-                      </Link>
-                    </SidebarMenuButton>
+                      isActive={isActive}
+                      className="gap-3 rounded-xl px-3 py-2 text-sm font-semibold transition-colors"
+                      render={
+                        <Link href={item.url} className="flex w-full items-center justify-between">
+                          <div className="flex items-center gap-3">
+                            <Icon className="size-4" />
+                            <span>{item.title}</span>
+                          </div>
+                          {showBadge && (
+                            <Badge
+                              variant="default"
+                              className="h-5 px-1.5 py-0 text-[10px] font-bold"
+                            >
+                              {unreadCount}
+                            </Badge>
+                          )}
+                        </Link>
+                      }
+                    />
                   </SidebarMenuItem>
-                ))}
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
-        ))}
+                );
+              })}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
       </SidebarContent>
 
-      <SidebarFooter>
-        <SidebarMenu>
-          <SidebarMenuItem className="space-y-5">
-            <div className="hidden flex-col gap-4 group-data-[collapsible=icon]:flex">
-              <Avatar size="lg" className="h-8 w-8">
-                <AvatarImage src="https://github.com/shadcn.png" />
-                <AvatarFallback>CN</AvatarFallback>
-              </Avatar>
-            </div>
-            <div className="group-data-[collapsible=icon]:hidden">
-              <div className="flex items-center justify-start gap-4">
-                <Avatar size="lg">
-                  <AvatarImage src="https://github.com/shadcn.png" />
-                  <AvatarFallback>CN</AvatarFallback>
-                </Avatar>
-                <div>
-                  <h2 className="font-semibold">John Doe</h2>
-                  <h3 className="text-sm text-gray-500">john@riseimpact.com</h3>
-                </div>
-              </div>
-            </div>
-            <SidebarMenuButton asChild className="group-data-[collapsible=icon]:w-full">
-              <Button
-                variant="outline"
-                className="border-secondary w-full bg-transparent group-data-[collapsible=icon]:p-0"
-              >
-                <LogOut className="size-4 group-data-[collapsible=icon]:h-5 group-data-[collapsible=icon]:w-5" />
-                <span className="group-data-[collapsible=icon]:hidden">Sign Out</span>
-              </Button>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
+      {/* Footer / User Profile & Logout */}
+      <SidebarFooter className="border-sidebar-border space-y-3 border-t p-4">
+        <div className="flex items-center gap-3">
+          <Avatar className="bg-primary/20 text-primary border-primary/30 flex h-8 w-8 items-center justify-center rounded-lg border text-xs font-bold">
+            <AvatarFallback>AD</AvatarFallback>
+          </Avatar>
+          <div className="grid flex-1 text-left text-xs leading-tight group-data-[collapsible=icon]:hidden">
+            <span className="truncate font-bold text-white">TechFirm Admin</span>
+            <span className="text-muted-foreground truncate text-[11px]">admin@techfirm.com</span>
+          </div>
+        </div>
+
+        <div className="space-y-1.5 pt-2">
+          <a
+            href="http://localhost:3000"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-sidebar-accent hover:bg-sidebar-border flex w-full items-center justify-center gap-1.5 rounded-lg px-2 py-1.5 text-[11px] font-bold text-gray-200 transition-colors group-data-[collapsible=icon]:p-2"
+          >
+            <span className="group-data-[collapsible=icon]:hidden">Public Website</span>
+            <ExternalLink className="text-primary size-3.5" />
+          </a>
+
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={handleLogout}
+            className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 h-8 w-full justify-start gap-2 text-xs font-bold group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:p-0"
+          >
+            <LogOut className="size-3.5" />
+            <span className="group-data-[collapsible=icon]:hidden">Sign Out</span>
+          </Button>
+        </div>
       </SidebarFooter>
+
       <SidebarRail />
     </Sidebar>
   );

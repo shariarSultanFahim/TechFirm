@@ -1,16 +1,37 @@
+"use client";
+
+import { IPost } from "@repo/types";
+
+import { usePosts } from "@/hooks/use-posts";
+
 import { BlogCard } from "./blog-card";
-import { blogPostsData, type BlogPost } from "./blog-data";
+import { type BlogPost } from "./blog-data";
 
 interface BlogGridProps {
-  posts?: BlogPost[];
+  posts?: (BlogPost | IPost)[];
+  category?: string;
+  search?: string;
 }
 
-export function BlogGrid({ posts = blogPostsData }: BlogGridProps) {
+export function BlogGrid({ posts: propPosts, category, search }: BlogGridProps) {
+  const { data: hookPosts = [] } = usePosts({ category, search });
+  const posts = propPosts || hookPosts;
+
+  if (posts.length === 0) {
+    return (
+      <div className="text-muted-foreground col-span-full w-full py-12 text-center">
+        <p className="text-sm font-semibold">No articles found in this category.</p>
+      </div>
+    );
+  }
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7 sm:gap-8 w-full">
-      {posts.map((post) => (
-        <BlogCard key={post.id} post={post} />
-      ))}
+    <div className="grid w-full grid-cols-1 gap-7 sm:gap-8 md:grid-cols-2 lg:grid-cols-3">
+      {posts.map((post, idx) => {
+        const key =
+          (post as IPost).id || (post as IPost).slug || (post as BlogPost).id || `blog-${idx}`;
+        return <BlogCard key={key} post={post} />;
+      })}
     </div>
   );
 }

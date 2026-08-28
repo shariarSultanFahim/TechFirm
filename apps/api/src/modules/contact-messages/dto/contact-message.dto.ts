@@ -3,11 +3,13 @@ import { Type } from "class-transformer";
 import {
   IsBoolean,
   IsEmail,
+  IsEnum,
   IsNotEmpty,
   IsNumber,
   IsOptional,
   IsString
 } from "class-validator";
+import { ContactMessageStatus } from "@repo/types";
 
 export class CreateContactMessageDto {
   @ApiProperty({ example: "Alex Johnson" })
@@ -19,12 +21,24 @@ export class CreateContactMessageDto {
   @IsEmail()
   email: string;
 
+  @ApiPropertyOptional({ example: "+1 (555) 019-2834" })
+  @IsString()
+  @IsOptional()
+  phone?: string;
+
   @ApiPropertyOptional({ example: "Cloud Architecture Inquiry" })
   @IsString()
   @IsOptional()
   subject?: string;
 
-  @ApiProperty({ example: "Hello, I would like to inquire about your enterprise cloud migration services." })
+  @ApiPropertyOptional({ example: "cloud-hosting" })
+  @IsString()
+  @IsOptional()
+  service?: string;
+
+  @ApiProperty({
+    example: "Hello, I would like to inquire about your enterprise cloud migration services."
+  })
   @IsString()
   @IsNotEmpty()
   message: string;
@@ -35,6 +49,16 @@ export class UpdateContactMessageDto {
   @IsBoolean()
   @IsOptional()
   isRead?: boolean;
+
+  @ApiPropertyOptional({ enum: ["unread", "read", "replied", "archived"] })
+  @IsEnum(["unread", "read", "replied", "archived"])
+  @IsOptional()
+  status?: ContactMessageStatus;
+
+  @ApiPropertyOptional({ example: "Followed up via email on 2026-02-01" })
+  @IsString()
+  @IsOptional()
+  replyNotes?: string;
 }
 
 export class QueryContactMessageDto {
@@ -44,17 +68,21 @@ export class QueryContactMessageDto {
   @Type(() => Number)
   page?: number = 1;
 
-  @ApiPropertyOptional({ default: 10 })
+  @ApiPropertyOptional({ default: 50 })
   @IsNumber()
   @IsOptional()
   @Type(() => Number)
-  limit?: number = 10;
+  limit?: number = 50;
 
   @ApiPropertyOptional()
-  @IsBoolean()
+  @IsString()
   @IsOptional()
-  @Type(() => Boolean)
-  isRead?: boolean;
+  isRead?: string;
+
+  @ApiPropertyOptional({ enum: ["unread", "read", "replied", "archived"] })
+  @IsString()
+  @IsOptional()
+  status?: string;
 
   @ApiPropertyOptional()
   @IsString()

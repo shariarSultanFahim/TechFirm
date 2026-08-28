@@ -1,96 +1,65 @@
 "use client";
 
-import faqImg from "@/assets/faq/faq-img.png";
-import { SectionHeader } from "@/components/widgets";
-import Image from "next/image";
 import { useState } from "react";
+import Image from "next/image";
 
-interface FAQItem {
-  id: string;
-  question: string;
-  answer: string;
-}
+import faqImg from "@/assets/faq/faq-img.png";
 
-const faqItems: FAQItem[] = [
-  {
-    id: "need-consultant",
-    question: "How do I know if I need a consultant?",
-    answer:
-      "If your business is facing scaling challenges, inefficient operations, or requires specialized technical expertise to accelerate growth, partnering with our consulting team can provide targeted solutions and strategic clarity."
-  },
-  {
-    id: "consulting-services",
-    question: "What types of consulting services do you offer?",
-    answer:
-      "We provide end-to-end consulting spanning cloud infrastructure architecture, scalable software development, workflow automation, performance optimization, and custom technical strategy."
-  },
-  {
-    id: "firm-different",
-    question: "What makes your consulting firm different from others?",
-    answer:
-      "We combine deep engineering rigor with agile business strategy, delivering actionable, production-ready outcomes rather than theoretical slide decks."
-  },
-  {
-    id: "engagement-duration",
-    question: "What makes your consulting firm different from others?",
-    answer:
-      "Our iterative sprint models allow rapid deployment and measurable ROI, offering hands-on execution from day one with continuous collaboration."
-  },
-  {
-    id: "who-benefit",
-    question: "Who can benefit from your consulting services?",
-    answer:
-      "Through a combination of data-driven insights and innovative approaches, we work closely with you to develop customized."
-  }
-];
+import { useFaqs } from "@/hooks/use-faqs";
 
-export function FaqSection({bgColor}: {bgColor?: string}) {
-  // Default open the 5th item to match the reference screenshot
-  const [openId, setOpenId] = useState<string | null>("who-benefit");
+import { SectionHeader } from "@/components/widgets";
+
+export function FaqSection({ bgColor }: { bgColor?: string }) {
+  const { data: faqs = [] } = useFaqs();
+
+  // Open first item or active item
+  const [openId, setOpenId] = useState<string | null>(null);
 
   const toggleFAQ = (id: string) => {
     setOpenId((prev) => (prev === id ? null : id));
   };
 
+  const displayFaqs = faqs.slice(0, 6);
+
   return (
-    <section className="relative w-full py-20 lg:py-28 overflow-hidden bg-white" style={{backgroundColor: bgColor}}>
-      <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+    <section
+      className="relative w-full overflow-hidden bg-white py-20 lg:py-28"
+      style={{ backgroundColor: bgColor }}
+    >
+      <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-16">
           {/* Left Column: Heading & FAQ Accordion */}
-          <div className="lg:col-span-7 flex flex-col justify-center">
+          <div className="flex flex-col justify-center lg:col-span-7">
             <SectionHeader
               align="left"
               badge="OUR FAQ'S"
               title="Common inquiries from clients"
-              className="mb-8 lg:mb-10 max-w-xl"
+              className="mb-8 max-w-xl lg:mb-10"
             />
 
             {/* FAQ Accordion List */}
-            <div className="flex flex-col space-y-3.5 w-full">
-              {faqItems.map((item) => {
-                const isOpen = openId === item.id;
+            <div className="flex w-full flex-col space-y-3.5">
+              {displayFaqs.map((item, idx) => {
+                const itemId = item.id || item._id || `faq-${idx}`;
+                const isOpen = openId === itemId || (openId === null && idx === 4);
 
                 if (isOpen) {
                   return (
                     <div
-                      key={item.id}
-                      className="rounded-2xl border border-[#EDE8F5] overflow-hidden shadow-xs transition-all duration-300"
+                      key={itemId}
+                      className="overflow-hidden rounded-2xl border border-[#EDE8F5] shadow-xs transition-all duration-300"
                     >
                       {/* Open Header Banner */}
                       <button
                         type="button"
-                        onClick={() => toggleFAQ(item.id)}
-                        className="w-full bg-[#141432] text-white px-6 py-4.5 sm:px-7 sm:py-5 flex items-center justify-between text-left transition-colors"
+                        onClick={() => toggleFAQ(itemId)}
+                        className="flex w-full cursor-pointer items-center justify-between bg-[#141432] px-6 py-4.5 text-left text-white transition-colors sm:px-7 sm:py-5"
                       >
-                        <span className="font-semibold text-sm sm:text-base pr-4">
+                        <span className="pr-4 text-sm font-semibold sm:text-base">
                           {item.question}
                         </span>
-                        <div className="w-7 h-7 rounded-full bg-white text-[#141432] flex items-center justify-center shrink-0 font-bold shadow-xs">
-                          <svg
-                            className="w-3.5 h-3.5"
-                            viewBox="0 0 16 16"
-                            fill="none"
-                          >
+                        <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white font-bold text-[#141432] shadow-xs">
+                          <svg className="h-3.5 w-3.5" viewBox="0 0 16 16" fill="none">
                             <path
                               d="M3 8H13"
                               stroke="currentColor"
@@ -102,7 +71,7 @@ export function FaqSection({bgColor}: {bgColor?: string}) {
                       </button>
 
                       {/* Open Answer Panel */}
-                      <div className="bg-white p-6 sm:p-7 text-[#5C5C5C] text-sm leading-relaxed font-medium">
+                      <div className="bg-white p-6 text-sm leading-relaxed font-medium text-[#5C5C5C] sm:p-7">
                         <p>{item.answer}</p>
                       </div>
                     </div>
@@ -112,20 +81,16 @@ export function FaqSection({bgColor}: {bgColor?: string}) {
                 return (
                   /* Closed FAQ Item */
                   <button
-                    key={item.id}
+                    key={itemId}
                     type="button"
-                    onClick={() => toggleFAQ(item.id)}
-                    className="w-full bg-white border border-[#EDE8F5] rounded-full px-6 py-4 sm:px-7 sm:py-4.5 flex items-center justify-between text-left transition-all duration-300 hover:border-[#864FFE]/40 hover:shadow-xs group"
+                    onClick={() => toggleFAQ(itemId)}
+                    className="group flex w-full cursor-pointer items-center justify-between rounded-full border border-[#EDE8F5] bg-white px-6 py-4 text-left transition-all duration-300 hover:border-[#864FFE]/40 hover:shadow-xs sm:px-7 sm:py-4.5"
                   >
-                    <span className="font-semibold text-[#141432] text-sm sm:text-base pr-4 group-hover:text-[#864FFE] transition-colors">
+                    <span className="pr-4 text-sm font-semibold text-[#141432] transition-colors group-hover:text-[#864FFE] sm:text-base">
                       {item.question}
                     </span>
-                    <div className="w-7 h-7 rounded-full bg-[#F3F4F6] text-[#141432] flex items-center justify-center shrink-0 font-bold transition-colors group-hover:bg-[#864FFE] group-hover:text-white">
-                      <svg
-                        className="w-3.5 h-3.5"
-                        viewBox="0 0 16 16"
-                        fill="none"
-                      >
+                    <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#F3F4F6] font-bold text-[#141432] transition-colors group-hover:bg-[#864FFE] group-hover:text-white">
+                      <svg className="h-3.5 w-3.5" viewBox="0 0 16 16" fill="none">
                         <path
                           d="M8 3V13M3 8H13"
                           stroke="currentColor"
@@ -141,12 +106,12 @@ export function FaqSection({bgColor}: {bgColor?: string}) {
           </div>
 
           {/* Right Column: FAQ Graphic/Illustration */}
-          <div className="lg:col-span-5 flex items-center justify-center">
-            <div className="relative w-full max-w-md lg:max-w-none flex items-center justify-center">
+          <div className="flex items-center justify-center lg:col-span-5">
+            <div className="relative flex w-full max-w-md items-center justify-center lg:max-w-none">
               <Image
                 src={faqImg}
                 alt="Client Inquiries & Consultation Support"
-                className="w-full h-auto object-contain drop-shadow-md transition-transform duration-500 hover:scale-[1.02]"
+                className="h-auto w-full object-contain drop-shadow-md transition-transform duration-500 hover:scale-[1.02]"
                 priority
               />
             </div>

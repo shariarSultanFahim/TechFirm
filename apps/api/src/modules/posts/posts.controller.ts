@@ -39,6 +39,17 @@ export class PostsController {
     };
   }
 
+  @Get("categories")
+  @ApiOperation({ summary: "Get distinct blog categories (Public)" })
+  @SwaggerApiResponse({ status: 200, description: "List of categories" })
+  async getCategories() {
+    const categories = await this.postsService.getCategories();
+    return {
+      message: "Categories retrieved successfully",
+      data: categories
+    };
+  }
+
   @Get("slug/:slug")
   @ApiOperation({ summary: "Get blog post by slug (Public)" })
   @SwaggerApiResponse({ status: 200, description: "Post details" })

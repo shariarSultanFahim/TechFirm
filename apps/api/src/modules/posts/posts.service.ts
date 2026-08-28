@@ -1,8 +1,4 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException
-} from "@nestjs/common";
+import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { CreatePostDto, QueryPostDto, UpdatePostDto } from "./dto/post.dto";
@@ -69,6 +65,11 @@ export class PostsService {
     };
   }
 
+  async getCategories(): Promise<string[]> {
+    const categories = await this.postModel.distinct("category").exec();
+    return categories.filter(Boolean);
+  }
+
   async findBySlug(slug: string): Promise<PostDocument> {
     const post = await this.postModel.findOne({ slug }).exec();
     if (!post) {
@@ -106,7 +107,9 @@ export class PostsService {
         .findOne({ slug: updatePostDto.slug, _id: { $ne: id } })
         .exec();
       if (existing) {
-        throw new BadRequestException(`An article with slug "${updatePostDto.slug}" already exists`);
+        throw new BadRequestException(
+          `An article with slug "${updatePostDto.slug}" already exists`
+        );
       }
     }
 

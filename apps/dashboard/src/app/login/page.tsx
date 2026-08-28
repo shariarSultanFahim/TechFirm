@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 
 import { useMutation } from "@tanstack/react-query";
 import { AlertCircle, ArrowRight, CheckCircle2, Lock, Mail, Zap } from "lucide-react";
@@ -13,7 +12,6 @@ import { LoginInput, loginSchema } from "@repo/validators";
 import { post } from "@/lib/api";
 
 export default function AdminLoginPage() {
-  const router = useRouter();
   const [error, setError] = useState<string | null>(null);
 
   const {

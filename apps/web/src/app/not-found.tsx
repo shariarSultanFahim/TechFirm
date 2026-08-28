@@ -1,53 +1,47 @@
-import { PillButton } from "@/components/ui";
 import { ArrowLeft, SearchSlash, X } from "lucide-react";
 
-
+import { PillButton } from "@/components/ui";
 
 export default function NotFound() {
   return (
-   <div className="relative min-h-[75vh] w-full flex items-center justify-center py-20 px-4 sm:px-6 lg:px-8 overflow-hidden bg-white">
+    <div className="relative flex min-h-[75vh] w-full items-center justify-center overflow-hidden bg-white px-4 py-20 sm:px-6 lg:px-8">
       {/* Ambient background glows */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[350px] bg-primary/10 rounded-full blur-[100px] pointer-events-none" />
-      <div className="absolute top-1/2 left-1/4 w-72 h-72 bg-[#35A3FF]/10 rounded-full blur-[80px] pointer-events-none" />
+      <div className="bg-primary/10 pointer-events-none absolute top-1/3 left-1/2 h-[350px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[100px]" />
+      <div className="pointer-events-none absolute top-1/2 left-1/4 h-72 w-72 rounded-full bg-[#35A3FF]/10 blur-[80px]" />
 
       {/* Subtle dotted grid texture */}
       <div
-        className="absolute inset-0 opacity-[0.03] dark:opacity-[0.06] pointer-events-none"
+        className="pointer-events-none absolute inset-0 opacity-[0.03] dark:opacity-[0.06]"
         style={{
           backgroundImage: `radial-gradient(#864FFE 1px, transparent 1px)`,
           backgroundSize: "24px 24px"
         }}
       />
 
-      <div className="relative z-10 max-w-2xl mx-auto text-center flex flex-col items-center">
+      <div className="relative z-10 mx-auto flex max-w-2xl flex-col items-center text-center">
         {/* Center Icon Illustration */}
-        <div className="relative mb-8 group">
-          <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-3xl bg-linear-to-br from-[#141432] to-[#252545] dark:from-[#1D1D2C] dark:to-[#2B2B3F] text-white flex items-center justify-center shadow-xl border border-border/50 group-hover:scale-105 transition-transform duration-300">
-            <SearchSlash className="w-10 h-10 sm:w-12 sm:h-12 text-[#864FFE]" />
+        <div className="group relative mb-8">
+          <div className="border-border/50 flex h-20 w-20 items-center justify-center rounded-3xl border bg-linear-to-br from-[#141432] to-[#252545] text-white shadow-xl transition-transform duration-300 group-hover:scale-105 sm:h-24 sm:w-24 dark:from-[#1D1D2C] dark:to-[#2B2B3F]">
+            <SearchSlash className="h-10 w-10 text-[#864FFE] sm:h-12 sm:w-12" />
           </div>
-          <div className="absolute -bottom-2 -right-2 w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center shadow-md">
-            <X className="w-4 h-4" />
+          <div className="bg-primary absolute -right-2 -bottom-2 flex h-8 w-8 items-center justify-center rounded-full text-white shadow-md">
+            <X className="h-4 w-4" />
           </div>
         </div>
 
         {/* Main Heading */}
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-foreground mb-4">
+        <h1 className="text-foreground mb-4 text-3xl font-black tracking-tight sm:text-4xl lg:text-5xl">
           Not Found
         </h1>
 
         {/* Subtitle / Description */}
-        <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-lg mb-8 font-medium">
-          Opps! The Page you're looking for doesn't exist or has been moved.
+        <p className="text-muted-foreground mb-8 max-w-lg text-sm leading-relaxed font-medium sm:text-base">
+          Opps! The Page you&apos;re looking for doesn&apos;t exist or has been moved.
         </p>
 
         {/* Action Button */}
-        <div className="flex flex-col sm:flex-row items-center gap-4">
-          <PillButton
-            href="/"
-            variant="primary"
-            size="lg"
-            icon={<ArrowLeft className="w-4 h-4" />}
-          >
+        <div className="flex flex-col items-center gap-4 sm:flex-row">
+          <PillButton href="/" variant="primary" size="lg" icon={<ArrowLeft className="h-4 w-4" />}>
             Back to Home
           </PillButton>
         </div>

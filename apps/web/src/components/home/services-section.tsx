@@ -1,19 +1,15 @@
-import {
-  CheckBadgeIcon,
-  Stat2000Icon,
-  Stat75kIcon,
-  Stat98Icon
-} from "@/assets/icons";
-import { Button } from "@/components/ui/button";
-import { PillButton } from "@/components/ui/pill-button";
-import { SectionHeader } from "@/components/widgets";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
 
+import { Stat75kIcon, Stat98Icon, Stat2000Icon } from "@/assets/icons";
 // Static image imports for service card graphics
 import serviceImg3 from "@/assets/services/developer-firndly-768x615 1.png";
 import serviceImg2 from "@/assets/services/Feature-Card-Footer 1.png";
 import serviceImg1 from "@/assets/services/w=420 1.png";
+
+import { Button } from "@/components/ui/button";
+import { PillButton } from "@/components/ui/pill-button";
+import { SectionHeader } from "@/components/widgets";
 
 interface ServiceCardData {
   id: string;
@@ -22,7 +18,7 @@ interface ServiceCardData {
   buttonText: string;
   buttonHref: string;
   buttonTextColor: string;
-  image: any;
+  image: StaticImageData;
   bgColor: string;
   borderColor: string;
 }
@@ -68,10 +64,10 @@ const serviceCards: ServiceCardData[] = [
 
 export function ServicesSection() {
   return (
-    <section className="relative w-full py-20 lg:py-28 overflow-hidden bg-white">
-      <div className="container max-w-7xl mx-auto ">
+    <section className="relative w-full overflow-hidden bg-white py-20 lg:py-28">
+      <div className="container mx-auto max-w-7xl">
         {/* Section Header with Right CTA Button */}
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12 lg:mb-16">
+        <div className="mb-12 flex flex-col gap-6 md:flex-row md:items-end md:justify-between lg:mb-16">
           <SectionHeader
             align="left"
             badge="OUR SERVICES"
@@ -80,37 +76,33 @@ export function ServicesSection() {
           />
 
           <div className="shrink-0 pb-1">
-            <PillButton
-              href="#services"
-              variant="primary"
-              size="lg"
-            >
+            <PillButton href="#services" variant="primary" size="lg">
               View All Services
             </PillButton>
           </div>
         </div>
 
         {/* 3 Service Feature Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
+        <div className="grid grid-cols-1 items-stretch gap-6 md:grid-cols-3 lg:gap-8">
           {serviceCards.map((card) => (
             <div
               key={card.id}
-              className={`flex flex-col justify-between h-full rounded-xl p-7 sm:p-9 border transition-all duration-300 hover:shadow-xl hover:-translate-y-1.5 ${card.bgColor} ${card.borderColor}`}
+              className={`flex h-full flex-col justify-between rounded-xl border p-7 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl sm:p-9 ${card.bgColor} ${card.borderColor}`}
             >
               {/* Card Header & Content */}
-              <div className="flex flex-col flex-1 justify-between">
+              <div className="flex flex-1 flex-col justify-between">
                 <div>
-                  <h3 className="text-xl sm:text-2xl font-bold text-[#141432] leading-snug tracking-tight mb-3 min-h-[56px] sm:min-h-[64px]">
+                  <h3 className="mb-3 min-h-[56px] text-xl leading-snug font-bold tracking-tight text-[#141432] sm:min-h-[64px] sm:text-2xl">
                     {card.title}
                   </h3>
-                  <p className="text-sm text-[#5C5C5C] leading-relaxed mb-6 font-medium min-h-[60px] sm:min-h-[72px]">
+                  <p className="mb-6 min-h-[60px] text-sm leading-relaxed font-medium text-[#5C5C5C] sm:min-h-[72px]">
                     {card.description}
                   </p>
                 </div>
                 <Button
                   variant="white"
                   size="pill-sm"
-                  className={`w-full rounded-full px-5 py-2 text-xs font-bold ${card.buttonTextColor} shadow-xs hover:shadow-md transition-all`}
+                  className={`w-full rounded-full px-5 py-2 text-xs font-bold ${card.buttonTextColor} shadow-xs transition-all hover:shadow-md`}
                   asChild
                 >
                   <Link href={card.buttonHref}>{card.buttonText}</Link>
@@ -118,11 +110,11 @@ export function ServicesSection() {
               </div>
 
               {/* Card Graphic/Image */}
-              <div className="relative mt-8 flex items-center justify-center overflow-hidden rounded-xl h-[200px] shrink-0">
+              <div className="relative mt-8 flex h-[200px] shrink-0 items-center justify-center overflow-hidden rounded-xl">
                 <Image
                   src={card.image}
                   alt={card.title}
-                  className="w-full h-[200px] object-fill drop-shadow-sm transition-transform duration-500 hover:scale-105"
+                  className="h-[200px] w-full object-fill drop-shadow-sm transition-transform duration-500 hover:scale-105"
                   priority={card.id === "conversions"}
                 />
               </div>
@@ -131,43 +123,43 @@ export function ServicesSection() {
         </div>
 
         {/* Bottom Statistics / Metrics Row */}
-        <div className="pt-14 lg:pt-18 mt-16">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 lg:gap-14">
+        <div className="mt-16 pt-14 lg:pt-18">
+          <div className="grid grid-cols-1 gap-10 md:grid-cols-3 lg:gap-14">
             {/* Stat 1: 98% */}
             <div className="flex flex-col items-start">
-              <div className="mb-5 h-14 sm:h-16 flex items-center">
-                <Stat98Icon className="h-14 sm:h-16 w-auto" />
+              <div className="mb-5 flex h-14 items-center sm:h-16">
+                <Stat98Icon className="h-14 w-auto sm:h-16" />
               </div>
-              <h4 className="border-t border-[#EDE8F5] w-full pt-4 text-lg sm:text-xl font-bold text-[#141432] mb-2 tracking-tight">
+              <h4 className="mb-2 w-full border-t border-[#EDE8F5] pt-4 text-lg font-bold tracking-tight text-[#141432] sm:text-xl">
                 Client Satisfaction
               </h4>
-              <p className="text-xs sm:text-sm text-[#737373] leading-relaxed max-w-xs font-medium">
+              <p className="max-w-xs text-xs leading-relaxed font-medium text-[#737373] sm:text-sm">
                 Attention, we take out our round glasses and our sweater with elbow patches.
               </p>
             </div>
 
             {/* Stat 2: 2,000+ */}
             <div className="flex flex-col items-start">
-              <div className="mb-5 h-14 sm:h-16 flex items-center">
-                <Stat2000Icon className="h-14 sm:h-16 w-auto text-[#864FFE]" />
+              <div className="mb-5 flex h-14 items-center sm:h-16">
+                <Stat2000Icon className="h-14 w-auto text-[#864FFE] sm:h-16" />
               </div>
-              <h4 className="border-t border-[#EDE8F5] w-full pt-4  text-lg sm:text-xl font-bold text-[#141432] mb-2 tracking-tight">
+              <h4 className="mb-2 w-full border-t border-[#EDE8F5] pt-4 text-lg font-bold tracking-tight text-[#141432] sm:text-xl">
                 Conversion Rate
               </h4>
-              <p className="text-xs sm:text-sm text-[#737373] leading-relaxed max-w-xs font-medium">
+              <p className="max-w-xs text-xs leading-relaxed font-medium text-[#737373] sm:text-sm">
                 Attention, we take out our round glasses and our sweater with elbow patches.
               </p>
             </div>
 
             {/* Stat 3: $75000+ */}
             <div className="flex flex-col items-start">
-              <div className="mb-5 h-14 sm:h-16 flex items-center">
-                <Stat75kIcon className="h-14 sm:h-16 w-auto" />
+              <div className="mb-5 flex h-14 items-center sm:h-16">
+                <Stat75kIcon className="h-14 w-auto sm:h-16" />
               </div>
-              <h4 className="border-t border-[#EDE8F5] w-full pt-4  text-lg sm:text-xl font-bold text-[#141432] mb-2 tracking-tight">
+              <h4 className="mb-2 w-full border-t border-[#EDE8F5] pt-4 text-lg font-bold tracking-tight text-[#141432] sm:text-xl">
                 Revenue Growth
               </h4>
-              <p className="text-xs sm:text-sm text-[#737373] leading-relaxed max-w-xs font-medium">
+              <p className="max-w-xs text-xs leading-relaxed font-medium text-[#737373] sm:text-sm">
                 Attention, we take out our round glasses and our sweater with elbow patches.
               </p>
             </div>

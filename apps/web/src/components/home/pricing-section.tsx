@@ -1,104 +1,45 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { SectionHeader } from "@/components/widgets";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+
+import { BillingPeriod } from "@repo/types";
 
 // Assets
 import pricingBg from "@/assets/pricing/bg.png";
 import shapeImg from "@/assets/pricing/shape.png";
 
-interface PricingPlan {
-  id: string;
-  name: string;
-  description: string;
-  monthlyPrice: string;
-  annualPrice: string;
-  isFeatured?: boolean;
-  buttonText: string;
-  buttonHref: string;
-  bgColor: string;
-  borderColor: string;
-  features: {
-    text: string;
-    included: boolean;
-  }[];
-}
+import { usePlans } from "@/hooks/use-plans";
 
-const pricingPlans: PricingPlan[] = [
-  {
-    id: "free",
-    name: "Free",
-    description: "For individuals and small teams with unlimited trial access.",
-    monthlyPrice: "$00.00",
-    annualPrice: "$00.00",
-    buttonText: "Get Started →",
-    buttonHref: "#pricing",
-    bgColor: "bg-[#FFF8F3]",
-    borderColor: "border-[#FBE6D6]",
-    features: [
-      { text: "Single Payment", included: true },
-      { text: "Custom design & develop", included: false },
-      { text: "Selling your own items", included: false }
-    ]
-  },
-  {
-    id: "advanced",
-    name: "Advanced",
-    description: "For individuals and small teams with unlimited trial access.",
-    monthlyPrice: "$19.00",
-    annualPrice: "$12.00",
-    isFeatured: true,
-    buttonText: "Get Started →",
-    buttonHref: "#pricing",
-    bgColor: "bg-[#F0F9FF]",
-    borderColor: "border-[#BAE6FD]",
-    features: [
-      { text: "Single Payment", included: true },
-      { text: "Custom design & develop", included: true },
-      { text: "Selling your own items", included: true },
-      { text: "Custom design & develop", included: true },
-      { text: "Selling your own items", included: true }
-    ]
-  },
-  {
-    id: "enterprise",
-    name: "Enterprise",
-    description: "For individuals and small teams with unlimited trial access.",
-    monthlyPrice: "$99.00",
-    annualPrice: "$64.00",
-    buttonText: "Get Started →",
-    buttonHref: "#pricing",
-    bgColor: "bg-[#F5F3FF]",
-    borderColor: "border-[#EDE9FE]",
-    features: [
-      { text: "Single Payment", included: true },
-      { text: "Selling on your own conditions", included: true },
-      { text: "Selling your own items", included: true }
-    ]
-  }
+import { Button } from "@/components/ui/button";
+import { SectionHeader } from "@/components/widgets";
+
+const CARD_STYLES = [
+  { bgColor: "bg-[#FFF8F3]", borderColor: "border-[#FBE6D6]" },
+  { bgColor: "bg-[#F0F9FF]", borderColor: "border-[#BAE6FD]" },
+  { bgColor: "bg-[#F5F3FF]", borderColor: "border-[#EDE9FE]" }
 ];
 
 export function PricingSection() {
-  const [billingCycle, setBillingCycle] = useState<"monthly" | "annually">("monthly");
+  const [billingCycle, setBillingCycle] = useState<BillingPeriod>("monthly");
+  const { data: plans = [] } = usePlans(billingCycle);
 
   return (
-    <section className="relative mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28 overflow-hidden bg-white">
+    <section className="relative mx-auto overflow-hidden bg-white px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
       {/* Background Globe Dotted Texture */}
-      <div className="hidden lg:block absolute top-0 left-0 w-full h-full pointer-events-none select-none overflow-hidden z-0">
+      <div className="pointer-events-none absolute top-0 left-0 z-0 hidden h-full w-full overflow-hidden select-none lg:block">
         <Image
           src={pricingBg}
           alt="Pricing Background Graphic"
-          className="absolute -top-10 -left-10 sm:left-0 w-auto h-[110%] max-w-none object-contain opacity-70"
+          className="absolute -top-10 -left-10 h-[110%] w-auto max-w-none object-contain opacity-70 sm:left-0"
           priority
         />
       </div>
 
-      <div className="container relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative z-10 container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header with Top-Right Sparkle Shape */}
-        <div className="relative mx-auto max-w-2xl text-center mb-10">
+        <div className="relative mx-auto mb-10 max-w-2xl text-center">
           <SectionHeader
             align="center"
             badge="WHAT CLIENTS SAY"
@@ -107,23 +48,19 @@ export function PricingSection() {
           />
 
           {/* Top Right Floating Accent Shape */}
-          <div className="absolute -top-2 right-0 sm:right-4 md:-right-8 w-8 sm:w-10 h-auto pointer-events-none">
-            <Image
-              src={shapeImg}
-              alt="Decorative Shape"
-              className="w-full h-auto object-contain"
-            />
+          <div className="pointer-events-none absolute -top-2 right-0 h-auto w-8 sm:right-4 sm:w-10 md:-right-8">
+            <Image src={shapeImg} alt="Decorative Shape" className="h-auto w-full object-contain" />
           </div>
         </div>
 
         {/* Billing Cycle Switcher with Save 35% Badge */}
-        <div className="flex justify-center items-center mb-16">
-          <div className="relative inline-flex items-center bg-[#F3F4F6] p-1 rounded-full shadow-inner">
+        <div className="mb-16 flex items-center justify-center">
+          <div className="relative inline-flex items-center rounded-full bg-[#F3F4F6] p-1 shadow-inner">
             {/* Monthly Tab */}
             <button
               type="button"
               onClick={() => setBillingCycle("monthly")}
-              className={`relative z-10 px-6 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 ${
+              className={`relative z-10 cursor-pointer rounded-full px-6 py-2 text-xs font-semibold transition-all duration-300 sm:text-sm ${
                 billingCycle === "monthly"
                   ? "bg-[#864FFE] text-white shadow-md"
                   : "text-[#141432] hover:text-[#864FFE]"
@@ -132,56 +69,60 @@ export function PricingSection() {
               Monthly
             </button>
 
-            {/* Annually Tab */}
+            {/* Annual Tab */}
             <button
               type="button"
-              onClick={() => setBillingCycle("annually")}
-              className={`relative z-10 px-6 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 ${
-                billingCycle === "annually"
+              onClick={() => setBillingCycle("annual")}
+              className={`relative z-10 cursor-pointer rounded-full px-6 py-2 text-xs font-semibold transition-all duration-300 sm:text-sm ${
+                billingCycle === "annual"
                   ? "bg-[#864FFE] text-white shadow-md"
                   : "text-[#141432] hover:text-[#864FFE]"
               }`}
             >
-              Annualy
+              Annually
             </button>
 
             {/* "Save 35%" Angled Badge */}
-            <div className="absolute -top-3.5 -right-7 sm:-right-8 bg-[#141432] text-white text-[10px] sm:text-[11px] font-bold px-2.5 py-0.5 rounded-full rotate-[32deg] shadow-md tracking-tight whitespace-nowrap">
+            <div className="absolute -top-3.5 -right-7 rotate-[32deg] rounded-full bg-[#141432] px-2.5 py-0.5 text-[10px] font-bold tracking-tight whitespace-nowrap text-white shadow-md sm:-right-8 sm:text-[11px]">
               Save 35%
             </div>
           </div>
         </div>
 
         {/* 3 Pricing Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch max-w-6xl mx-auto">
-          {pricingPlans.map((plan) => {
-            const price =
-              billingCycle === "monthly" ? plan.monthlyPrice : plan.annualPrice;
+        <div className="mx-auto grid max-w-6xl grid-cols-1 items-stretch gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+          {plans.slice(0, 3).map((plan, idx) => {
+            const formattedPrice = `$${Number(plan.price).toFixed(2)}`;
+            const isFeatured = plan.isPopular || idx === 1;
+            const style = CARD_STYLES[idx % CARD_STYLES.length] || CARD_STYLES[0]!;
+            const buttonText = plan.buttonText || "Get Started →";
+            const buttonHref = "#pricing";
 
-            if (plan.isFeatured) {
+            if (isFeatured) {
               return (
                 /* Featured Card with Gradient Glow Border & Elevation */
                 <div
-                  key={plan.id}
-                  className="relative rounded-3xl p-1.5 bg-gradient-to-b from-[#BAE6FD] via-[#864FFE] to-[#FB923C] shadow-xl md:-translate-y-4 transition-all duration-300 hover:shadow-2xl"
+                  key={plan.id || plan._id || `plan-${idx}`}
+                  className="relative rounded-3xl bg-gradient-to-b from-[#BAE6FD] via-[#864FFE] to-[#FB923C] p-1.5 shadow-xl transition-all duration-300 hover:shadow-2xl md:-translate-y-4"
                 >
-                  <div className="rounded-[22px] p-7 sm:p-9 bg-[#F0F9FF] h-full flex flex-col justify-between">
+                  <div className="flex h-full flex-col justify-between rounded-[22px] bg-[#F0F9FF] p-7 sm:p-9">
                     <div>
                       {/* Plan Header */}
-                      <h3 className="text-2xl font-bold text-[#141432] tracking-tight mb-2">
+                      <h3 className="mb-2 text-2xl font-bold tracking-tight text-[#141432]">
                         {plan.name}
                       </h3>
-                      <p className="text-xs sm:text-sm text-[#5C5C5C] leading-relaxed mb-6 font-medium">
-                        {plan.description}
+                      <p className="mb-6 text-xs leading-relaxed font-medium text-[#5C5C5C] sm:text-sm">
+                        {plan.description ||
+                          "For individuals and small teams with unlimited trial access."}
                       </p>
 
                       {/* Price */}
                       <div className="mb-6">
-                        <div className="text-3xl sm:text-4xl font-bold text-[#141432] tracking-tight">
-                          {price}
+                        <div className="text-3xl font-bold tracking-tight text-[#141432] sm:text-4xl">
+                          {formattedPrice}
                         </div>
-                        <div className="text-xs text-[#737373] font-medium mt-1">
-                          /Per Month
+                        <div className="mt-1 text-xs font-medium text-[#737373]">
+                          /{billingCycle === "annual" ? "Per Year" : "Per Month"}
                         </div>
                       </div>
 
@@ -189,22 +130,18 @@ export function PricingSection() {
                       <Button
                         variant="white"
                         size="pill-sm"
-                        className="w-full rounded-full px-5 py-2.5 text-xs font-bold text-[#141432] hover:text-[#864FFE] shadow-xs hover:shadow-md mb-8"
+                        className="mb-8 w-full cursor-pointer rounded-full px-5 py-2.5 text-xs font-bold text-[#141432] shadow-xs hover:text-[#864FFE] hover:shadow-md"
                         asChild
                       >
-                        <Link href={plan.buttonHref}>{plan.buttonText}</Link>
+                        <Link href={buttonHref}>{buttonText}</Link>
                       </Button>
 
                       {/* Features List */}
                       <ul className="space-y-3.5">
-                        {plan.features.map((feature, idx) => (
-                          <li key={idx} className="flex items-center gap-3">
-                            <div className="w-4 h-4 rounded-full bg-[#141432] flex items-center justify-center text-white shrink-0">
-                              <svg
-                                className="w-2.5 h-2.5"
-                                viewBox="0 0 12 12"
-                                fill="none"
-                              >
+                        {plan.features.map((featureText, fIdx) => (
+                          <li key={fIdx} className="flex items-center gap-3">
+                            <div className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[#141432] text-white">
+                              <svg className="h-2.5 w-2.5" viewBox="0 0 12 12" fill="none">
                                 <path
                                   d="M2.5 6L5 8.5L9.5 3.5"
                                   stroke="currentColor"
@@ -214,8 +151,8 @@ export function PricingSection() {
                                 />
                               </svg>
                             </div>
-                            <span className="text-xs sm:text-sm font-medium text-[#141432]">
-                              {feature.text}
+                            <span className="text-xs font-medium text-[#141432] sm:text-sm">
+                              {featureText}
                             </span>
                           </li>
                         ))}
@@ -229,25 +166,26 @@ export function PricingSection() {
             return (
               /* Regular Cards (Free, Enterprise) */
               <div
-                key={plan.id}
-                className={`flex flex-col justify-between rounded-3xl p-7 sm:p-9 border transition-all duration-300 hover:shadow-xl hover:-translate-y-1.5 ${plan.bgColor} ${plan.borderColor}`}
+                key={plan.id || plan._id || `plan-${idx}`}
+                className={`flex flex-col justify-between rounded-3xl border p-7 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl sm:p-9 ${style.bgColor} ${style.borderColor}`}
               >
                 <div>
                   {/* Plan Header */}
-                  <h3 className="text-2xl font-bold text-[#141432] tracking-tight mb-2">
+                  <h3 className="mb-2 text-2xl font-bold tracking-tight text-[#141432]">
                     {plan.name}
                   </h3>
-                  <p className="text-xs sm:text-sm text-[#5C5C5C] leading-relaxed mb-6 font-medium">
-                    {plan.description}
+                  <p className="mb-6 text-xs leading-relaxed font-medium text-[#5C5C5C] sm:text-sm">
+                    {plan.description ||
+                      "For individuals and small teams with unlimited trial access."}
                   </p>
 
                   {/* Price */}
                   <div className="mb-6">
-                    <div className="text-3xl sm:text-4xl font-bold text-[#141432] tracking-tight">
-                      {price}
+                    <div className="text-3xl font-bold tracking-tight text-[#141432] sm:text-4xl">
+                      {formattedPrice}
                     </div>
-                    <div className="text-xs text-[#737373] font-medium mt-1">
-                      /Per Month
+                    <div className="mt-1 text-xs font-medium text-[#737373]">
+                      /{billingCycle === "annual" ? "Per Year" : "Per Month"}
                     </div>
                   </div>
 
@@ -255,55 +193,29 @@ export function PricingSection() {
                   <Button
                     variant="white"
                     size="pill-sm"
-                    className="w-full rounded-full px-5 py-2.5 text-xs font-bold text-[#141432] hover:text-[#864FFE] shadow-xs hover:shadow-md mb-8"
+                    className="mb-8 w-full cursor-pointer rounded-full px-5 py-2.5 text-xs font-bold text-[#141432] shadow-xs hover:text-[#864FFE] hover:shadow-md"
                     asChild
                   >
-                    <Link href={plan.buttonHref}>{plan.buttonText}</Link>
+                    <Link href={buttonHref}>{buttonText}</Link>
                   </Button>
 
                   {/* Features List */}
                   <ul className="space-y-3.5">
-                    {plan.features.map((feature, idx) => (
-                      <li key={idx} className="flex items-center gap-3">
-                        {feature.included ? (
-                          <div className="w-4 h-4 rounded-full bg-[#141432] flex items-center justify-center text-white shrink-0">
-                            <svg
-                              className="w-2.5 h-2.5"
-                              viewBox="0 0 12 12"
-                              fill="none"
-                            >
-                              <path
-                                d="M2.5 6L5 8.5L9.5 3.5"
-                                stroke="currentColor"
-                                strokeWidth="1.75"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                              />
-                            </svg>
-                          </div>
-                        ) : (
-                          <svg
-                            className="w-4 h-4 text-[#D1D5DB] shrink-0"
-                            viewBox="0 0 16 16"
-                            fill="none"
-                          >
+                    {plan.features.map((featureText, fIdx) => (
+                      <li key={fIdx} className="flex items-center gap-3">
+                        <div className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[#141432] text-white">
+                          <svg className="h-2.5 w-2.5" viewBox="0 0 12 12" fill="none">
                             <path
-                              d="M3.5 8L6.5 11L12.5 5"
+                              d="M2.5 6L5 8.5L9.5 3.5"
                               stroke="currentColor"
                               strokeWidth="1.75"
                               strokeLinecap="round"
                               strokeLinejoin="round"
                             />
                           </svg>
-                        )}
-                        <span
-                          className={`text-xs sm:text-sm font-medium ${
-                            feature.included
-                              ? "text-[#141432]"
-                              : "text-[#8C8C8C]"
-                          }`}
-                        >
-                          {feature.text}
+                        </div>
+                        <span className="text-xs font-medium text-[#141432] sm:text-sm">
+                          {featureText}
                         </span>
                       </li>
                     ))}

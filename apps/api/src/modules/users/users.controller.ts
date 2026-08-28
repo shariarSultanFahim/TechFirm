@@ -6,6 +6,7 @@ import {
   Get,
   Param,
   Patch,
+  Post,
   Query,
   UseGuards
 } from "@nestjs/common";
@@ -36,7 +37,26 @@ export class UsersController {
   @ApiOperation({ summary: "Get all users (Admin only)" })
   @SwaggerApiResponse({ status: 200, description: "List of users with pagination" })
   async findAll(@Query() query: QueryUserDto) {
-    return this.usersService.findAll(query);
+    const res = await this.usersService.findAll(query);
+    return {
+      success: true,
+      message: "Users retrieved successfully",
+      data: res.data,
+      meta: res.meta
+    };
+  }
+
+  @Post()
+  @Roles(UserRole.ADMIN)
+  @ApiOperation({ summary: "Create user account (Admin only)" })
+  @SwaggerApiResponse({ status: 201, description: "User created successfully" })
+  async create(@Body() createUserDto: any) {
+    const user = await this.usersService.create(createUserDto);
+    return {
+      success: true,
+      message: "User created successfully",
+      data: user.toJSON()
+    };
   }
 
   @Get(":id")
