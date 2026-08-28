@@ -1,15 +1,17 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 
 import { useMutation } from "@tanstack/react-query";
-import { AlertCircle, ArrowRight, CheckCircle2, Lock, Mail, Zap } from "lucide-react";
+import { AlertCircle, ArrowRight, CheckCircle2, Lock, Mail } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 import { LoginInput, loginSchema } from "@repo/validators";
 
+import logoImg from "@/assets/logo-short.png";
 import { post } from "@/lib/api";
 
 export default function AdminLoginPage() {
@@ -29,9 +31,14 @@ export default function AdminLoginPage() {
 
   const mutation = useMutation({
     mutationFn: async (data: LoginInput) => {
-      return await post("/auth/login", data);
+      return await post<{ data?: { accessToken?: string } }>("/auth/login", data);
     },
-    onSuccess: () => {
+    onSuccess: (response) => {
+      const accessToken = response?.data?.accessToken;
+      if (accessToken && typeof document !== "undefined") {
+        const isSecure = window.location.protocol === "https:";
+        document.cookie = `accessToken=${accessToken}; path=/; max-age=${7 * 24 * 60 * 60}; SameSite=Lax${isSecure ? "; Secure" : ""}`;
+      }
       toast.success("Welcome back! Signed in successfully.");
       window.location.href = "/overview";
     },
@@ -51,8 +58,15 @@ export default function AdminLoginPage() {
     <div className="bg-background text-foreground flex min-h-screen items-center justify-center p-4">
       <div className="bg-card border-border w-full max-w-md rounded-3xl border p-8 shadow-xl sm:p-10">
         <div className="mb-8 text-center">
-          <div className="bg-primary text-primary-foreground shadow-primary/20 mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl shadow-lg">
-            <Zap className="h-6 w-6 fill-current" />
+          <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center">
+            <Image
+              src={logoImg}
+              alt="TechFirm Logo"
+              width={48}
+              height={48}
+              priority
+              className="h-12 w-12 object-contain"
+            />
           </div>
           <h1 className="text-foreground text-2xl font-bold tracking-tight">TechFirm Console</h1>
           <p className="text-muted-foreground mt-1 text-xs font-normal">

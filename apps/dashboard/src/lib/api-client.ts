@@ -47,10 +47,20 @@ export async function apiClient<T = unknown>(
     }
   }
 
+  let authHeaders: Record<string, string> = {};
+  if (typeof document !== "undefined") {
+    const match = document.cookie.match(/(?:^|;\s*)accessToken=([^;]+)/);
+    const token = match ? match[1] : null;
+    if (token) {
+      authHeaders = { Authorization: `Bearer ${token}` };
+    }
+  }
+
   const config: RequestInit = {
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",
+      ...authHeaders,
       ...headers
     },
     credentials: "include",

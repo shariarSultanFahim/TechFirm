@@ -41,7 +41,11 @@ export class AuthController {
 
     return {
       message: "Registration successful",
-      data: { user }
+      data: {
+        user,
+        accessToken: tokens.accessToken,
+        refreshToken: tokens.refreshToken
+      }
     };
   }
 
@@ -56,7 +60,11 @@ export class AuthController {
 
     return {
       message: "Login successful",
-      data: { user }
+      data: {
+        user,
+        accessToken: tokens.accessToken,
+        refreshToken: tokens.refreshToken
+      }
     };
   }
 
@@ -77,7 +85,11 @@ export class AuthController {
 
     return {
       message: "Token refreshed successfully",
-      data: { user }
+      data: {
+        user,
+        accessToken: tokens.accessToken,
+        refreshToken: tokens.refreshToken
+      }
     };
   }
 
