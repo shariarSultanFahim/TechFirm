@@ -7,3 +7,7 @@ export * from "./CloudIcon";
 export * from "./WavesBadgeIcon";
 export * from "./UShapeBadgeIcon";
 export * from "./ArrowBadgeIcon";
+export * from "./CheckBadgeIcon";
+export * from "./Stat98Icon";
+export * from "./Stat2000Icon";
+export * from "./Stat75kIcon";

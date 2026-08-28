@@ -10,6 +10,7 @@ import {
   WordpressIcon
 } from "@/assets/icons";
 import { SectionHeader } from "@/components/widgets";
+import { Button } from "@/components/ui";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -143,12 +144,13 @@ export function HostingPlanSection() {
                   </div>
 
                   <div className="pt-8">
-                    <Link
-                      href={plan.href}
-                      className="inline-flex items-center justify-center px-7 py-2.5 rounded-full bg-linear-to-r from-[#864FFE] to-[#7033F5] text-white text-xs font-bold shadow-md hover:shadow-lg hover:opacity-95 transition-all"
+                    <Button
+                      variant="primary"
+                      size="pill-sm"
+                      asChild
                     >
-                      Learn More
-                    </Link>
+                      <Link href={plan.href}>Learn More</Link>
+                    </Button>
                   </div>
                 </div>
               );
@@ -180,12 +182,14 @@ export function HostingPlanSection() {
                 </div>
 
                 <div className="pt-8">
-                  <Link
-                    href={plan.href}
-                    className="inline-flex items-center justify-center px-6 py-2.5 rounded-full border border-border text-xs font-bold text-[#141432] hover:border-primary hover:text-primary hover:bg-primary/5 transition-all"
+                  <Button
+                    variant="outline"
+                    size="pill-sm"
+                    className="border-border text-[#141432] hover:border-primary hover:text-primary hover:bg-primary/5"
+                    asChild
                   >
-                    Learn More
-                  </Link>
+                    <Link href={plan.href}>Learn More</Link>
+                  </Button>
                 </div>
               </div>
             );

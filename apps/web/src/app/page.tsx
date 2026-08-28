@@ -2,7 +2,8 @@ import {
   HeroSection,
   CloudControlPanelSection,
   HostingPlanSection,
-  ReviewsSection
+  ReviewsSection,
+  ServicesSection
 } from "@/components/home";
 
 export default function HomePage() {
@@ -19,6 +20,9 @@ export default function HomePage() {
 
       {/* 4. Client Reviews & Partner Logos */}
       <ReviewsSection />
+
+      {/* 5. Our Services & Key Statistics */}
+      <ServicesSection />
     </main>
   );
 }

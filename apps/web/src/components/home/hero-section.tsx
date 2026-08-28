@@ -5,6 +5,7 @@ import heroTopImg from "@/assets/hero/hero-top.png";
 import { Check, ChevronDown, ChevronRight, Star } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
+import { Button } from "@/components/ui";
 
 const tldPricingList = [
   { tld: ".com", price: "$39/Year" },
@@ -87,13 +88,15 @@ export function HeroSection() {
                   required
                   className="w-full sm:w-64 px-6 py-3 rounded-full border border-border bg-card text-foreground placeholder:text-muted-foreground/80 text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all shadow-2xs"
                 />
-                <button
+                <Button
                   type="submit"
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-7 py-3 rounded-full bg-linear-to-r from-[#864FFE] to-[#7033F5] text-white font-bold text-sm shadow-md hover:shadow-lg hover:opacity-95 transition-all cursor-pointer shrink-0"
+                  variant="primary"
+                  size="pill"
+                  className="w-full sm:w-auto shrink-0"
                 >
                   <span>Sign Up</span>
                   <ChevronRight className="w-4 h-4 stroke-[2.5]" />
-                </button>
+                </Button>
               </div>
 
               {emailSubmitted && (
@@ -182,13 +185,15 @@ export function HeroSection() {
                 </div>
 
                 {/* Search Button */}
-                <button
+                <Button
                   type="submit"
-                  className="px-6 sm:px-8 py-3 rounded-full bg-linear-to-r from-[#864FFE] to-[#7033F5] text-white font-bold text-sm hover:opacity-95 shadow-md hover:shadow-lg transition-all flex items-center gap-1 cursor-pointer shrink-0"
+                  variant="primary"
+                  size="pill"
+                  className="px-6 sm:px-8 py-3 shrink-0"
                 >
                   <span>Search</span>
                   <ChevronRight className="w-4 h-4 stroke-[2.5]" />
-                </button>
+                </Button>
               </div>
             </div>
 
