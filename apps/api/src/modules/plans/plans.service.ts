@@ -11,7 +11,7 @@ export class PlansService {
     private readonly planModel: Model<PlanDocument>
   ) {}
 
-  async findAll(query?: QueryPlanDto): Promise<PlanDocument[]> {
+  async findAll(query?: QueryPlanDto) {
     const filter: Record<string, any> = {};
     if (query?.billingPeriod) {
       filter.billingPeriod = query.billingPeriod;
@@ -19,8 +19,41 @@ export class PlansService {
     if (query?.isActive !== undefined) {
       filter.isActive = query.isActive;
     }
+    if (query?.search) {
+      filter.$or = [
+        { name: { $regex: query.search, $options: "i" } },
+        { description: { $regex: query.search, $options: "i" } }
+      ];
+    }
 
-    return this.planModel.find(filter).sort({ order: 1, createdAt: 1 }).exec();
+    const total = await this.planModel.countDocuments(filter).exec();
+
+    if (query?.page || query?.limit) {
+      const page = Number(query.page) || 1;
+      const limit = Number(query.limit) || 10;
+      const skip = (page - 1) * limit;
+
+      const items = await this.planModel
+        .find(filter)
+        .sort({ order: 1, createdAt: 1 })
+        .skip(skip)
+        .limit(limit)
+        .exec();
+
+      return {
+        items: items.map((p) => p.toJSON()),
+        data: items.map((p) => p.toJSON()),
+        meta: {
+          page,
+          limit,
+          total,
+          totalPages: Math.ceil(total / limit)
+        }
+      };
+    }
+
+    const items = await this.planModel.find(filter).sort({ order: 1, createdAt: 1 }).exec();
+    return items.map((p) => p.toJSON());
   }
 
   async findById(id: string): Promise<PlanDocument> {

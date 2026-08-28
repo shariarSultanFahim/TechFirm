@@ -11,7 +11,7 @@ export class FaqsService {
     private readonly faqModel: Model<FaqDocument>
   ) {}
 
-  async findAll(query?: QueryFaqsDto): Promise<Faq[]> {
+  async findAll(query?: QueryFaqsDto) {
     const filter: Record<string, any> = {};
 
     if (query?.isActive !== undefined) {
@@ -27,17 +27,34 @@ export class FaqsService {
       filter.$or = [{ question: searchRegex }, { answer: searchRegex }];
     }
 
-    const q = this.faqModel.find(filter).sort({ order: 1, createdAt: -1 });
+    const total = await this.faqModel.countDocuments(filter).exec();
 
-    if (query?.limit) {
-      q.limit(Number(query.limit));
+    if (query?.page || query?.limit) {
+      const page = Number(query.page) || 1;
+      const limit = Number(query.limit) || 10;
+      const skip = (page - 1) * limit;
+
+      const items = await this.faqModel
+        .find(filter)
+        .sort({ order: 1, createdAt: -1 })
+        .skip(skip)
+        .limit(limit)
+        .exec();
+
+      return {
+        items: items.map((f) => (f.toJSON ? f.toJSON() : f)),
+        data: items.map((f) => (f.toJSON ? f.toJSON() : f)),
+        meta: {
+          page,
+          limit,
+          total,
+          totalPages: Math.ceil(total / limit)
+        }
+      };
     }
 
-    if (query?.page && query?.limit) {
-      q.skip((Number(query.page) - 1) * Number(query.limit));
-    }
-
-    return q.exec();
+    const items = await this.faqModel.find(filter).sort({ order: 1, createdAt: -1 }).exec();
+    return items.map((f) => (f.toJSON ? f.toJSON() : f));
   }
 
   async getCategories(): Promise<string[]> {

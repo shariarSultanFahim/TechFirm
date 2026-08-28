@@ -42,6 +42,7 @@ export interface PaginationMeta {
   limit: number;
   total: number;
   totalPage?: number;
+  totalPages?: number;
 }
 
 /**

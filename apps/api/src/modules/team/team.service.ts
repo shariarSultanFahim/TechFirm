@@ -39,7 +39,7 @@ export class TeamService {
     }
   }
 
-  async findAll(query?: QueryTeamMembersDto): Promise<TeamMember[]> {
+  async findAll(query?: QueryTeamMembersDto) {
     const filter: Record<string, any> = {};
 
     if (query?.isActive !== undefined) {
@@ -56,17 +56,34 @@ export class TeamService {
       ];
     }
 
-    const q = this.teamMemberModel.find(filter).sort({ order: 1, createdAt: -1 });
+    const total = await this.teamMemberModel.countDocuments(filter).exec();
 
-    if (query?.limit) {
-      q.limit(Number(query.limit));
+    if (query?.page || query?.limit) {
+      const page = Number(query.page) || 1;
+      const limit = Number(query.limit) || 10;
+      const skip = (page - 1) * limit;
+
+      const items = await this.teamMemberModel
+        .find(filter)
+        .sort({ order: 1, createdAt: -1 })
+        .skip(skip)
+        .limit(limit)
+        .exec();
+
+      return {
+        items: items.map((m) => (m.toJSON ? m.toJSON() : m)),
+        data: items.map((m) => (m.toJSON ? m.toJSON() : m)),
+        meta: {
+          page,
+          limit,
+          total,
+          totalPages: Math.ceil(total / limit)
+        }
+      };
     }
 
-    if (query?.page && query?.limit) {
-      q.skip((Number(query.page) - 1) * Number(query.limit));
-    }
-
-    return q.exec();
+    const items = await this.teamMemberModel.find(filter).sort({ order: 1, createdAt: -1 }).exec();
+    return items.map((m) => (m.toJSON ? m.toJSON() : m));
   }
 
   async findBySlug(slug: string): Promise<TeamMember> {

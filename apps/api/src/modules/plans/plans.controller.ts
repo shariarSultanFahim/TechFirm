@@ -31,10 +31,17 @@ export class PlansController {
   @ApiOperation({ summary: "Get all plans (Public)" })
   @SwaggerApiResponse({ status: 200, description: "List of plans" })
   async findAll(@Query() query: QueryPlanDto) {
-    const plans = await this.plansService.findAll(query);
+    const res = await this.plansService.findAll(query);
+    if (res && typeof res === "object" && "items" in res) {
+      return {
+        message: "Plans retrieved successfully",
+        data: res.items,
+        meta: res.meta
+      };
+    }
     return {
       message: "Plans retrieved successfully",
-      data: plans.map((p) => p.toJSON())
+      data: res
     };
   }
 

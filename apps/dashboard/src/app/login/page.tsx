@@ -6,6 +6,7 @@ import { useMutation } from "@tanstack/react-query";
 import { AlertCircle, ArrowRight, CheckCircle2, Lock, Mail, Zap } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 import { LoginInput, loginSchema } from "@repo/validators";
 
@@ -31,11 +32,13 @@ export default function AdminLoginPage() {
       return await post("/auth/login", data);
     },
     onSuccess: () => {
+      toast.success("Welcome back! Signed in successfully.");
       window.location.href = "/overview";
     },
     onError: (err: unknown) => {
       const msg = err instanceof Error ? err.message : "Invalid admin credentials.";
       setError(msg);
+      toast.error(msg);
     }
   });
 

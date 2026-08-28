@@ -27,7 +27,18 @@ export class FaqsController {
   @ApiOperation({ summary: "Get all FAQs (Public, supports category filter, search, active flag)" })
   @ApiResponse({ status: 200, description: "Returns list of FAQs" })
   async findAll(@Query() query: QueryFaqsDto) {
-    return this.faqsService.findAll(query);
+    const res = await this.faqsService.findAll(query);
+    if (res && typeof res === "object" && "items" in res) {
+      return {
+        message: "FAQs retrieved successfully",
+        data: res.items,
+        meta: res.meta
+      };
+    }
+    return {
+      message: "FAQs retrieved successfully",
+      data: res
+    };
   }
 
   @Get("categories")

@@ -26,8 +26,8 @@ export const createUserSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters").max(50),
   email: z.string().email("Invalid email address"),
   password: z.string().min(8, "Password must be at least 8 characters"),
-  role: userRoleEnum.default("user"),
-  isActive: z.boolean().default(true)
+  role: userRoleEnum,
+  isActive: z.boolean()
 });
 
 export const updateUserSchema = z.object({
@@ -71,13 +71,13 @@ export const billingPeriodEnum = z.enum(["monthly", "annual"]);
 export const createPlanSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
   price: z.number().min(0, "Price must be non-negative"),
-  billingPeriod: billingPeriodEnum.default("monthly"),
+  billingPeriod: billingPeriodEnum,
   features: z.array(z.string()).min(1, "At least one feature is required"),
-  isPopular: z.boolean().default(false),
-  isActive: z.boolean().default(true),
-  order: z.number().int().default(0),
+  isPopular: z.boolean(),
+  isActive: z.boolean(),
+  order: z.number().int(),
   description: z.string().optional(),
-  buttonText: z.string().optional().default("Get Started")
+  buttonText: z.string().optional()
 });
 
 export const updatePlanSchema = createPlanSchema.partial();
@@ -87,7 +87,7 @@ export const updatePlanSchema = createPlanSchema.partial();
  */
 export const createPostSchema = z.object({
   title: z.string().min(3, "Title must be at least 3 characters"),
-  slug: z.string().min(3, "Slug must be at least 3 characters").optional(),
+  slug: z.string().optional(),
   excerpt: z.string().min(10, "Excerpt must be at least 10 characters"),
   body: z.string().min(20, "Body must be at least 20 characters"),
   coverImage: z.string().min(1, "Cover image is required"),
@@ -98,9 +98,9 @@ export const createPostSchema = z.object({
     role: z.string().optional()
   }),
   publishedAt: z.union([z.string(), z.date()]).optional(),
-  isPublished: z.boolean().default(true),
-  readTime: z.string().optional().default("5 min read"),
-  tags: z.array(z.string()).optional().default([])
+  isPublished: z.boolean(),
+  readTime: z.string().optional(),
+  tags: z.array(z.string())
 });
 
 export const updatePostSchema = createPostSchema.partial();
@@ -189,16 +189,16 @@ export const createTestimonialSchema = z.object({
   quote: z.string().min(5, "Quote must be at least 5 characters"),
   authorName: z.string().min(2, "Author name is required"),
   authorRole: z.string().min(2, "Author role is required"),
-  company: z.string().optional().default(""),
+  company: z.string().optional(),
   avatar: z.string().min(1, "Avatar URL is required"),
-  rating: z.number().min(1).max(5).default(5),
-  tags: z.array(z.string()).default([]),
-  hasVideo: z.boolean().default(false),
-  videoUrl: z.string().optional().default(""),
-  posterImage: z.string().optional().default(""),
-  iconBg: z.string().optional().default("bg-linear-to-br from-[#00C0FA] to-[#007BFE]"),
-  order: z.number().default(0),
-  isActive: z.boolean().default(true)
+  rating: z.number().min(1).max(5),
+  tags: z.array(z.string()),
+  hasVideo: z.boolean(),
+  videoUrl: z.string().optional(),
+  posterImage: z.string().optional(),
+  iconBg: z.string().optional(),
+  order: z.number(),
+  isActive: z.boolean()
 });
 
 export const updateTestimonialSchema = createTestimonialSchema.partial();
@@ -215,9 +215,9 @@ export const queryTestimonialsSchema = z.object({
 export const createFaqSchema = z.object({
   question: z.string().min(5, "Question must be at least 5 characters"),
   answer: z.string().min(10, "Answer must be at least 10 characters"),
-  category: z.string().min(2, "Category is required").default("General"),
-  order: z.number().default(0),
-  isActive: z.boolean().default(true)
+  category: z.string().min(2, "Category is required"),
+  order: z.number(),
+  isActive: z.boolean()
 });
 
 export const updateFaqSchema = createFaqSchema.partial();
@@ -236,15 +236,15 @@ export const queryFaqsSchema = z.object({
 export const createTeamMemberSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
   role: z.string().min(2, "Role is required"),
-  bio: z.string().optional().default(""),
+  bio: z.string().optional(),
   photo: z.string().min(1, "Photo URL is required"),
   email: z.string().email("Invalid email address").optional().or(z.literal("")),
-  phone: z.string().optional().default(""),
+  phone: z.string().optional(),
   socialLinks: socialLinksSchema.optional(),
-  skills: z.array(z.string()).default([]),
-  experience: z.string().optional().default(""),
-  order: z.number().default(0),
-  isActive: z.boolean().default(true)
+  skills: z.array(z.string()),
+  experience: z.string().optional(),
+  order: z.number(),
+  isActive: z.boolean()
 });
 
 export const updateTeamMemberSchema = createTeamMemberSchema.partial();
@@ -266,19 +266,19 @@ export const portfolioResultSchema = z.object({
 
 export const createPortfolioItemSchema = z.object({
   title: z.string().min(2, "Title must be at least 2 characters"),
-  subtitle: z.string().optional().default(""),
+  subtitle: z.string().optional(),
   category: z.string().min(2, "Category is required"),
-  industry: z.string().optional().default(""),
-  overview: z.string().optional().default(""),
+  industry: z.string().optional(),
+  overview: z.string().optional(),
   image: z.string().min(1, "Image URL is required"),
-  bgImage: z.string().optional().default(""),
-  isDark: z.boolean().default(false),
-  actionText: z.string().optional().default("View Project"),
-  challengeText: z.array(z.string()).default([]),
-  solutionText: z.array(z.string()).default([]),
-  results: z.array(portfolioResultSchema).default([]),
-  order: z.number().default(0),
-  isActive: z.boolean().default(true)
+  bgImage: z.string().optional(),
+  isDark: z.boolean(),
+  actionText: z.string().optional(),
+  challengeText: z.array(z.string()),
+  solutionText: z.array(z.string()),
+  results: z.array(portfolioResultSchema),
+  order: z.number(),
+  isActive: z.boolean()
 });
 
 export const updatePortfolioItemSchema = createPortfolioItemSchema.partial();

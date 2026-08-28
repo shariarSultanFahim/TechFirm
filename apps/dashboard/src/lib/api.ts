@@ -14,11 +14,22 @@ api.interceptors.response.use(
   (res) => res,
   (err: AxiosError<{ message?: string; errorMessages?: Array<{ message: string }> }>) => {
     if (axios.isAxiosError(err)) {
+      const status = err.response?.status;
       const serverMessage =
         err.response?.data?.message ||
         err.response?.data?.errorMessages?.[0]?.message ||
         err.message ||
         "An unexpected network error occurred";
+
+      // If unauthorized, clear stale cookies and redirect to login
+      if (status === 401 && typeof window !== "undefined") {
+        document.cookie = "accessToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+        if (!window.location.pathname.startsWith("/login")) {
+          const currentPath = encodeURIComponent(window.location.pathname);
+          window.location.href = `/login?from=${currentPath}`;
+        }
+      }
+
       return Promise.reject(new Error(serverMessage));
     }
     return Promise.reject(err);

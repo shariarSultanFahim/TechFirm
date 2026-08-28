@@ -31,7 +31,18 @@ export class TeamController {
   @ApiOperation({ summary: "Get all team members (Public, filterable by search/active)" })
   @ApiResponse({ status: 200, description: "Returns list of team members" })
   async findAll(@Query() query: QueryTeamMembersDto) {
-    return this.teamService.findAll(query);
+    const res = await this.teamService.findAll(query);
+    if (res && typeof res === "object" && "items" in res) {
+      return {
+        message: "Team members retrieved successfully",
+        data: res.items,
+        meta: res.meta
+      };
+    }
+    return {
+      message: "Team members retrieved successfully",
+      data: res
+    };
   }
 
   @Get(":slug")

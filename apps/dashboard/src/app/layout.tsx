@@ -1,6 +1,6 @@
-import { Providers } from "@/providers/Providers";
+import { Toaster } from "sonner";
 
-import { Toaster } from "@/components/ui/toast";
+import { Providers } from "@/providers/Providers";
 
 import "@/styles/globals.css";
 
@@ -30,7 +30,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       >
         <Providers>
           {children}
-          <Toaster />
+          <Toaster richColors closeButton position="top-right" />
         </Providers>
       </body>
     </html>

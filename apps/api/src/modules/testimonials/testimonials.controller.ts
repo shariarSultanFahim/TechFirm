@@ -31,7 +31,18 @@ export class TestimonialsController {
   @ApiOperation({ summary: "Get all testimonials (Public, filterable by active/limit)" })
   @ApiResponse({ status: 200, description: "Returns list of testimonials" })
   async findAll(@Query() query: QueryTestimonialsDto) {
-    return this.testimonialsService.findAll(query);
+    const res = await this.testimonialsService.findAll(query);
+    if (res && typeof res === "object" && "items" in res) {
+      return {
+        message: "Testimonials retrieved successfully",
+        data: res.items,
+        meta: res.meta
+      };
+    }
+    return {
+      message: "Testimonials retrieved successfully",
+      data: res
+    };
   }
 
   @Get(":id")

@@ -1,0 +1,70 @@
+"use client";
+
+import { useQuery } from "@tanstack/react-query";
+
+import { ApiResponse, IPost, PaginationMeta } from "@repo/types";
+
+import { get } from "@/lib/api";
+
+export interface UsePostsParams {
+  page?: number;
+  limit?: number;
+  category?: string;
+  search?: string;
+  isPublished?: boolean;
+}
+
+export function usePosts(params?: UsePostsParams) {
+  const page = params?.page ?? 1;
+  const limit = params?.limit ?? 10;
+  const category = params?.category === "All" ? undefined : params?.category;
+  const search = params?.search;
+  const isPublished = params?.isPublished;
+
+  return useQuery<{ items: IPost[]; meta: PaginationMeta }>({
+    queryKey: ["posts", { page, limit, category, search, isPublished }],
+    queryFn: async () => {
+      const qp = new URLSearchParams();
+      if (page) qp.set("page", String(page));
+      if (limit) qp.set("limit", String(limit));
+      if (category) qp.set("category", category);
+      if (search) qp.set("search", search);
+      if (isPublished !== undefined) qp.set("isPublished", String(isPublished));
+
+      const res = await get<ApiResponse<IPost[]> & { items?: IPost[] }>(`/posts?${qp.toString()}`);
+
+      const items = Array.isArray(res.data) ? res.data : res.items || [];
+
+      const meta: PaginationMeta = res.meta || {
+        page,
+        limit,
+        total: items.length,
+        totalPages: Math.ceil(items.length / limit) || 1
+      };
+
+      return { items, meta };
+    }
+  });
+}
+
+export function usePostCategories() {
+  const defaultCategories = [
+    "Cloud Solutions",
+    "Cyber Security",
+    "DevOps & CI/CD",
+    "Managed Services",
+    "Technology"
+  ];
+
+  return useQuery<string[]>({
+    queryKey: ["post-categories"],
+    queryFn: async () => {
+      try {
+        const res = await get<ApiResponse<string[]>>("/posts/categories");
+        return res.data && res.data.length > 0 ? res.data : defaultCategories;
+      } catch {
+        return defaultCategories;
+      }
+    }
+  });
+}

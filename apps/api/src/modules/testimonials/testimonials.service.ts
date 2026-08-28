@@ -15,24 +15,41 @@ export class TestimonialsService {
     private readonly testimonialModel: Model<TestimonialDocument>
   ) {}
 
-  async findAll(query?: QueryTestimonialsDto): Promise<Testimonial[]> {
+  async findAll(query?: QueryTestimonialsDto) {
     const filter: Record<string, any> = {};
 
     if (query?.isActive !== undefined) {
       filter.isActive = query.isActive === "true";
     }
 
-    const q = this.testimonialModel.find(filter).sort({ order: 1, createdAt: -1 });
+    const total = await this.testimonialModel.countDocuments(filter).exec();
 
-    if (query?.limit) {
-      q.limit(Number(query.limit));
+    if (query?.page || query?.limit) {
+      const page = Number(query.page) || 1;
+      const limit = Number(query.limit) || 10;
+      const skip = (page - 1) * limit;
+
+      const items = await this.testimonialModel
+        .find(filter)
+        .sort({ order: 1, createdAt: -1 })
+        .skip(skip)
+        .limit(limit)
+        .exec();
+
+      return {
+        items: items.map((t) => (t.toJSON ? t.toJSON() : t)),
+        data: items.map((t) => (t.toJSON ? t.toJSON() : t)),
+        meta: {
+          page,
+          limit,
+          total,
+          totalPages: Math.ceil(total / limit)
+        }
+      };
     }
 
-    if (query?.page && query?.limit) {
-      q.skip((Number(query.page) - 1) * Number(query.limit));
-    }
-
-    return q.exec();
+    const items = await this.testimonialModel.find(filter).sort({ order: 1, createdAt: -1 }).exec();
+    return items.map((t) => (t.toJSON ? t.toJSON() : t));
   }
 
   async findById(id: string): Promise<Testimonial> {
