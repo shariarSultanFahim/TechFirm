@@ -1,16 +1,46 @@
-import { UnderDevelopment } from "@/components/widgets";
+import { Metadata } from "next";
+import { notFound } from "next/navigation";
+import {
+  caseStudies,
+  getCaseStudyBySlug,
+  PortfolioDetailView
+} from "@/components/portfolio";
 
-export const metadata = {
-  title: "Case Study — TechFirm",
-  description: "Client case study details."
-};
+interface PortfolioDetailPageProps {
+  params: Promise<{
+    slug: string;
+  }>;
+}
 
-export default function CaseStudyPage() {
-  return (
-    <UnderDevelopment
-      title="Case Study Details"
-      badge="PORTFOLIO"
-      description="This project showcase and architecture breakdown is being prepared."
-    />
-  );
+export async function generateStaticParams() {
+  return caseStudies.map((study) => ({
+    slug: study.slug
+  }));
+}
+
+export async function generateMetadata({
+  params
+}: PortfolioDetailPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const study = getCaseStudyBySlug(slug);
+
+  return {
+    title: `${study.title} — Case Study — TechFirm`,
+    description:
+      study.overview ||
+      "Discover how TechFirm engineered high performance cloud server solutions for enterprise transformation."
+  };
+}
+
+export default async function PortfolioDetailPage({
+  params
+}: PortfolioDetailPageProps) {
+  const { slug } = await params;
+  const study = getCaseStudyBySlug(slug);
+
+  if (!study) {
+    notFound();
+  }
+
+  return <PortfolioDetailView caseStudy={study} />;
 }
