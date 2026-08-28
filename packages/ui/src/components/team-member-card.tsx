@@ -1,5 +1,6 @@
 import * as React from "react";
-import { Linkedin, Twitter, Mail } from "lucide-react";
+import { Mail } from "lucide-react";
+import { LinkedinIcon, TwitterIcon } from "./social-icons";
 
 export interface TeamMemberItem {
   name: string;
@@ -79,12 +80,12 @@ export function TeamMemberCard({
         <div className="flex items-center gap-3">
           {linkedinUrl && (
             <a href={linkedinUrl} className="text-muted-foreground hover:text-primary transition-colors" aria-label="LinkedIn">
-              <Linkedin className="w-4 h-4" />
+              <LinkedinIcon className="w-4 h-4" />
             </a>
           )}
           {twitterUrl && (
             <a href={twitterUrl} className="text-muted-foreground hover:text-primary transition-colors" aria-label="Twitter">
-              <Twitter className="w-4 h-4" />
+              <TwitterIcon className="w-4 h-4" />
             </a>
           )}
           {emailUrl && (

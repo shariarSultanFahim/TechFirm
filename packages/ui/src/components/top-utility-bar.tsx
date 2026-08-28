@@ -1,5 +1,11 @@
 import * as React from "react";
-import { Mail, Phone, Clock, Facebook, Twitter, Linkedin, Instagram } from "lucide-react";
+import { Mail, Phone, Clock } from "lucide-react";
+import {
+  FacebookIcon,
+  TwitterIcon,
+  LinkedinIcon,
+  InstagramIcon
+} from "./social-icons";
 
 export function TopUtilityBar() {
   return (
@@ -22,16 +28,16 @@ export function TopUtilityBar() {
         <div className="flex items-center gap-3">
           <span className="text-gray-400">Follow Us:</span>
           <a href="#" className="hover:text-primary transition-colors" aria-label="Facebook">
-            <Facebook className="w-3.5 h-3.5" />
+            <FacebookIcon className="w-3.5 h-3.5" />
           </a>
           <a href="#" className="hover:text-primary transition-colors" aria-label="Twitter">
-            <Twitter className="w-3.5 h-3.5" />
+            <TwitterIcon className="w-3.5 h-3.5" />
           </a>
           <a href="#" className="hover:text-primary transition-colors" aria-label="LinkedIn">
-            <Linkedin className="w-3.5 h-3.5" />
+            <LinkedinIcon className="w-3.5 h-3.5" />
           </a>
           <a href="#" className="hover:text-primary transition-colors" aria-label="Instagram">
-            <Instagram className="w-3.5 h-3.5" />
+            <InstagramIcon className="w-3.5 h-3.5" />
           </a>
         </div>
       </div>

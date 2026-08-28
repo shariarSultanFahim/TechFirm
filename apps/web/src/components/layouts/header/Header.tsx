@@ -1,5 +1,6 @@
 "use client";
 
+import { useCart } from "@/components/cart";
 import { PillButton } from "@/components/ui/pill-button";
 import { siteConfig } from "@/config/site";
 import {
@@ -18,17 +19,15 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 export function Header() {
+  const { openCart, totalCount } = useCart();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [searchModalOpen, setSearchModalOpen] = useState(false);
-  const [languageDropdownOpen, setLanguageDropdownOpen] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState("English");
   const pathname = usePathname();
 
-  const languageRef = useRef<HTMLDivElement>(null);
 
   const toggleDropdown = (title: string) => {
     setActiveDropdown(activeDropdown === title ? null : title);
@@ -39,27 +38,15 @@ export function Header() {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         setSearchModalOpen(false);
-        setLanguageDropdownOpen(false);
         setMobileMenuOpen(false);
         setActiveDropdown(null);
       }
     };
 
-    const handleClickOutside = (e: MouseEvent) => {
-      if (
-        languageRef.current &&
-        !languageRef.current.contains(e.target as Node)
-      ) {
-        setLanguageDropdownOpen(false);
-      }
-    };
-
     window.addEventListener("keydown", handleKeyDown);
-    document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
-      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
@@ -78,7 +65,7 @@ export function Header() {
   return (
     <>
       {/* Top Utility Header Bar - Visible on screens 1024px+ (lg) */}
-      <div className="relative z-60 w-full bg-[#f8f9fa] border-b border-border/70 text-foreground py-2.5 lg:py-3 hidden lg:block">
+      <div className="relative z-10 w-full bg-[#f8f9fa] border-b border-border/70 text-foreground py-2.5 lg:py-3 hidden lg:block">
         <div className="container max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between gap-4 lg:gap-6">
           {/* Logo Section */}
           <div className="flex items-center gap-5 xl:gap-7 shrink-0">
@@ -198,69 +185,7 @@ export function Header() {
               </a>
             </div>
 
-            {/* Language Selector Dropdown */}
-            <div className="relative" ref={languageRef}>
-              <button
-                type="button"
-                onClick={() => setLanguageDropdownOpen(!languageDropdownOpen)}
-                className="flex items-center gap-1 text-xs font-bold text-foreground hover:text-primary py-1 px-1.5 rounded-md hover:bg-muted transition-colors cursor-pointer"
-              >
-                <span className="text-sm">🇬🇧</span>
-                <span>{selectedLanguage}</span>
-                <ChevronDown
-                  className={`w-3 h-3 text-muted-foreground transition-transform duration-200 ${
-                    languageDropdownOpen ? "rotate-180" : ""
-                  }`}
-                />
-              </button>
-
-              {languageDropdownOpen && (
-                <div className="absolute right-0 top-full mt-2 w-36 bg-card rounded-xl shadow-xl border border-border py-2 z-70 animate-in fade-in zoom-in-95 duration-150">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setSelectedLanguage("English");
-                      setLanguageDropdownOpen(false);
-                    }}
-                    className={`w-full flex items-center gap-2 px-3.5 py-2 text-xs font-bold transition-colors ${
-                      selectedLanguage === "English"
-                        ? "text-primary bg-accent"
-                        : "text-foreground hover:bg-accent/60 hover:text-primary"
-                    }`}
-                  >
-                    <span>🇬🇧</span> English
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setSelectedLanguage("Deutsch");
-                      setLanguageDropdownOpen(false);
-                    }}
-                    className={`w-full flex items-center gap-2 px-3.5 py-2 text-xs font-bold transition-colors ${
-                      selectedLanguage === "Deutsch"
-                        ? "text-primary bg-accent"
-                        : "text-foreground hover:bg-accent/60 hover:text-primary"
-                    }`}
-                  >
-                    <span>🇩🇪</span> Deutsch
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setSelectedLanguage("Français");
-                      setLanguageDropdownOpen(false);
-                    }}
-                    className={`w-full flex items-center gap-2 px-3.5 py-2 text-xs font-bold transition-colors ${
-                      selectedLanguage === "Français"
-                        ? "text-primary bg-accent"
-                        : "text-foreground hover:bg-accent/60 hover:text-primary"
-                    }`}
-                  >
-                    <span>🇫🇷</span> Français
-                  </button>
-                </div>
-              )}
-            </div>
+            
           </div>
         </div>
       </div>
@@ -375,16 +300,19 @@ export function Header() {
             </button>
 
             {/* Cart Icon Button */}
-            <Link
-              href="/cart"
-              className="relative w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-[#eef1f6] dark:bg-muted hover:bg-[#e2e6ee] dark:hover:bg-muted/80 border border-border/40 flex items-center justify-center text-foreground hover:text-primary transition-all shadow-2xs shrink-0"
-              aria-label="Cart"
+            <button
+              type="button"
+              onClick={openCart}
+              className="relative w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-[#eef1f6] dark:bg-muted hover:bg-[#e2e6ee] dark:hover:bg-muted/80 border border-border/40 flex items-center justify-center text-foreground hover:text-primary transition-all shadow-2xs shrink-0 cursor-pointer"
+              aria-label="Open Cart"
             >
               <ShoppingCart className="w-4.5 h-4.5" />
-              <span className="absolute -top-1 -right-1 w-4.5 h-4.5 rounded-full bg-primary text-white text-[10px] font-bold flex items-center justify-center shadow-xs">
-                0
-              </span>
-            </Link>
+              {totalCount > 0 && (
+                <span className="absolute -top-1 -right-1 w-4.5 h-4.5 rounded-full bg-primary text-white text-[10px] font-bold flex items-center justify-center shadow-xs">
+                  {totalCount}
+                </span>
+              )}
+            </button>
 
             {/* Pill CTA Button - Shown on screens 1024px+ (lg) */}
             <PillButton
