@@ -1,4 +1,4 @@
-# 🚀 TechFirm — Full-Stack Monorepo Assessment
+# 🚀 TechFirm — Full-Stack Assessment
 
 A production-grade full-stack monorepo built for a technical assessment, featuring a **Public Web Application** (`apps/web`), a dedicated **Admin Management Dashboard** (`apps/dashboard`), and a scalable **NestJS + MongoDB REST API** (`apps/api`) orchestrated with **Turborepo**.
 
