@@ -1,14 +1,13 @@
 "use client";
 
 import * as React from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { useQuery } from "@tanstack/react-query";
 import {
   Briefcase,
   CreditCard,
-  ExternalLink,
   FileText,
   HelpCircle,
   LayoutDashboard,
@@ -17,15 +16,15 @@ import {
   MessageSquareQuote,
   Settings,
   UserCheck,
-  Users,
-  Zap
+  Users
 } from "lucide-react";
 
-import { ApiResponse } from "@repo/types";
+import logoImg from "@/assets/logo.png";
 
-import { get, post } from "@/lib/api";
+import { useCurrentUser, useLogout } from "@/hooks/use-auth";
+import { useUnreadMessagesCount } from "@/hooks/use-contact-messages";
 
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -56,28 +55,25 @@ const navItems = [
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const pathname = usePathname();
+  const { data: unreadCount = 0 } = useUnreadMessagesCount();
+  const { data: user } = useCurrentUser();
+  const logout = useLogout();
 
-  const { data: unreadCount = 0 } = useQuery({
-    queryKey: ["unread-count"],
-    queryFn: async () => {
-      try {
-        const res = await get<ApiResponse<{ count: number }>>("/contact-messages/unread-count");
-        return res.data?.count ?? 0;
-      } catch {
-        return 0;
-      }
-    },
-    refetchInterval: 30000
-  });
-
-  const handleLogout = async () => {
-    try {
-      await post("/auth/logout");
-      window.location.href = "/login";
-    } catch {
-      window.location.href = "/login";
-    }
+  const handleLogout = () => {
+    logout.mutate();
   };
+
+  const displayName = user?.name || "TechFirm Admin";
+  const displayEmail = user?.email || "admin@techfirm.com";
+  const avatarUrl = user?.avatar;
+  const initials =
+    displayName
+      .split(" ")
+      .filter(Boolean)
+      .map((part) => part[0])
+      .join("")
+      .slice(0, 2)
+      .toUpperCase() || "AD";
 
   return (
     <Sidebar variant="inset" collapsible="icon" {...props}>
@@ -90,8 +86,15 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               className="hover:bg-sidebar-accent"
               render={
                 <Link href="/overview" className="flex items-center gap-3">
-                  <div className="bg-primary text-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg shadow-xs">
-                    <Zap className="size-4 fill-current" />
+                  <div className="flex aspect-square size-8 shrink-0 items-center justify-center overflow-hidden">
+                    <Image
+                      src={logoImg}
+                      alt="TechFirm Logo"
+                      width={32}
+                      height={32}
+                      priority
+                      className="size-8 object-contain"
+                    />
                   </div>
                   <div className="grid flex-1 text-left text-sm leading-tight">
                     <span className="text-sidebar-foreground truncate font-bold">
@@ -157,27 +160,18 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarFooter className="border-sidebar-border space-y-3 border-t p-4">
         <div className="flex items-center gap-3">
           <Avatar className="bg-primary/10 text-primary border-primary/20 flex h-8 w-8 items-center justify-center rounded-lg border text-xs font-medium">
-            <AvatarFallback>AD</AvatarFallback>
+            {avatarUrl && <AvatarImage src={avatarUrl} alt={displayName} />}
+            <AvatarFallback>{initials}</AvatarFallback>
           </Avatar>
           <div className="grid flex-1 text-left text-xs leading-tight group-data-[collapsible=icon]:hidden">
-            <span className="text-sidebar-foreground truncate font-medium">TechFirm Admin</span>
+            <span className="text-sidebar-foreground truncate font-medium">{displayName}</span>
             <span className="text-muted-foreground truncate text-[11px] font-normal">
-              admin@techfirm.com
+              {displayEmail}
             </span>
           </div>
         </div>
 
         <div className="space-y-1.5 pt-2">
-          <a
-            href="http://localhost:3000"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-sidebar-accent hover:bg-sidebar-border text-sidebar-foreground flex w-full items-center justify-center gap-1.5 rounded-lg px-2 py-1.5 text-[11px] font-medium transition-colors group-data-[collapsible=icon]:p-2"
-          >
-            <span className="group-data-[collapsible=icon]:hidden">Public Website</span>
-            <ExternalLink className="text-primary size-3.5" />
-          </a>
-
           <Button
             variant="ghost"
             size="sm"

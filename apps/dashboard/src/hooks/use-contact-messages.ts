@@ -59,6 +59,7 @@ export function useUnreadMessagesCount() {
       } catch {
         return 0;
       }
-    }
+    },
+    refetchInterval: 30000
   });
 }
