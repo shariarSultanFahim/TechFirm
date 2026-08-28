@@ -1,7 +1,8 @@
 import {
   HeroSection,
   CloudControlPanelSection,
-  HostingPlanSection
+  HostingPlanSection,
+  ReviewsSection
 } from "@/components/home";
 
 export default function HomePage() {
@@ -15,6 +16,9 @@ export default function HomePage() {
 
       {/* 3. Hosting Plans & Pricing Carousel/Grid */}
       <HostingPlanSection />
+
+      {/* 4. Client Reviews & Partner Logos */}
+      <ReviewsSection />
     </main>
   );
 }

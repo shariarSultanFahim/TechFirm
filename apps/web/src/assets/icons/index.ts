@@ -4,3 +4,6 @@ export * from "./GlobeIcon";
 export * from "./WordpressIcon";
 export * from "./ServerIcon";
 export * from "./CloudIcon";
+export * from "./WavesBadgeIcon";
+export * from "./UShapeBadgeIcon";
+export * from "./ArrowBadgeIcon";
