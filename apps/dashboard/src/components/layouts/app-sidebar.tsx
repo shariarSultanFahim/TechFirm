@@ -19,7 +19,7 @@ import {
   Users
 } from "lucide-react";
 
-import logoImg from "@/assets/logo.png";
+import logoImg from "@/assets/logo-short.png";
 
 import { useCurrentUser, useLogout } from "@/hooks/use-auth";
 import { useUnreadMessagesCount } from "@/hooks/use-contact-messages";
