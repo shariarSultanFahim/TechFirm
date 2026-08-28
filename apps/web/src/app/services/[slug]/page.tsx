@@ -1,16 +1,44 @@
-import { UnderDevelopment } from "@/components/widgets";
+import { Metadata } from "next";
+import { notFound } from "next/navigation";
+import {
+  servicesData,
+  getServiceBySlug,
+  ServiceDetailView
+} from "@/components/services";
 
-export const metadata = {
-  title: "Service Details — TechFirm",
-  description: "Managed service details."
-};
+interface ServiceDetailPageProps {
+  params: Promise<{
+    slug: string;
+  }>;
+}
 
-export default function ServiceDetailPage() {
-  return (
-    <UnderDevelopment
-      title="Service Details"
-      badge="MANAGED IT SERVICE"
-      description="Service tier specs, deployment options, and SLA breakdowns are being published soon."
-    />
-  );
+export async function generateStaticParams() {
+  return servicesData.map((service) => ({
+    slug: service.slug
+  }));
+}
+
+export async function generateMetadata({
+  params
+}: ServiceDetailPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const service = getServiceBySlug(slug);
+
+  return {
+    title: `${service.title} — Services & Solutions — TechFirm`,
+    description: service.heroSubtitle
+  };
+}
+
+export default async function ServiceDetailPage({
+  params
+}: ServiceDetailPageProps) {
+  const { slug } = await params;
+  const service = getServiceBySlug(slug);
+
+  if (!service) {
+    notFound();
+  }
+
+  return <ServiceDetailView service={service} />;
 }
