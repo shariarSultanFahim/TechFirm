@@ -1,16 +1,45 @@
-import { UnderDevelopment } from "@/components/widgets";
+import { notFound } from "next/navigation";
+import {
+  BlogDetailView,
+  getBlogPost,
+  blogPostsData
+} from "@/components/blog";
 
-export const metadata = {
-  title: "Article — TechFirm",
-  description: "Article insights and details."
-};
+export async function generateStaticParams() {
+  return blogPostsData.map((post) => ({
+    slug: post.slug
+  }));
+}
 
-export default function BlogPostPage() {
+export async function generateMetadata({
+  params
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const post = getBlogPost(slug);
+
+  return {
+    title: `${post.title} — TechFirm Blog`,
+    description: post.excerpt
+  };
+}
+
+export default async function BlogPostPage({
+  params
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const post = getBlogPost(slug);
+
+  if (!post) {
+    notFound();
+  }
+
   return (
-    <UnderDevelopment
-      title="Article Details"
-      badge="BLOG POST"
-      description="This article is currently being updated with the latest research and technical documentation."
-    />
+    <main className="w-full bg-white">
+      <BlogDetailView post={post} />
+    </main>
   );
 }

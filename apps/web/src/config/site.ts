@@ -80,10 +80,10 @@ export const siteConfig: TechfirmSiteConfig = {
     {
       title: "Blog",
       href: "/blog",
-      children: [
-        { title: "Blog Grid", href: "/blog", description: "Latest industry news and technology insights." },
-        { title: "Blog Standard", href: "/blog", description: "Featured in-depth technical analysis." }
-      ]
+      // children: [
+      //   { title: "Blog Grid", href: "/blog", description: "Latest industry news and technology insights." },
+      //   { title: "Blog Standard", href: "/blog", description: "Featured in-depth technical analysis." }
+      // ]
     },
     { title: "Contact", href: "/contact" }
   ]
