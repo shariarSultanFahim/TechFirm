@@ -29,42 +29,52 @@ export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const token = request.cookies.get("accessToken")?.value;
 
-  // Allow static files, api routes, or public auth pages if any
-  const isPublicPath =
+  // 1. Allow public static assets and metadata
+  if (
     pathname.startsWith("/_next") ||
     pathname.startsWith("/favicon.ico") ||
-    pathname === "/unauthorized";
-
-  if (isPublicPath) {
+    pathname.startsWith("/api") ||
+    pathname === "/robots.txt" ||
+    pathname === "/sitemap.xml"
+  ) {
     return NextResponse.next();
   }
 
-  // All dashboard routes are protected and strictly require admin role
-  if (!token) {
-    const webUrl = process.env.NEXT_PUBLIC_WEB_URL || "http://localhost:3000";
-    const loginRedirect = new URL(`${webUrl}/login`);
-    loginRedirect.searchParams.set("from", request.nextUrl.href);
-    return NextResponse.redirect(loginRedirect);
+  const nowInSeconds = Math.floor(Date.now() / 1000);
+  const payload = token ? parseJwtPayload(token) : null;
+  const isTokenValid = Boolean(payload && payload.exp && payload.exp >= nowInSeconds);
+
+  // 2. Handle Login Route (on port 3001)
+  if (pathname === "/login" || pathname.startsWith("/login")) {
+    if (isTokenValid && payload?.role === "admin") {
+      return NextResponse.redirect(new URL("/overview", request.url));
+    }
+    return NextResponse.next();
   }
 
-  const payload = parseJwtPayload(token);
-  const nowInSeconds = Math.floor(Date.now() / 1000);
+  // 3. Protected Dashboard Routes: Must have valid token
+  if (!isTokenValid || !payload) {
+    const loginRedirect = new URL("/login", request.url);
+    if (pathname !== "/" && pathname !== "/overview") {
+      loginRedirect.searchParams.set("from", pathname);
+    }
+    const response = NextResponse.redirect(loginRedirect);
+    if (token) {
+      response.cookies.delete("accessToken");
+    }
+    return response;
+  }
 
-  if (!payload || (payload.exp && payload.exp < nowInSeconds)) {
-    const webUrl = process.env.NEXT_PUBLIC_WEB_URL || "http://localhost:3000";
-    const loginRedirect = new URL(`${webUrl}/login`);
-    loginRedirect.searchParams.set("from", request.nextUrl.href);
+  // 4. Role verification: Admin only
+  if (payload.role !== "admin") {
+    const loginRedirect = new URL("/login", request.url);
+    loginRedirect.searchParams.set("error", "unauthorized_role");
     const response = NextResponse.redirect(loginRedirect);
     response.cookies.delete("accessToken");
     return response;
   }
 
-  // Role verification: Admin only
-  if (payload.role !== "admin") {
-    const unauthorizedUrl = new URL("/unauthorized", request.url);
-    return NextResponse.rewrite(unauthorizedUrl);
-  }
-
+  // 5. Forward admin headers to server components
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set("x-user-role", payload.role);
   requestHeaders.set("x-user-id", payload.sub || "");
