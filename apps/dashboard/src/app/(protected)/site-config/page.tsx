@@ -54,7 +54,7 @@ export default function SiteConfigPage() {
             if (form) form.requestSubmit();
           }}
           disabled={updateSiteConfig.isPending}
-          className="flex items-center gap-2 text-xs font-bold shadow-md"
+          className="flex items-center gap-2 text-xs font-medium shadow-xs"
         >
           <Save className="h-4 w-4" />
           <span>{updateSiteConfig.isPending ? "Saving..." : "Save Changes"}</span>

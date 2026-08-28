@@ -35,7 +35,7 @@ export default function UsersManagementPage() {
       >
         <Button
           onClick={handleOpenCreate}
-          className="flex items-center gap-2 text-xs font-bold shadow-md"
+          className="flex items-center gap-2 text-xs font-medium shadow-xs"
         >
           <UserPlus className="h-4 w-4" />
           <span>Add User Account</span>

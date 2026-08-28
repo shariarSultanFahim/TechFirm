@@ -116,9 +116,9 @@ export function PlanForm({
                   <button
                     type="button"
                     onClick={() => field.onChange("monthly")}
-                    className={`rounded-lg py-1.5 text-xs font-bold transition-all ${
+                    className={`rounded-lg py-1.5 text-xs font-medium transition-all ${
                       field.value === "monthly"
-                        ? "bg-primary text-primary-foreground shadow-xs"
+                        ? "bg-primary text-primary-foreground shadow-2xs"
                         : "bg-muted text-muted-foreground hover:text-foreground"
                     }`}
                   >
@@ -127,9 +127,9 @@ export function PlanForm({
                   <button
                     type="button"
                     onClick={() => field.onChange("annual")}
-                    className={`rounded-lg py-1.5 text-xs font-bold transition-all ${
+                    className={`rounded-lg py-1.5 text-xs font-medium transition-all ${
                       field.value === "annual"
-                        ? "bg-primary text-primary-foreground shadow-xs"
+                        ? "bg-primary text-primary-foreground shadow-2xs"
                         : "bg-muted text-muted-foreground hover:text-foreground"
                     }`}
                   >
@@ -198,7 +198,7 @@ export function PlanForm({
               onChange={(e) => setFeaturesRaw(e.target.value)}
               rows={4}
               placeholder={"24/7 Dedicated Support\nHigh Availability Cloud\nAutomated Backups"}
-              className="text-xs"
+              className="text-xs font-normal"
             />
           </FormControl>
         </FormItem>
@@ -237,12 +237,12 @@ export function PlanForm({
               type="button"
               variant="outline"
               onClick={onCancel}
-              className="text-xs font-bold"
+              className="text-xs font-medium"
             >
               Cancel
             </Button>
           )}
-          <Button type="submit" disabled={isLoading} className="text-xs font-bold">
+          <Button type="submit" disabled={isLoading} className="text-xs font-medium">
             {isLoading ? "Saving..." : submitLabel}
           </Button>
         </div>

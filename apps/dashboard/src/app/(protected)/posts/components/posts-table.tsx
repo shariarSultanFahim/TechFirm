@@ -77,9 +77,9 @@ export function PostsTable({ onEdit, onOpenCreate }: PostsTableProps) {
                 setSelectedCategory(cat);
                 setPageIndex(0);
               }}
-              className={`cursor-pointer rounded-lg px-3 py-1.5 text-xs font-bold transition-colors ${
+              className={`cursor-pointer rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${
                 selectedCategory === cat
-                  ? "bg-background text-foreground shadow-xs"
+                  ? "bg-background text-foreground shadow-2xs"
                   : "text-muted-foreground hover:text-foreground"
               }`}
             >
@@ -96,7 +96,7 @@ export function PostsTable({ onEdit, onOpenCreate }: PostsTableProps) {
               setPageIndex(0);
             }}
             placeholder="Search articles..."
-            className="text-xs"
+            className="text-xs font-normal"
           />
         </div>
       </div>
@@ -116,11 +116,11 @@ export function PostsTable({ onEdit, onOpenCreate }: PostsTableProps) {
         emptyState={
           <div className="text-muted-foreground flex flex-col items-center justify-center p-12 text-center">
             <BookOpen className="text-muted-foreground/30 mb-3 h-10 w-10" />
-            <p className="text-foreground font-bold">No articles found</p>
-            <p className="mt-1 text-xs">
+            <p className="text-foreground text-sm font-medium">No articles found</p>
+            <p className="mt-1 text-xs font-normal">
               Write insightful articles to drive organic search traffic.
             </p>
-            <Button onClick={onOpenCreate} size="sm" className="mt-4 text-xs font-bold">
+            <Button onClick={onOpenCreate} size="sm" className="mt-4 text-xs font-medium">
               <Plus className="mr-1.5 h-3.5 w-3.5" /> Write Article
             </Button>
           </div>

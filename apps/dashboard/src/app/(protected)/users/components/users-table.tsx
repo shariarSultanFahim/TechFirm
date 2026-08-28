@@ -72,9 +72,9 @@ export function UsersTable({ onEdit, onOpenCreate }: UsersTableProps) {
                   setSelectedRole(r);
                   setPageIndex(0);
                 }}
-                className={`cursor-pointer rounded-lg px-3 py-1.5 text-xs font-bold transition-all ${
+                className={`cursor-pointer rounded-lg px-3 py-1.5 text-xs font-medium transition-all ${
                   isSelected
-                    ? "bg-primary text-primary-foreground shadow-xs"
+                    ? "bg-primary text-primary-foreground shadow-2xs"
                     : "bg-muted/70 hover:bg-muted text-muted-foreground hover:text-foreground"
                 }`}
               >
@@ -92,7 +92,7 @@ export function UsersTable({ onEdit, onOpenCreate }: UsersTableProps) {
               setSearch(e.target.value);
               setPageIndex(0);
             }}
-            className="text-xs"
+            className="text-xs font-normal"
           />
         </div>
       </div>
@@ -112,9 +112,11 @@ export function UsersTable({ onEdit, onOpenCreate }: UsersTableProps) {
         emptyState={
           <div className="text-muted-foreground flex flex-col items-center justify-center p-12 text-center">
             <Users className="text-muted-foreground/30 mb-3 h-10 w-10" />
-            <p className="text-foreground font-bold">No user accounts found</p>
-            <p className="mt-1 text-xs">Add administrators or team accounts to collaborate.</p>
-            <Button onClick={onOpenCreate} size="sm" className="mt-4 text-xs font-bold">
+            <p className="text-foreground text-sm font-medium">No user accounts found</p>
+            <p className="mt-1 text-xs font-normal">
+              Add administrators or team accounts to collaborate.
+            </p>
+            <Button onClick={onOpenCreate} size="sm" className="mt-4 text-xs font-medium">
               <Plus className="mr-1.5 h-3.5 w-3.5" /> Add User Account
             </Button>
           </div>

@@ -2,40 +2,45 @@ import * as React from "react";
 
 import { cn } from "@/lib/utils";
 
-interface PageHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
+interface PageHeaderProps {
   title: string;
   description?: string;
+  children?: React.ReactNode;
   icon?: React.ComponentType<{ className?: string }>;
-  children?: React.ReactNode; // For action buttons like "Add New Plan"
+  className?: string;
 }
 
 export function PageHeader({
   title,
   description,
-  icon: Icon,
   children,
-  className,
-  ...props
+  icon: Icon,
+  className
 }: PageHeaderProps) {
   return (
     <div
       className={cn(
-        "flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between",
+        "border-border flex flex-col justify-between gap-4 border-b pb-6 sm:flex-row sm:items-center",
         className
       )}
-      {...props}
     >
       <div className="space-y-1">
-        <h1 className="text-foreground flex items-center gap-2.5 text-2xl font-black tracking-tight sm:text-3xl">
-          {Icon && <Icon className="text-primary h-6 w-6 shrink-0" />}
-          <span>{title}</span>
-        </h1>
+        <div className="flex items-center gap-2.5">
+          {Icon && (
+            <div className="bg-primary/10 text-primary flex h-9 w-9 items-center justify-center rounded-xl shadow-2xs">
+              <Icon className="h-5 w-5" />
+            </div>
+          )}
+          <h1 className="text-foreground text-2xl font-bold tracking-tight sm:text-3xl">{title}</h1>
+        </div>
         {description && (
-          <p className="text-muted-foreground text-xs leading-relaxed sm:text-sm">{description}</p>
+          <p className="text-muted-foreground text-xs font-normal sm:text-sm">{description}</p>
         )}
       </div>
 
-      {children && <div className="flex shrink-0 flex-wrap items-center gap-2.5">{children}</div>}
+      {children && (
+        <div className="flex flex-wrap items-center gap-2 sm:justify-end">{children}</div>
+      )}
     </div>
   );
 }

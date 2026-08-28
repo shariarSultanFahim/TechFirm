@@ -145,9 +145,9 @@ export function UserForm({
             >
               <div className="mb-1 flex items-center gap-2">
                 <User className="text-muted-foreground h-4 w-4" />
-                <span className="text-foreground text-xs font-bold">Standard User</span>
+                <span className="text-foreground text-xs font-medium">Standard User</span>
               </div>
-              <p className="text-muted-foreground text-[10px] leading-snug">
+              <p className="text-muted-foreground text-[10px] leading-snug font-normal">
                 Standard access without admin panel management privileges.
               </p>
             </button>
@@ -163,9 +163,9 @@ export function UserForm({
             >
               <div className="mb-1 flex items-center gap-2">
                 <ShieldAlert className="text-primary h-4 w-4" />
-                <span className="text-primary text-xs font-bold">Administrator</span>
+                <span className="text-primary text-xs font-medium">Administrator</span>
               </div>
-              <p className="text-muted-foreground text-[10px] leading-snug">
+              <p className="text-muted-foreground text-[10px] leading-snug font-normal">
                 Full CRUD privileges across all dashboard settings and content.
               </p>
             </button>
@@ -191,12 +191,12 @@ export function UserForm({
               type="button"
               variant="outline"
               onClick={onCancel}
-              className="text-xs font-bold"
+              className="text-xs font-medium"
             >
               Cancel
             </Button>
           )}
-          <Button type="submit" disabled={isLoading} className="text-xs font-bold">
+          <Button type="submit" disabled={isLoading} className="text-xs font-medium">
             {isLoading ? "Saving..." : submitLabel}
           </Button>
         </div>

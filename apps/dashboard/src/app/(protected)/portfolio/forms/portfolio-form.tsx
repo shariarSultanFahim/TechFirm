@@ -103,52 +103,58 @@ export function PortfolioForm({
     (defaultValues?.solutionText || []).join("\n\n")
   );
 
+  const [results, setResults] = React.useState<{ title: string; description: string }[]>(
+    defaultValues?.results || []
+  );
   const [newResultTitle, setNewResultTitle] = React.useState("");
   const [newResultDesc, setNewResultDesc] = React.useState("");
 
-  const results = form.watch("results") || [];
-  const imageUrl = form.watch("image");
+  const selectedCategory = form.watch("category");
+  const currentImage = form.watch("image");
 
   const handleAddResult = () => {
-    if (!newResultTitle.trim() || !newResultDesc.trim()) return;
-    form.setValue("results", [
+    if (!newResultTitle.trim()) return;
+    const updated = [
       ...results,
       { title: newResultTitle.trim(), description: newResultDesc.trim() }
-    ]);
+    ];
+    setResults(updated);
     setNewResultTitle("");
     setNewResultDesc("");
   };
 
-  const handleRemoveResult = (index: number) => {
-    form.setValue(
-      "results",
-      results.filter((_, i) => i !== index)
-    );
+  const handleRemoveResult = (idx: number) => {
+    setResults(results.filter((_, i) => i !== idx));
   };
 
-  const handleFormSubmit = (data: z.infer<typeof createPortfolioItemSchema>) => {
-    const challengeText = challengesText
-      .split("\n")
-      .map((c) => c.trim())
+  const handleFormSubmit = (data: CreatePortfolioItemInput) => {
+    const parsedChallenges = challengesText
+      .split("\n\n")
+      .map((p) => p.trim())
       .filter(Boolean);
 
-    const solutionText = solutionsText
-      .split("\n")
-      .map((s) => s.trim())
+    const parsedSolutions = solutionsText
+      .split("\n\n")
+      .map((p) => p.trim())
       .filter(Boolean);
 
     onSubmit({
       ...data,
-      challengeText,
-      solutionText
+      challengeText: parsedChallenges,
+      solutionText: parsedSolutions,
+      results: results
     });
   };
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleFormSubmit)} className="space-y-4">
-        {/* Title and Subtitle */}
+        {/* Project Overview */}
         <div className="bg-muted/30 border-border/50 space-y-3 rounded-xl border p-3.5">
+          <p className="text-muted-foreground text-[10px] font-medium tracking-wider uppercase">
+            Basic Project Info
+          </p>
+
           <FormField
             control={form.control}
             name="title"
@@ -156,27 +162,7 @@ export function PortfolioForm({
               <FormItem>
                 <FormLabel>Project Title *</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="e.g. Maximizing Efficiency with Multi-Cloud Architecture"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="subtitle"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Subtitle / Tagline</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="e.g. An intuitive distributed e-learning platform"
-                    {...field}
-                  />
+                  <Input placeholder="e.g. Cloud Banking Modernization" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -186,27 +172,13 @@ export function PortfolioForm({
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <FormField
               control={form.control}
-              name="category"
+              name="subtitle"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Category *</FormLabel>
+                  <FormLabel>Subtitle / One-line Result</FormLabel>
                   <FormControl>
-                    <Input placeholder="e.g. Technology" {...field} />
+                    <Input placeholder="e.g. Scaled core throughput 10x" {...field} />
                   </FormControl>
-                  <div className="flex flex-wrap gap-1 pt-1">
-                    {Array.from(new Set([...categories, ...CATEGORY_PRESETS]))
-                      .slice(0, 4)
-                      .map((cat) => (
-                        <button
-                          key={cat}
-                          type="button"
-                          onClick={() => field.onChange(cat)}
-                          className="bg-muted hover:bg-primary/10 hover:text-primary cursor-pointer rounded px-2 py-0.5 text-[10px] transition-colors"
-                        >
-                          {cat}
-                        </button>
-                      ))}
-                  </div>
                   <FormMessage />
                 </FormItem>
               )}
@@ -217,78 +189,57 @@ export function PortfolioForm({
               name="industry"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Client Industry</FormLabel>
+                  <FormLabel>Industry Vertical</FormLabel>
                   <FormControl>
-                    <Input placeholder="e.g. Retail & FinTech" {...field} />
+                    <Input placeholder="e.g. Banking &amp; Financial Services" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
           </div>
-        </div>
 
-        {/* Cover Image & Presets */}
-        <div className="bg-muted/30 border-border/50 space-y-3 rounded-xl border p-3.5">
           <FormField
             control={form.control}
-            name="image"
+            name="category"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Cover Image URL *</FormLabel>
-                <div className="flex items-center gap-3">
-                  <div className="border-border bg-muted relative h-12 w-16 shrink-0 overflow-hidden rounded-lg border">
-                    {imageUrl ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img src={imageUrl} alt="Preview" className="h-full w-full object-cover" />
-                    ) : (
-                      <div className="text-muted-foreground flex h-full w-full items-center justify-center">
-                        <Briefcase className="h-4 w-4" />
-                      </div>
-                    )}
-                  </div>
-                  <FormControl>
-                    <Input placeholder="https://images.unsplash.com/..." {...field} />
-                  </FormControl>
+                <FormLabel>Category</FormLabel>
+                <div className="mb-2 flex flex-wrap gap-1.5">
+                  {Array.from(new Set([...categories, ...CATEGORY_PRESETS])).map((cat) => (
+                    <button
+                      key={cat}
+                      type="button"
+                      onClick={() => field.onChange(cat)}
+                      className={`cursor-pointer rounded-md px-2.5 py-1 text-xs font-medium transition-all ${
+                        selectedCategory === cat
+                          ? "bg-primary text-primary-foreground shadow-2xs"
+                          : "bg-muted text-muted-foreground hover:text-foreground"
+                      }`}
+                    >
+                      {cat}
+                    </button>
+                  ))}
                 </div>
+                <FormControl>
+                  <Input placeholder="Or type custom category..." {...field} />
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
 
-          <div className="grid grid-cols-3 gap-1.5 pt-1 sm:grid-cols-6">
-            {PORTFOLIO_IMAGE_PRESETS.map((preset) => (
-              <button
-                key={preset.name}
-                type="button"
-                onClick={() => form.setValue("image", preset.url)}
-                className={`relative aspect-video cursor-pointer overflow-hidden rounded-md border transition-all ${
-                  imageUrl === preset.url
-                    ? "ring-primary border-transparent ring-2"
-                    : "border-border hover:border-primary/50 opacity-70 hover:opacity-100"
-                }`}
-                title={preset.name}
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={preset.url} alt={preset.name} className="h-full w-full object-cover" />
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Overview & Scope */}
-        <div className="bg-muted/30 border-border/50 space-y-3 rounded-xl border p-3.5">
           <FormField
             control={form.control}
             name="overview"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Project Overview</FormLabel>
+                <FormLabel>Project Overview &amp; Summary *</FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder="Comprehensive overview of client objectives and partnership..."
+                    placeholder="High-level narrative describing the engagement..."
                     rows={3}
-                    className="text-xs"
+                    className="text-xs font-normal"
                     {...field}
                   />
                 </FormControl>
@@ -296,27 +247,76 @@ export function PortfolioForm({
               </FormItem>
             )}
           />
+        </div>
+
+        {/* Project Visuals & Screenshots */}
+        <div className="bg-muted/30 border-border/50 space-y-3 rounded-xl border p-3.5">
+          <p className="text-muted-foreground text-[10px] font-medium tracking-wider uppercase">
+            Visual Assets
+          </p>
+
+          <FormField
+            control={form.control}
+            name="image"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Hero / Cover Image URL *</FormLabel>
+                <FormControl>
+                  <Input placeholder="https://images.unsplash.com/..." {...field} />
+                </FormControl>
+                <div className="mt-2 flex flex-wrap items-center gap-1.5 pt-1">
+                  <span className="text-muted-foreground text-[10px] font-medium">Presets:</span>
+                  {PORTFOLIO_IMAGE_PRESETS.map((preset) => (
+                    <button
+                      key={preset.name}
+                      type="button"
+                      onClick={() => form.setValue("image", preset.url)}
+                      className={`cursor-pointer rounded-md border px-2 py-0.5 text-[10px] font-medium transition-all ${
+                        currentImage === preset.url
+                          ? "border-primary bg-primary/10 text-primary shadow-2xs"
+                          : "border-border hover:bg-muted text-muted-foreground"
+                      }`}
+                    >
+                      {preset.name}
+                    </button>
+                  ))}
+                </div>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
+        {/* Deep Dive Case Study Content */}
+        <div className="bg-muted/30 border-border/50 space-y-3 rounded-xl border p-3.5">
+          <p className="text-muted-foreground text-[10px] font-medium tracking-wider uppercase">
+            Case Study Narrative (Paragraphs separated by blank line)
+          </p>
 
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-            <div className="space-y-1.5">
-              <FormLabel>Client Challenges (1 per paragraph)</FormLabel>
+            <div>
+              <label className="text-muted-foreground mb-1.5 block text-xs font-medium uppercase">
+                The Challenges &amp; Bottlenecks
+              </label>
               <Textarea
                 value={challengesText}
                 onChange={(e) => setChallengesText(e.target.value)}
                 placeholder="High latency bottlenecks...&#10;&#10;Legacy monolith fragility..."
-                rows={3}
-                className="text-xs"
+                rows={4}
+                className="text-xs font-normal"
               />
             </div>
 
-            <div className="space-y-1.5">
-              <FormLabel>Engineered Solutions (1 per paragraph)</FormLabel>
+            <div>
+              <label className="text-muted-foreground mb-1.5 block text-xs font-medium uppercase">
+                The Architecture &amp; Solution
+              </label>
               <Textarea
                 value={solutionsText}
                 onChange={(e) => setSolutionsText(e.target.value)}
                 placeholder="Deployed auto-scaling microservices...&#10;&#10;Implemented distributed caching..."
-                rows={3}
-                className="text-xs"
+                rows={4}
+                className="text-xs font-normal"
               />
             </div>
           </div>
@@ -332,8 +332,8 @@ export function PortfolioForm({
                 className="bg-background border-border flex items-center justify-between gap-2 rounded-lg border p-2 text-xs"
               >
                 <div>
-                  <p className="text-foreground font-bold">{r.title}</p>
-                  <p className="text-muted-foreground text-[11px]">{r.description}</p>
+                  <p className="text-foreground font-medium">{r.title}</p>
+                  <p className="text-muted-foreground text-[11px] font-normal">{r.description}</p>
                 </div>
                 <Button
                   type="button"
@@ -352,20 +352,20 @@ export function PortfolioForm({
                 placeholder="Metric Headline (e.g. 99.99% SLA)"
                 value={newResultTitle}
                 onChange={(e) => setNewResultTitle(e.target.value)}
-                className="text-xs"
+                className="text-xs font-normal"
               />
               <div className="flex gap-2">
                 <Input
                   placeholder="Metric Summary (e.g. Zero downtime)"
                   value={newResultDesc}
                   onChange={(e) => setNewResultDesc(e.target.value)}
-                  className="text-xs"
+                  className="text-xs font-normal"
                 />
                 <Button
                   type="button"
                   size="sm"
                   onClick={handleAddResult}
-                  className="shrink-0 text-xs font-bold"
+                  className="shrink-0 text-xs font-medium"
                 >
                   <Plus className="mr-1 h-3.5 w-3.5" /> Add
                 </Button>
@@ -429,12 +429,12 @@ export function PortfolioForm({
               type="button"
               variant="outline"
               onClick={onCancel}
-              className="text-xs font-bold"
+              className="text-xs font-medium"
             >
               Cancel
             </Button>
           )}
-          <Button type="submit" disabled={isLoading} className="text-xs font-bold">
+          <Button type="submit" disabled={isLoading} className="text-xs font-medium">
             {isLoading ? "Saving..." : submitLabel}
           </Button>
         </div>

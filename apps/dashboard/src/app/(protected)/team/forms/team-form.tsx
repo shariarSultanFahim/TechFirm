@@ -98,59 +98,22 @@ export function TeamMemberForm({
     setSkillInput("");
   };
 
-  const handleRemoveSkill = (index: number) => {
+  const handleRemoveSkill = (idx: number) => {
     form.setValue(
       "skills",
-      skills.filter((_, i) => i !== index)
+      skills.filter((_, i) => i !== idx)
     );
   };
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        {/* Photo selection */}
+        {/* Core Member Information */}
         <div className="bg-muted/30 border-border/50 space-y-3 rounded-xl border p-3.5">
-          <FormField
-            control={form.control}
-            name="photo"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Profile Photo URL *</FormLabel>
-                <div className="flex items-center gap-3">
-                  <Avatar className="border-border h-12 w-12 shrink-0 border">
-                    <AvatarImage src={photoUrl} alt={name} />
-                    <AvatarFallback className="text-xs font-bold">
-                      {name ? name.slice(0, 2).toUpperCase() : <Users className="h-5 w-5" />}
-                    </AvatarFallback>
-                  </Avatar>
-                  <FormControl>
-                    <Input placeholder="https://images.unsplash.com/..." {...field} />
-                  </FormControl>
-                </div>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <p className="text-muted-foreground text-[10px] font-medium tracking-wider uppercase">
+            Basic Information
+          </p>
 
-          <div className="flex flex-wrap items-center gap-1.5 pt-1">
-            <span className="text-muted-foreground flex items-center gap-1 text-[11px]">
-              <Sparkles className="text-primary h-3 w-3" /> Presets:
-            </span>
-            {PHOTO_PRESETS.map((p) => (
-              <button
-                key={p.label}
-                type="button"
-                onClick={() => form.setValue("photo", p.url)}
-                className="bg-muted hover:bg-muted/80 text-foreground border-border cursor-pointer rounded border px-2 py-0.5 text-[10px] font-semibold transition-colors"
-              >
-                {p.label}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Name and Role */}
-        <div className="bg-muted/30 border-border/50 space-y-3 rounded-xl border p-3.5">
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <FormField
               control={form.control}
@@ -159,7 +122,7 @@ export function TeamMemberForm({
                 <FormItem>
                   <FormLabel>Full Name *</FormLabel>
                   <FormControl>
-                    <Input placeholder="e.g. Michael Carter" {...field} />
+                    <Input placeholder="e.g. Elena Rostova" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -171,9 +134,9 @@ export function TeamMemberForm({
               name="role"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Job Role / Title *</FormLabel>
+                  <FormLabel>Role / Job Title *</FormLabel>
                   <FormControl>
-                    <Input placeholder="e.g. Chief Solutions Architect" {...field} />
+                    <Input placeholder="e.g. Lead Systems Architect" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -186,12 +149,12 @@ export function TeamMemberForm({
             name="bio"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Biography</FormLabel>
+                <FormLabel>Bio &amp; Summary</FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder="Summary of experience and leadership background..."
+                    placeholder="Brief background, specialization, and achievements..."
                     rows={3}
-                    className="text-xs"
+                    className="text-xs font-normal"
                     {...field}
                   />
                 </FormControl>
@@ -206,9 +169,9 @@ export function TeamMemberForm({
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Work Email</FormLabel>
+                  <FormLabel>Email Address</FormLabel>
                   <FormControl>
-                    <Input type="email" placeholder="m.carter@techfirm.com" {...field} />
+                    <Input type="email" placeholder="elena@techfirm.com" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -220,7 +183,7 @@ export function TeamMemberForm({
               name="phone"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Phone Number</FormLabel>
+                  <FormLabel>Contact Phone</FormLabel>
                   <FormControl>
                     <Input placeholder="+1 (555) 019-2834" {...field} />
                   </FormControl>
@@ -236,9 +199,9 @@ export function TeamMemberForm({
               name="experience"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Experience Badge</FormLabel>
+                  <FormLabel>Years Experience / Subtitle</FormLabel>
                   <FormControl>
-                    <Input placeholder="e.g. 15+ Years" {...field} />
+                    <Input placeholder="e.g. 10+ Years Cloud Infrastructure" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -265,21 +228,69 @@ export function TeamMemberForm({
           </div>
         </div>
 
-        {/* Skills Tag Management */}
-        <div className="bg-muted/30 border-border/50 space-y-2.5 rounded-xl border p-3.5">
+        {/* Photo Selection */}
+        <div className="bg-muted/30 border-border/50 space-y-3 rounded-xl border p-3.5">
+          <p className="text-muted-foreground text-[10px] font-medium tracking-wider uppercase">
+            Profile Photo
+          </p>
+
+          <FormField
+            control={form.control}
+            name="photo"
+            render={({ field }) => (
+              <FormItem>
+                <div className="flex items-center gap-3">
+                  <Avatar className="border-border h-12 w-12 shrink-0 border shadow-xs">
+                    <AvatarImage src={photoUrl} alt={name || "Member"} />
+                    <AvatarFallback className="text-xs font-medium">
+                      {name ? name.slice(0, 2).toUpperCase() : <Users className="h-4 w-4" />}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="flex-1">
+                    <FormControl>
+                      <Input placeholder="https://images.unsplash.com/..." {...field} />
+                    </FormControl>
+                  </div>
+                </div>
+
+                <div className="mt-2 flex flex-wrap items-center gap-1.5 pt-1">
+                  <span className="text-muted-foreground text-[10px] font-medium">Presets:</span>
+                  {PHOTO_PRESETS.map((preset) => (
+                    <button
+                      key={preset.label}
+                      type="button"
+                      onClick={() => form.setValue("photo", preset.url)}
+                      className={`cursor-pointer rounded-md border px-2 py-0.5 text-[10px] font-medium transition-all ${
+                        photoUrl === preset.url
+                          ? "border-primary bg-primary/10 text-primary shadow-2xs"
+                          : "border-border hover:bg-muted text-muted-foreground"
+                      }`}
+                    >
+                      {preset.label}
+                    </button>
+                  ))}
+                </div>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
+        {/* Skills Tagging */}
+        <div className="bg-muted/30 border-border/50 space-y-3 rounded-xl border p-3.5">
           <FormItem>
-            <FormLabel>Core Expertise &amp; Skills</FormLabel>
+            <FormLabel>Technical Skills &amp; Proficiencies</FormLabel>
             <div className="mb-2 flex flex-wrap gap-1">
               {skills.map((skill, idx) => (
                 <span
                   key={idx}
-                  className="bg-primary/10 text-primary inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-[11px] font-bold"
+                  className="bg-primary/10 text-primary inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-[11px] font-medium"
                 >
                   <span>{skill}</span>
                   <button
                     type="button"
                     onClick={() => handleRemoveSkill(idx)}
-                    className="hover:text-destructive ml-1 cursor-pointer font-bold"
+                    className="hover:text-destructive ml-1 cursor-pointer font-medium"
                   >
                     ×
                   </button>
@@ -290,8 +301,8 @@ export function TeamMemberForm({
               <Input
                 value={skillInput}
                 onChange={(e) => setSkillInput(e.target.value)}
-                placeholder="e.g. Cloud Architecture, DevOps"
-                className="text-xs"
+                placeholder="e.g. Kubernetes, Rust, Terraform"
+                className="text-xs font-normal"
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
                     e.preventDefault();
@@ -304,7 +315,7 @@ export function TeamMemberForm({
                 size="sm"
                 variant="outline"
                 onClick={handleAddSkill}
-                className="shrink-0 text-xs font-bold"
+                className="shrink-0 text-xs font-medium"
               >
                 Add
               </Button>
@@ -314,7 +325,7 @@ export function TeamMemberForm({
 
         {/* Social Links */}
         <div className="bg-muted/30 border-border/50 space-y-3 rounded-xl border p-3.5">
-          <p className="text-muted-foreground text-[10px] font-bold tracking-wider uppercase">
+          <p className="text-muted-foreground text-[10px] font-medium tracking-wider uppercase">
             Social Profiles
           </p>
           <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-3">
@@ -327,7 +338,7 @@ export function TeamMemberForm({
                     <Linkedin className="text-primary h-3 w-3" /> LinkedIn
                   </FormLabel>
                   <FormControl>
-                    <Input placeholder="https://..." className="text-xs" {...field} />
+                    <Input placeholder="https://..." className="text-xs font-normal" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -343,7 +354,7 @@ export function TeamMemberForm({
                     <Twitter className="text-primary h-3 w-3" /> Twitter
                   </FormLabel>
                   <FormControl>
-                    <Input placeholder="https://..." className="text-xs" {...field} />
+                    <Input placeholder="https://..." className="text-xs font-normal" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -359,7 +370,7 @@ export function TeamMemberForm({
                     <Github className="text-primary h-3 w-3" /> GitHub
                   </FormLabel>
                   <FormControl>
-                    <Input placeholder="https://..." className="text-xs" {...field} />
+                    <Input placeholder="https://..." className="text-xs font-normal" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -387,12 +398,12 @@ export function TeamMemberForm({
               type="button"
               variant="outline"
               onClick={onCancel}
-              className="text-xs font-bold"
+              className="text-xs font-medium"
             >
               Cancel
             </Button>
           )}
-          <Button type="submit" disabled={isLoading} className="text-xs font-bold">
+          <Button type="submit" disabled={isLoading} className="text-xs font-medium">
             {isLoading ? "Saving..." : submitLabel}
           </Button>
         </div>

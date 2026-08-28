@@ -20,7 +20,7 @@ export function getTestimonialColumns(
       accessorKey: "order",
       header: "Order",
       cell: ({ row }) => (
-        <span className="text-muted-foreground font-mono text-xs font-bold">
+        <span className="text-muted-foreground font-mono text-xs font-normal">
           #{row.original.order}
         </span>
       )
@@ -34,13 +34,13 @@ export function getTestimonialColumns(
           <div className="flex items-center gap-3">
             <Avatar className="border-border h-9 w-9 shrink-0 rounded-full border">
               <AvatarImage src={t.avatar} alt={t.authorName} />
-              <AvatarFallback className="text-xs font-bold">
+              <AvatarFallback className="text-xs font-medium">
                 {t.authorName.slice(0, 2).toUpperCase()}
               </AvatarFallback>
             </Avatar>
             <div className="space-y-0.5">
-              <p className="text-foreground text-xs font-bold">{t.authorName}</p>
-              <p className="text-muted-foreground text-[11px]">
+              <p className="text-foreground text-xs font-medium">{t.authorName}</p>
+              <p className="text-muted-foreground text-[11px] font-normal">
                 {t.authorRole} {t.company ? `• ${t.company}` : ""}
               </p>
             </div>
@@ -55,13 +55,15 @@ export function getTestimonialColumns(
         const t = row.original;
         return (
           <div className="max-w-md space-y-1.5">
-            <p className="text-foreground/80 line-clamp-2 text-xs italic">&quot;{t.quote}&quot;</p>
+            <p className="text-foreground/80 line-clamp-2 text-xs font-normal italic">
+              &quot;{t.quote}&quot;
+            </p>
             {t.tags && t.tags.length > 0 && (
               <div className="flex flex-wrap gap-1">
                 {t.tags.map((tag, idx) => (
                   <span
                     key={idx}
-                    className="bg-muted text-muted-foreground rounded-sm px-1.5 py-0.5 text-[10px] font-semibold"
+                    className="bg-muted text-muted-foreground rounded-sm px-1.5 py-0.5 text-[10px] font-medium"
                   >
                     {tag}
                   </span>
@@ -90,12 +92,12 @@ export function getTestimonialColumns(
         row.original.hasVideo ? (
           <Badge
             variant="secondary"
-            className="gap-1 border-purple-500/20 bg-purple-500/10 text-[10px] font-bold text-purple-600"
+            className="border-primary/20 bg-primary/10 text-primary gap-1 text-[10px] font-medium"
           >
             <Video className="h-3 w-3" /> Video Review
           </Badge>
         ) : (
-          <span className="text-muted-foreground text-xs font-medium">Standard</span>
+          <span className="text-muted-foreground text-xs font-normal">Standard</span>
         )
     },
     {

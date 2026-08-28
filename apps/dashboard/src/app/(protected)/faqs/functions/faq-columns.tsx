@@ -18,7 +18,7 @@ export function getFaqColumns(
       accessorKey: "order",
       header: "Order",
       cell: ({ row }) => (
-        <span className="text-muted-foreground font-mono text-xs font-bold">
+        <span className="text-muted-foreground font-mono text-xs font-normal">
           #{row.original.order}
         </span>
       )
@@ -27,21 +27,25 @@ export function getFaqColumns(
       accessorKey: "question",
       header: "Question",
       cell: ({ row }) => (
-        <span className="text-foreground max-w-xs text-xs font-bold">{row.original.question}</span>
+        <span className="text-foreground max-w-xs text-xs font-medium">
+          {row.original.question}
+        </span>
       )
     },
     {
       accessorKey: "answer",
       header: "Answer",
       cell: ({ row }) => (
-        <p className="text-muted-foreground line-clamp-2 max-w-md text-xs">{row.original.answer}</p>
+        <p className="text-muted-foreground line-clamp-2 max-w-md text-xs font-normal">
+          {row.original.answer}
+        </p>
       )
     },
     {
       accessorKey: "category",
       header: "Category",
       cell: ({ row }) => (
-        <Badge variant="outline" className="text-[11px] font-semibold capitalize">
+        <Badge variant="outline" className="text-[10px] font-medium capitalize">
           {row.original.category}
         </Badge>
       )

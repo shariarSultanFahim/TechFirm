@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import { Loader2 } from "lucide-react";
 
 import {
   AlertDialog,
@@ -18,8 +18,8 @@ interface ConfirmDialogProps {
   onOpenChange: (open: boolean) => void;
   title?: string;
   description?: string | React.ReactNode;
-  confirmLabel?: string;
-  cancelLabel?: string;
+  confirmText?: string;
+  cancelText?: string;
   variant?: "destructive" | "default";
   isLoading?: boolean;
   onConfirm: () => void | Promise<void>;
@@ -28,32 +28,32 @@ interface ConfirmDialogProps {
 export function ConfirmDialog({
   open,
   onOpenChange,
-  title = "Are you absolutely sure?",
-  description = "This action cannot be undone and will permanently remove this resource.",
-  confirmLabel = "Delete Permanently",
-  cancelLabel = "Cancel",
+  title = "Are you sure?",
+  description = "This action cannot be undone.",
+  confirmText = "Delete",
+  cancelText = "Cancel",
   variant = "destructive",
   isLoading = false,
   onConfirm
 }: ConfirmDialogProps) {
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
-      <AlertDialogContent className="w-[calc(100%-2rem)] max-w-md p-6">
+      <AlertDialogContent className="sm:max-w-md">
         <AlertDialogHeader>
-          <AlertDialogTitle className="text-foreground text-base font-black tracking-tight">
+          <AlertDialogTitle className="text-foreground text-base font-semibold">
             {title}
           </AlertDialogTitle>
-          <AlertDialogDescription className="text-muted-foreground text-xs leading-relaxed">
+          <AlertDialogDescription className="text-muted-foreground text-xs leading-relaxed font-normal">
             {description}
           </AlertDialogDescription>
         </AlertDialogHeader>
-        <AlertDialogFooter className="mt-4 gap-2">
+        <AlertDialogFooter className="border-border border-t pt-4">
           <AlertDialogCancel
             disabled={isLoading}
-            className="text-xs font-bold"
             onClick={() => onOpenChange(false)}
+            className="text-xs font-medium"
           >
-            {cancelLabel}
+            {cancelText}
           </AlertDialogCancel>
           <AlertDialogAction
             disabled={isLoading}
@@ -61,13 +61,14 @@ export function ConfirmDialog({
               e.preventDefault();
               await onConfirm();
             }}
-            className={
+            className={`cursor-pointer ${
               variant === "destructive"
-                ? "bg-destructive hover:bg-destructive/90 text-destructive-foreground text-xs font-bold"
-                : "bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-bold"
-            }
+                ? "bg-destructive hover:bg-destructive/90 text-destructive-foreground text-xs font-medium"
+                : "bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-medium"
+            }`}
           >
-            {isLoading ? "Processing..." : confirmLabel}
+            {isLoading && <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" />}
+            <span>{isLoading ? "Processing..." : confirmText}</span>
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

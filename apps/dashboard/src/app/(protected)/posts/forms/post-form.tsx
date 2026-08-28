@@ -100,27 +100,31 @@ export function PostForm({
     setTagInput("");
   };
 
-  const handleRemoveTag = (index: number) => {
+  const handleRemoveTag = (idx: number) => {
     form.setValue(
       "tags",
-      tags.filter((_, i) => i !== index)
+      tags.filter((_, i) => i !== idx)
     );
   };
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        {/* Title & Slug */}
+        {/* Basic Article Info */}
         <div className="bg-muted/30 border-border/50 space-y-3 rounded-xl border p-3.5">
+          <p className="text-muted-foreground text-[10px] font-medium tracking-wider uppercase">
+            Article Details
+          </p>
+
           <FormField
             control={form.control}
             name="title"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Article Title *</FormLabel>
+                <FormLabel>Article Headline *</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="e.g. Optimizing Multi-Cloud Infrastructure for Resilient Microservices"
+                    placeholder="e.g. Modernizing Kubernetes Infrastructure for High Throughput"
                     {...field}
                   />
                 </FormControl>
@@ -129,31 +133,47 @@ export function PostForm({
             )}
           />
 
-          <FormField
-            control={form.control}
-            name="slug"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Custom URL Slug (Optional)</FormLabel>
-                <FormControl>
-                  <Input placeholder="e.g. optimizing-multi-cloud-infrastructure" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <FormField
+              control={form.control}
+              name="slug"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Custom Slug (Optional)</FormLabel>
+                  <FormControl>
+                    <Input placeholder="modernizing-kubernetes-infrastructure" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="readTime"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Estimated Read Time</FormLabel>
+                  <FormControl>
+                    <Input placeholder="e.g. 6 min read" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
 
           <FormField
             control={form.control}
             name="excerpt"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Summary Excerpt *</FormLabel>
+                <FormLabel>Article Excerpt / Teaser *</FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder="Short introductory summary for search cards..."
+                    placeholder="Brief 1-2 sentence overview of the insights covered..."
                     rows={2}
-                    className="text-xs"
+                    className="text-xs font-normal"
                     {...field}
                   />
                 </FormControl>
@@ -163,68 +183,27 @@ export function PostForm({
           />
         </div>
 
-        {/* Banner Cover Image */}
+        {/* Category & Cover Photo */}
         <div className="bg-muted/30 border-border/50 space-y-3 rounded-xl border p-3.5">
-          <FormField
-            control={form.control}
-            name="coverImage"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Cover Banner Image URL *</FormLabel>
-                <div className="flex items-center gap-3">
-                  <div className="border-border bg-muted relative h-12 w-16 shrink-0 overflow-hidden rounded-lg border">
-                    {coverImage ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img src={coverImage} alt="Cover" className="h-full w-full object-cover" />
-                    ) : (
-                      <div className="text-muted-foreground flex h-full w-full items-center justify-center">
-                        <BookOpen className="h-4 w-4" />
-                      </div>
-                    )}
-                  </div>
-                  <FormControl>
-                    <Input placeholder="https://images.unsplash.com/..." {...field} />
-                  </FormControl>
-                </div>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <p className="text-muted-foreground text-[10px] font-medium tracking-wider uppercase">
+            Topic &amp; Imagery
+          </p>
 
-          <div className="flex flex-wrap items-center gap-1.5 pt-1">
-            <span className="text-muted-foreground flex items-center gap-1 text-[11px]">
-              <Sparkles className="text-primary h-3 w-3" /> Presets:
-            </span>
-            {COVER_PRESETS.map((cp) => (
-              <button
-                key={cp.label}
-                type="button"
-                onClick={() => form.setValue("coverImage", cp.url)}
-                className="bg-muted hover:bg-muted/80 text-foreground border-border cursor-pointer rounded border px-2 py-0.5 text-[10px] font-semibold transition-colors"
-              >
-                {cp.label}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Category & Read Time */}
-        <div className="bg-muted/30 border-border/50 space-y-3 rounded-xl border p-3.5">
           <FormField
             control={form.control}
             name="category"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Topic Category</FormLabel>
+                <FormLabel>Category</FormLabel>
                 <div className="mb-2 flex flex-wrap gap-1.5">
                   {Array.from(new Set([...categories, ...CATEGORY_PRESETS])).map((cat) => (
                     <button
                       key={cat}
                       type="button"
                       onClick={() => field.onChange(cat)}
-                      className={`cursor-pointer rounded-md px-2.5 py-1 text-xs font-bold transition-all ${
+                      className={`cursor-pointer rounded-md px-2.5 py-1 text-xs font-medium transition-all ${
                         selectedCategory === cat
-                          ? "bg-primary text-primary-foreground shadow-xs"
+                          ? "bg-primary text-primary-foreground shadow-2xs"
                           : "bg-muted text-muted-foreground hover:text-foreground"
                       }`}
                     >
@@ -233,7 +212,7 @@ export function PostForm({
                   ))}
                 </div>
                 <FormControl>
-                  <Input placeholder="Or enter custom category..." {...field} />
+                  <Input placeholder="Or type a custom category..." {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -242,65 +221,52 @@ export function PostForm({
 
           <FormField
             control={form.control}
-            name="readTime"
+            name="coverImage"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Estimated Read Time</FormLabel>
+                <FormLabel>Cover Image URL *</FormLabel>
                 <FormControl>
-                  <Input placeholder="e.g. 5 min read" {...field} />
+                  <Input placeholder="https://images.unsplash.com/..." {...field} />
                 </FormControl>
+                <div className="mt-2 flex flex-wrap items-center gap-1.5 pt-1">
+                  <span className="text-muted-foreground text-[10px] font-medium">Presets:</span>
+                  {COVER_PRESETS.map((preset) => (
+                    <button
+                      key={preset.label}
+                      type="button"
+                      onClick={() => form.setValue("coverImage", preset.url)}
+                      className={`cursor-pointer rounded-md border px-2 py-0.5 text-[10px] font-medium transition-all ${
+                        coverImage === preset.url
+                          ? "border-primary bg-primary/10 text-primary shadow-2xs"
+                          : "border-border hover:bg-muted text-muted-foreground"
+                      }`}
+                    >
+                      {preset.label}
+                    </button>
+                  ))}
+                </div>
                 <FormMessage />
               </FormItem>
             )}
           />
         </div>
 
-        {/* Author Credit */}
+        {/* Markdown Body Content */}
         <div className="bg-muted/30 border-border/50 space-y-3 rounded-xl border p-3.5">
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-            <FormField
-              control={form.control}
-              name="author.name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Author Name *</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Michael Carter" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+          <p className="text-muted-foreground text-[10px] font-medium tracking-wider uppercase">
+            Article Content (Markdown)
+          </p>
 
-            <FormField
-              control={form.control}
-              name="author.role"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Author Role</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Chief Solutions Architect" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-        </div>
-
-        {/* Article Body (Markdown) */}
-        <div className="bg-muted/30 border-border/50 space-y-3 rounded-xl border p-3.5">
           <FormField
             control={form.control}
             name="body"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Article Content (Markdown Supported) *</FormLabel>
                 <FormControl>
                   <Textarea
                     placeholder="## Introduction&#10;&#10;Write comprehensive article body here..."
                     rows={8}
-                    className="font-mono text-xs"
+                    className="font-mono text-xs font-normal"
                     {...field}
                   />
                 </FormControl>
@@ -318,13 +284,13 @@ export function PostForm({
               {tags.map((tag, idx) => (
                 <span
                   key={idx}
-                  className="bg-primary/10 text-primary inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-[11px] font-bold"
+                  className="bg-primary/10 text-primary inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-[11px] font-medium"
                 >
                   <span>{tag}</span>
                   <button
                     type="button"
                     onClick={() => handleRemoveTag(idx)}
-                    className="hover:text-destructive ml-1 cursor-pointer font-bold"
+                    className="hover:text-destructive ml-1 cursor-pointer font-medium"
                   >
                     ×
                   </button>
@@ -336,7 +302,7 @@ export function PostForm({
                 value={tagInput}
                 onChange={(e) => setTagInput(e.target.value)}
                 placeholder="e.g. DevOps, Cloud"
-                className="text-xs"
+                className="text-xs font-normal"
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
                     e.preventDefault();
@@ -349,7 +315,7 @@ export function PostForm({
                 size="sm"
                 variant="outline"
                 onClick={handleAddTag}
-                className="shrink-0 text-xs font-bold"
+                className="shrink-0 text-xs font-medium"
               >
                 Add
               </Button>
@@ -376,12 +342,12 @@ export function PostForm({
               type="button"
               variant="outline"
               onClick={onCancel}
-              className="text-xs font-bold"
+              className="text-xs font-medium"
             >
               Cancel
             </Button>
           )}
-          <Button type="submit" disabled={isLoading} className="text-xs font-bold">
+          <Button type="submit" disabled={isLoading} className="text-xs font-medium">
             {isLoading ? "Saving..." : submitLabel}
           </Button>
         </div>

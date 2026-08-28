@@ -79,7 +79,7 @@ export function FaqForm({
                 <Textarea
                   placeholder="Write the comprehensive answer here..."
                   rows={4}
-                  className="text-xs"
+                  className="text-xs font-normal"
                   {...field}
                 />
               </FormControl>
@@ -102,9 +102,9 @@ export function FaqForm({
                       key={cat}
                       type="button"
                       onClick={() => field.onChange(cat)}
-                      className={`cursor-pointer rounded-md px-2.5 py-1 text-xs font-bold transition-all ${
+                      className={`cursor-pointer rounded-md px-2.5 py-1 text-xs font-medium transition-all ${
                         selectedCategory === cat
-                          ? "bg-primary text-primary-foreground shadow-xs"
+                          ? "bg-primary text-primary-foreground shadow-2xs"
                           : "bg-muted text-muted-foreground hover:text-foreground"
                       }`}
                     >
@@ -160,12 +160,12 @@ export function FaqForm({
               type="button"
               variant="outline"
               onClick={onCancel}
-              className="text-xs font-bold"
+              className="text-xs font-medium"
             >
               Cancel
             </Button>
           )}
-          <Button type="submit" disabled={isLoading} className="text-xs font-bold">
+          <Button type="submit" disabled={isLoading} className="text-xs font-medium">
             {isLoading ? "Saving..." : submitLabel}
           </Button>
         </div>

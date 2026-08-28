@@ -167,28 +167,28 @@ export function SiteConfigForm({ initialConfig, onSubmit }: SiteConfigFormProps)
         <TabsList className="bg-muted/60 grid h-auto w-full max-w-3xl grid-cols-2 gap-1.5 rounded-xl p-1.5 sm:grid-cols-4">
           <TabsTrigger
             value="general"
-            className="flex items-center justify-center gap-2 rounded-lg py-2.5 text-xs font-bold"
+            className="flex items-center justify-center gap-2 rounded-lg py-2.5 text-xs font-medium"
           >
             <Globe className="text-primary h-4 w-4" />
             <span>General &amp; Contacts</span>
           </TabsTrigger>
           <TabsTrigger
             value="social"
-            className="flex items-center justify-center gap-2 rounded-lg py-2.5 text-xs font-bold"
+            className="flex items-center justify-center gap-2 rounded-lg py-2.5 text-xs font-medium"
           >
             <Share2 className="text-primary h-4 w-4" />
             <span>Social Links</span>
           </TabsTrigger>
           <TabsTrigger
             value="cta"
-            className="flex items-center justify-center gap-2 rounded-lg py-2.5 text-xs font-bold"
+            className="flex items-center justify-center gap-2 rounded-lg py-2.5 text-xs font-medium"
           >
             <Rocket className="text-primary h-4 w-4" />
             <span>Launch CTA Band</span>
           </TabsTrigger>
           <TabsTrigger
             value="footer"
-            className="flex items-center justify-center gap-2 rounded-lg py-2.5 text-xs font-bold"
+            className="flex items-center justify-center gap-2 rounded-lg py-2.5 text-xs font-medium"
           >
             <LayoutTemplate className="text-primary h-4 w-4" />
             <span>Footer Navigation</span>
@@ -198,14 +198,14 @@ export function SiteConfigForm({ initialConfig, onSubmit }: SiteConfigFormProps)
         {/* 1. General & Contacts */}
         <TabsContent value="general" className="space-y-6">
           <div className="bg-card border-border space-y-6 rounded-2xl border p-6 shadow-xs sm:p-8">
-            <h3 className="text-foreground border-border flex items-center gap-2 border-b pb-3 text-base font-bold">
+            <h3 className="text-foreground border-border flex items-center gap-2 border-b pb-3 text-base font-medium">
               <Globe className="text-primary h-4 w-4" />
               Brand &amp; Identity
             </h3>
 
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
               <div className="space-y-2">
-                <label className="text-muted-foreground text-xs font-bold tracking-wider uppercase">
+                <label className="text-muted-foreground text-xs font-medium tracking-wider uppercase">
                   Site Name
                 </label>
                 <Input
@@ -216,7 +216,7 @@ export function SiteConfigForm({ initialConfig, onSubmit }: SiteConfigFormProps)
               </div>
 
               <div className="space-y-2">
-                <label className="text-muted-foreground text-xs font-bold tracking-wider uppercase">
+                <label className="text-muted-foreground text-xs font-medium tracking-wider uppercase">
                   Tagline / Subheading
                 </label>
                 <Input
@@ -227,7 +227,7 @@ export function SiteConfigForm({ initialConfig, onSubmit }: SiteConfigFormProps)
               </div>
 
               <div className="space-y-2 md:col-span-2">
-                <label className="text-muted-foreground text-xs font-bold tracking-wider uppercase">
+                <label className="text-muted-foreground text-xs font-medium tracking-wider uppercase">
                   Logo Image URL
                 </label>
                 <Input
@@ -238,14 +238,14 @@ export function SiteConfigForm({ initialConfig, onSubmit }: SiteConfigFormProps)
               </div>
             </div>
 
-            <h3 className="text-foreground border-border flex items-center gap-2 border-b pt-4 pb-3 text-base font-bold">
+            <h3 className="text-foreground border-border flex items-center gap-2 border-b pt-4 pb-3 text-base font-medium">
               <Mail className="text-primary h-4 w-4" />
               Contact &amp; Working Hours
             </h3>
 
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
               <div className="space-y-2">
-                <label className="text-muted-foreground flex items-center gap-1.5 text-xs font-bold tracking-wider uppercase">
+                <label className="text-muted-foreground flex items-center gap-1.5 text-xs font-medium tracking-wider uppercase">
                   <Mail className="text-primary h-3.5 w-3.5" />
                   Contact Email
                 </label>
@@ -258,7 +258,7 @@ export function SiteConfigForm({ initialConfig, onSubmit }: SiteConfigFormProps)
               </div>
 
               <div className="space-y-2">
-                <label className="text-muted-foreground flex items-center gap-1.5 text-xs font-bold tracking-wider uppercase">
+                <label className="text-muted-foreground flex items-center gap-1.5 text-xs font-medium tracking-wider uppercase">
                   <Phone className="text-primary h-3.5 w-3.5" />
                   Contact Phone
                 </label>
@@ -270,7 +270,7 @@ export function SiteConfigForm({ initialConfig, onSubmit }: SiteConfigFormProps)
               </div>
 
               <div className="space-y-2">
-                <label className="text-muted-foreground flex items-center gap-1.5 text-xs font-bold tracking-wider uppercase">
+                <label className="text-muted-foreground flex items-center gap-1.5 text-xs font-medium tracking-wider uppercase">
                   <Clock className="text-primary h-3.5 w-3.5" />
                   Working Hours
                 </label>
@@ -282,7 +282,7 @@ export function SiteConfigForm({ initialConfig, onSubmit }: SiteConfigFormProps)
               </div>
 
               <div className="space-y-2">
-                <label className="text-muted-foreground flex items-center gap-1.5 text-xs font-bold tracking-wider uppercase">
+                <label className="text-muted-foreground flex items-center gap-1.5 text-xs font-medium tracking-wider uppercase">
                   <MapPin className="text-primary h-3.5 w-3.5" />
                   Office Address
                 </label>
@@ -294,7 +294,7 @@ export function SiteConfigForm({ initialConfig, onSubmit }: SiteConfigFormProps)
               </div>
             </div>
 
-            <h3 className="text-foreground border-border flex items-center justify-between border-b pt-4 pb-3 text-base font-bold">
+            <h3 className="text-foreground border-border flex items-center justify-between border-b pt-4 pb-3 text-base font-medium">
               <span className="flex items-center gap-2">
                 <Clock className="text-primary h-4 w-4" />
                 Top Announcement Bar
@@ -309,7 +309,7 @@ export function SiteConfigForm({ initialConfig, onSubmit }: SiteConfigFormProps)
             </h3>
 
             <div className="space-y-2">
-              <label className="text-muted-foreground text-xs font-bold tracking-wider uppercase">
+              <label className="text-muted-foreground text-xs font-medium tracking-wider uppercase">
                 Announcement Message
               </label>
               <Input
@@ -324,14 +324,14 @@ export function SiteConfigForm({ initialConfig, onSubmit }: SiteConfigFormProps)
         {/* 2. Social Links */}
         <TabsContent value="social" className="space-y-6">
           <div className="bg-card border-border space-y-6 rounded-2xl border p-6 shadow-xs sm:p-8">
-            <h3 className="text-foreground border-border flex items-center gap-2 border-b pb-3 text-base font-bold">
+            <h3 className="text-foreground border-border flex items-center gap-2 border-b pb-3 text-base font-medium">
               <Share2 className="text-primary h-4 w-4" />
               Social Media Profiles
             </h3>
 
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
               <div className="space-y-2">
-                <label className="text-muted-foreground text-xs font-bold tracking-wider uppercase">
+                <label className="text-muted-foreground text-xs font-medium tracking-wider uppercase">
                   Facebook URL
                 </label>
                 <Input
@@ -342,7 +342,7 @@ export function SiteConfigForm({ initialConfig, onSubmit }: SiteConfigFormProps)
               </div>
 
               <div className="space-y-2">
-                <label className="text-muted-foreground text-xs font-bold tracking-wider uppercase">
+                <label className="text-muted-foreground text-xs font-medium tracking-wider uppercase">
                   Twitter / X URL
                 </label>
                 <Input
@@ -353,7 +353,7 @@ export function SiteConfigForm({ initialConfig, onSubmit }: SiteConfigFormProps)
               </div>
 
               <div className="space-y-2">
-                <label className="text-muted-foreground text-xs font-bold tracking-wider uppercase">
+                <label className="text-muted-foreground text-xs font-medium tracking-wider uppercase">
                   LinkedIn URL
                 </label>
                 <Input
@@ -364,7 +364,7 @@ export function SiteConfigForm({ initialConfig, onSubmit }: SiteConfigFormProps)
               </div>
 
               <div className="space-y-2">
-                <label className="text-muted-foreground text-xs font-bold tracking-wider uppercase">
+                <label className="text-muted-foreground text-xs font-medium tracking-wider uppercase">
                   Instagram URL
                 </label>
                 <Input
@@ -375,7 +375,7 @@ export function SiteConfigForm({ initialConfig, onSubmit }: SiteConfigFormProps)
               </div>
 
               <div className="space-y-2">
-                <label className="text-muted-foreground text-xs font-bold tracking-wider uppercase">
+                <label className="text-muted-foreground text-xs font-medium tracking-wider uppercase">
                   GitHub URL
                 </label>
                 <Input
@@ -391,14 +391,14 @@ export function SiteConfigForm({ initialConfig, onSubmit }: SiteConfigFormProps)
         {/* 3. Launch CTA Band */}
         <TabsContent value="cta" className="space-y-6">
           <div className="bg-card border-border space-y-6 rounded-2xl border p-6 shadow-xs sm:p-8">
-            <h3 className="text-foreground border-border flex items-center gap-2 border-b pb-3 text-base font-bold">
+            <h3 className="text-foreground border-border flex items-center gap-2 border-b pb-3 text-base font-medium">
               <Rocket className="text-primary h-4 w-4" />
               Launch CTA Banner Overlap
             </h3>
 
             <div className="space-y-4">
               <div className="space-y-2">
-                <label className="text-muted-foreground text-xs font-bold tracking-wider uppercase">
+                <label className="text-muted-foreground text-xs font-medium tracking-wider uppercase">
                   Banner Headline
                 </label>
                 <Input
@@ -409,7 +409,7 @@ export function SiteConfigForm({ initialConfig, onSubmit }: SiteConfigFormProps)
               </div>
 
               <div className="space-y-2">
-                <label className="text-muted-foreground text-xs font-bold tracking-wider uppercase">
+                <label className="text-muted-foreground text-xs font-medium tracking-wider uppercase">
                   Banner Subtitle
                 </label>
                 <Input
@@ -421,7 +421,7 @@ export function SiteConfigForm({ initialConfig, onSubmit }: SiteConfigFormProps)
 
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
-                  <label className="text-muted-foreground text-xs font-bold tracking-wider uppercase">
+                  <label className="text-muted-foreground text-xs font-medium tracking-wider uppercase">
                     Button Label
                   </label>
                   <Input
@@ -432,7 +432,7 @@ export function SiteConfigForm({ initialConfig, onSubmit }: SiteConfigFormProps)
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-muted-foreground text-xs font-bold tracking-wider uppercase">
+                  <label className="text-muted-foreground text-xs font-medium tracking-wider uppercase">
                     Button Link (Href)
                   </label>
                   <Input
@@ -445,14 +445,14 @@ export function SiteConfigForm({ initialConfig, onSubmit }: SiteConfigFormProps)
 
               {/* Badges */}
               <div className="space-y-3 pt-3">
-                <label className="text-muted-foreground text-xs font-bold tracking-wider uppercase">
+                <label className="text-muted-foreground text-xs font-medium tracking-wider uppercase">
                   Feature Badges (Checkmark Pills)
                 </label>
                 <div className="mb-3 flex flex-wrap gap-2">
                   {(formData.ctaBand?.badges || []).map((badge, idx) => (
                     <span
                       key={idx}
-                      className="bg-primary/10 text-primary border-primary/20 inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-bold"
+                      className="bg-primary/10 text-primary border-primary/20 inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-medium"
                     >
                       <CheckCircle2 className="h-3.5 w-3.5" />
                       <span>{badge}</span>
@@ -483,7 +483,7 @@ export function SiteConfigForm({ initialConfig, onSubmit }: SiteConfigFormProps)
                     type="button"
                     variant="outline"
                     onClick={handleAddBadge}
-                    className="shrink-0 font-bold"
+                    className="shrink-0 font-medium"
                   >
                     <Plus className="mr-1 h-4 w-4" /> Add Badge
                   </Button>
@@ -496,13 +496,13 @@ export function SiteConfigForm({ initialConfig, onSubmit }: SiteConfigFormProps)
         {/* 4. Footer Navigation */}
         <TabsContent value="footer" className="space-y-6">
           <div className="bg-card border-border space-y-6 rounded-2xl border p-6 shadow-xs sm:p-8">
-            <h3 className="text-foreground border-border flex items-center gap-2 border-b pb-3 text-base font-bold">
+            <h3 className="text-foreground border-border flex items-center gap-2 border-b pb-3 text-base font-medium">
               <LayoutTemplate className="text-primary h-4 w-4" />
               Footer Copyright
             </h3>
 
             <div className="space-y-2">
-              <label className="text-muted-foreground text-xs font-bold tracking-wider uppercase">
+              <label className="text-muted-foreground text-xs font-medium tracking-wider uppercase">
                 Copyright Notice
               </label>
               <Input
@@ -528,13 +528,13 @@ export function SiteConfigForm({ initialConfig, onSubmit }: SiteConfigFormProps)
               {/* Collaborate Column */}
               <div className="bg-muted/30 border-border/50 space-y-4 rounded-xl border p-5">
                 <div className="flex items-center justify-between">
-                  <h4 className="text-foreground text-sm font-bold">Column 1: Collaborate</h4>
+                  <h4 className="text-foreground text-sm font-medium">Column 1: Collaborate</h4>
                   <Button
                     type="button"
                     size="sm"
                     variant="outline"
                     onClick={() => handleAddFooterLink("collaborateLinks")}
-                    className="h-8 text-xs font-bold"
+                    className="h-8 text-xs font-medium"
                   >
                     <Plus className="mr-1 h-3.5 w-3.5" /> Add Link
                   </Button>
@@ -575,7 +575,7 @@ export function SiteConfigForm({ initialConfig, onSubmit }: SiteConfigFormProps)
               {/* My Account Column */}
               <div className="bg-muted/30 border-border/50 space-y-4 rounded-xl border p-5">
                 <div className="flex items-center justify-between">
-                  <h4 className="text-foreground text-sm font-bold">
+                  <h4 className="text-foreground text-sm font-medium">
                     Column 2: My Account / Company
                   </h4>
                   <Button
@@ -583,7 +583,7 @@ export function SiteConfigForm({ initialConfig, onSubmit }: SiteConfigFormProps)
                     size="sm"
                     variant="outline"
                     onClick={() => handleAddFooterLink("myAccountLinks")}
-                    className="h-8 text-xs font-bold"
+                    className="h-8 text-xs font-medium"
                   >
                     <Plus className="mr-1 h-3.5 w-3.5" /> Add Link
                   </Button>
@@ -624,13 +624,13 @@ export function SiteConfigForm({ initialConfig, onSubmit }: SiteConfigFormProps)
               {/* Services Column */}
               <div className="bg-muted/30 border-border/50 space-y-4 rounded-xl border p-5">
                 <div className="flex items-center justify-between">
-                  <h4 className="text-foreground text-sm font-bold">Column 3: Services</h4>
+                  <h4 className="text-foreground text-sm font-medium">Column 3: Services</h4>
                   <Button
                     type="button"
                     size="sm"
                     variant="outline"
                     onClick={() => handleAddFooterLink("serviceLinks")}
-                    className="h-8 text-xs font-bold"
+                    className="h-8 text-xs font-medium"
                   >
                     <Plus className="mr-1 h-3.5 w-3.5" /> Add Link
                   </Button>
@@ -671,13 +671,13 @@ export function SiteConfigForm({ initialConfig, onSubmit }: SiteConfigFormProps)
               {/* Bottom Links Column */}
               <div className="bg-muted/30 border-border/50 space-y-4 rounded-xl border p-5">
                 <div className="flex items-center justify-between">
-                  <h4 className="text-foreground text-sm font-bold">Bottom Bar Links</h4>
+                  <h4 className="text-foreground text-sm font-medium">Bottom Bar Links</h4>
                   <Button
                     type="button"
                     size="sm"
                     variant="outline"
                     onClick={() => handleAddFooterLink("bottomLinks")}
-                    className="h-8 text-xs font-bold"
+                    className="h-8 text-xs font-medium"
                   >
                     <Plus className="mr-1 h-3.5 w-3.5" /> Add Link
                   </Button>

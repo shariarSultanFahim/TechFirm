@@ -35,12 +35,14 @@ export function getPortfolioColumns(
         const item = row.original;
         return (
           <div className="max-w-xs space-y-0.5">
-            <p className="text-foreground line-clamp-1 text-xs font-bold">{item.title}</p>
+            <p className="text-foreground line-clamp-1 text-xs font-medium">{item.title}</p>
             {item.subtitle && (
-              <p className="text-muted-foreground line-clamp-1 text-[11px]">{item.subtitle}</p>
+              <p className="text-muted-foreground line-clamp-1 text-[11px] font-normal">
+                {item.subtitle}
+              </p>
             )}
             <div className="mt-1 flex items-center gap-1.5">
-              <code className="text-muted-foreground bg-muted rounded-sm px-1 text-[10px]">
+              <code className="text-muted-foreground bg-muted rounded-sm px-1 font-mono text-[10px]">
                 /portfolio/{item.slug}
               </code>
               <a
@@ -64,10 +66,12 @@ export function getPortfolioColumns(
         const item = row.original;
         return (
           <div className="space-y-1">
-            <Badge variant="outline" className="text-[10px] font-semibold">
+            <Badge variant="outline" className="text-[10px] font-medium">
               {item.category}
             </Badge>
-            {item.industry && <p className="text-muted-foreground text-[10px]">{item.industry}</p>}
+            {item.industry && (
+              <p className="text-muted-foreground text-[10px] font-normal">{item.industry}</p>
+            )}
           </div>
         );
       }
@@ -81,15 +85,15 @@ export function getPortfolioColumns(
           <div className="flex max-w-[200px] flex-wrap gap-1">
             {results.length > 0 ? (
               results.slice(0, 2).map((r, i) => (
-                <Badge key={i} variant="secondary" className="px-1.5 py-0.5 text-[9px] font-bold">
+                <Badge key={i} variant="secondary" className="px-1.5 py-0.5 text-[9px] font-medium">
                   {r.title}
                 </Badge>
               ))
             ) : (
-              <span className="text-muted-foreground text-[11px]">—</span>
+              <span className="text-muted-foreground text-[11px] font-normal">—</span>
             )}
             {results.length > 2 && (
-              <Badge variant="outline" className="text-[9px]">
+              <Badge variant="outline" className="text-[9px] font-medium">
                 +{results.length - 2} more
               </Badge>
             )}
@@ -101,7 +105,7 @@ export function getPortfolioColumns(
       accessorKey: "order",
       header: "Order",
       cell: ({ row }) => (
-        <span className="text-muted-foreground font-mono text-xs font-bold">
+        <span className="text-muted-foreground font-mono text-xs font-normal">
           #{row.original.order}
         </span>
       )

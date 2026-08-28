@@ -47,7 +47,7 @@ export default function OverviewPage() {
       count: totalMessages,
       badge: unreadCount > 0 ? `${unreadCount} unread` : "0 unread",
       badgeColor:
-        unreadCount > 0 ? "text-rose-600 bg-rose-500/10" : "text-muted-foreground bg-muted",
+        unreadCount > 0 ? "text-destructive bg-destructive/10" : "text-muted-foreground bg-muted",
       icon: Mail,
       href: "/messages"
     },
@@ -63,7 +63,7 @@ export default function OverviewPage() {
       title: "Editorial Posts",
       count: totalPosts,
       badge: "Tech insights",
-      badgeColor: "text-emerald-600 bg-emerald-500/10",
+      badgeColor: "text-primary bg-primary/10",
       icon: FileText,
       href: "/posts"
     },
@@ -71,7 +71,7 @@ export default function OverviewPage() {
       title: "Active Plans",
       count: totalPlans,
       badge: "Monthly & Annual",
-      badgeColor: "text-amber-600 bg-amber-500/10",
+      badgeColor: "text-primary bg-primary/10",
       icon: CreditCard,
       href: "/plans"
     },
@@ -79,7 +79,7 @@ export default function OverviewPage() {
       title: "Team Members",
       count: totalTeam,
       badge: "Leadership & Eng",
-      badgeColor: "text-indigo-600 bg-indigo-500/10",
+      badgeColor: "text-primary bg-primary/10",
       icon: UserCheck,
       href: "/team"
     },
@@ -107,7 +107,7 @@ export default function OverviewPage() {
 
       <div className="space-y-3">
         <div className="flex items-center justify-between">
-          <h2 className="text-foreground flex items-center gap-2 text-sm font-black tracking-wider uppercase">
+          <h2 className="text-muted-foreground flex items-center gap-2 text-xs font-semibold tracking-wider uppercase">
             <TrendingUp className="text-primary h-4 w-4" />
             <span>Platform Overview &amp; Content Metrics</span>
           </h2>

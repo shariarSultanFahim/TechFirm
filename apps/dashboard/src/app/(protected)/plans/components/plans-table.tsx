@@ -67,9 +67,9 @@ export function PlansTable({ onEdit, onOpenCreate }: PlansTableProps) {
                 setSelectedPeriod(period);
                 setPageIndex(0);
               }}
-              className={`rounded-lg px-3.5 py-1.5 text-xs font-bold capitalize transition-colors ${
+              className={`rounded-lg px-3.5 py-1.5 text-xs font-medium capitalize transition-colors ${
                 selectedPeriod === period
-                  ? "bg-background text-foreground shadow-xs"
+                  ? "bg-background text-foreground shadow-2xs"
                   : "text-muted-foreground hover:text-foreground"
               }`}
             >
@@ -86,7 +86,7 @@ export function PlansTable({ onEdit, onOpenCreate }: PlansTableProps) {
               setPageIndex(0);
             }}
             placeholder="Search plans..."
-            className="text-xs"
+            className="text-xs font-normal"
           />
         </div>
       </div>
@@ -106,9 +106,11 @@ export function PlansTable({ onEdit, onOpenCreate }: PlansTableProps) {
         emptyState={
           <div className="text-muted-foreground flex flex-col items-center justify-center p-12 text-center">
             <CreditCard className="text-muted-foreground/30 mb-3 h-10 w-10" />
-            <p className="text-foreground font-bold">No pricing plans found</p>
-            <p className="mt-1 text-xs">Create subscription and hosting tiers for your clients.</p>
-            <Button onClick={onOpenCreate} size="sm" className="mt-4 text-xs font-bold">
+            <p className="text-foreground text-sm font-medium">No pricing plans found</p>
+            <p className="mt-1 text-xs font-normal">
+              Create subscription and hosting tiers for your clients.
+            </p>
+            <Button onClick={onOpenCreate} size="sm" className="mt-4 text-xs font-medium">
               <Plus className="mr-1.5 h-3.5 w-3.5" /> Add Pricing Plan
             </Button>
           </div>

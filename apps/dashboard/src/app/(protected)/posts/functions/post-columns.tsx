@@ -36,10 +36,12 @@ export function getPostColumns(
         const p = row.original;
         return (
           <div className="max-w-xs space-y-0.5">
-            <p className="text-foreground line-clamp-1 text-xs font-bold">{p.title}</p>
-            <p className="text-muted-foreground line-clamp-1 text-[11px]">{p.excerpt}</p>
+            <p className="text-foreground line-clamp-1 text-xs font-medium">{p.title}</p>
+            <p className="text-muted-foreground line-clamp-1 text-[11px] font-normal">
+              {p.excerpt}
+            </p>
             {p.slug && (
-              <code className="text-muted-foreground bg-muted inline-block rounded-sm px-1 text-[10px]">
+              <code className="text-muted-foreground bg-muted inline-block rounded-sm px-1 font-mono text-[10px]">
                 /blog/{p.slug}
               </code>
             )}
@@ -51,7 +53,7 @@ export function getPostColumns(
       accessorKey: "category",
       header: "Category",
       cell: ({ row }) => (
-        <Badge variant="outline" className="text-[10px] font-semibold">
+        <Badge variant="outline" className="text-[10px] font-medium">
           {row.original.category}
         </Badge>
       )
@@ -65,13 +67,11 @@ export function getPostColumns(
           <div className="flex items-center gap-2">
             <Avatar className="h-6 w-6">
               <AvatarImage src={author?.avatar} alt={author?.name} />
-              <AvatarFallback className="text-[9px] font-bold">
+              <AvatarFallback className="text-[9px] font-medium">
                 {author?.name ? author.name.slice(0, 2).toUpperCase() : "AU"}
               </AvatarFallback>
             </Avatar>
-            <span className="text-foreground text-xs font-semibold">
-              {author?.name || "Author"}
-            </span>
+            <span className="text-foreground text-xs font-medium">{author?.name || "Author"}</span>
           </div>
         );
       }
@@ -90,7 +90,7 @@ export function getPostColumns(
           : "Draft";
 
         return (
-          <div className="text-muted-foreground flex items-center gap-1 text-[11px]">
+          <div className="text-muted-foreground flex items-center gap-1 text-[11px] font-normal">
             <Calendar className="h-3 w-3" />
             <span>{formattedDate}</span>
           </div>

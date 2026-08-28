@@ -30,10 +30,10 @@ export function getMessageColumns(): ColumnDef<IContactMessage>[] {
         const msg = row.original;
         return (
           <div>
-            <p className="text-foreground text-xs font-bold">{msg.name}</p>
-            <p className="text-muted-foreground text-[11px]">{msg.email}</p>
+            <p className="text-foreground text-xs font-medium">{msg.name}</p>
+            <p className="text-muted-foreground text-[11px] font-normal">{msg.email}</p>
             {msg.phone && (
-              <p className="text-muted-foreground mt-0.5 flex items-center gap-1 text-[10px]">
+              <p className="text-muted-foreground mt-0.5 flex items-center gap-1 text-[10px] font-normal">
                 <Phone className="h-2.5 w-2.5" />
                 <span>{msg.phone}</span>
               </p>
@@ -49,10 +49,12 @@ export function getMessageColumns(): ColumnDef<IContactMessage>[] {
         const msg = row.original;
         return (
           <div className="max-w-md">
-            <p className="text-foreground line-clamp-1 text-xs font-bold">
+            <p className="text-foreground line-clamp-1 text-xs font-medium">
               {msg.subject || "General Consultation Inquiry"}
             </p>
-            <p className="text-muted-foreground mt-0.5 line-clamp-1 text-[11px]">{msg.message}</p>
+            <p className="text-muted-foreground mt-0.5 line-clamp-1 text-[11px] font-normal">
+              {msg.message}
+            </p>
           </div>
         );
       }
@@ -62,11 +64,11 @@ export function getMessageColumns(): ColumnDef<IContactMessage>[] {
       header: "Service",
       cell: ({ row }) =>
         row.original.service ? (
-          <Badge variant="outline" className="text-[10px] font-semibold">
+          <Badge variant="outline" className="text-[10px] font-medium">
             {row.original.service}
           </Badge>
         ) : (
-          <span className="text-muted-foreground text-[11px]">—</span>
+          <span className="text-muted-foreground text-[11px] font-normal">—</span>
         )
     },
     {
@@ -78,22 +80,22 @@ export function getMessageColumns(): ColumnDef<IContactMessage>[] {
         return (
           <>
             {status === "unread" && (
-              <Badge className="bg-rose-500/10 text-[10px] font-bold text-rose-600 hover:bg-rose-500/20">
+              <Badge className="bg-destructive/10 text-destructive hover:bg-destructive/20 text-[10px] font-medium">
                 Unread
               </Badge>
             )}
             {status === "read" && (
-              <Badge variant="secondary" className="text-[10px] font-semibold">
+              <Badge variant="secondary" className="text-[10px] font-medium">
                 Read
               </Badge>
             )}
             {status === "replied" && (
-              <Badge className="bg-emerald-500/10 text-[10px] font-bold text-emerald-600 hover:bg-emerald-500/20">
+              <Badge className="bg-primary/10 text-primary hover:bg-primary/20 text-[10px] font-medium">
                 Replied
               </Badge>
             )}
             {status === "archived" && (
-              <Badge variant="outline" className="text-muted-foreground text-[10px]">
+              <Badge variant="outline" className="text-muted-foreground text-[10px] font-medium">
                 Archived
               </Badge>
             )}
@@ -107,7 +109,7 @@ export function getMessageColumns(): ColumnDef<IContactMessage>[] {
       cell: ({ row }) => {
         const date = row.original.createdAt;
         return (
-          <span className="text-muted-foreground text-xs whitespace-nowrap">
+          <span className="text-muted-foreground text-xs font-normal whitespace-nowrap">
             {date
               ? new Date(date).toLocaleDateString("en-US", {
                   month: "short",

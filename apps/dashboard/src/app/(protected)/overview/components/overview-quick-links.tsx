@@ -24,7 +24,7 @@ const MODULES = [
 export function OverviewQuickLinks() {
   return (
     <div className="space-y-3">
-      <h2 className="text-foreground flex items-center gap-2 text-sm font-black tracking-wider uppercase">
+      <h2 className="text-muted-foreground flex items-center gap-2 text-xs font-semibold tracking-wider uppercase">
         <LayoutDashboard className="text-primary h-4 w-4" />
         <span>Management Modules</span>
       </h2>
@@ -41,7 +41,7 @@ export function OverviewQuickLinks() {
               <div className="bg-muted text-foreground group-hover:bg-primary group-hover:text-primary-foreground flex h-8 w-8 items-center justify-center rounded-lg transition-colors">
                 <Icon className="h-4 w-4" />
               </div>
-              <span className="text-foreground text-xs font-bold">{item.title}</span>
+              <span className="text-foreground text-xs font-medium">{item.title}</span>
             </Link>
           );
         })}

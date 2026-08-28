@@ -35,7 +35,7 @@ export default function PostsPage() {
       >
         <Button
           onClick={handleOpenCreate}
-          className="flex items-center gap-2 text-xs font-bold shadow-md"
+          className="flex items-center gap-2 text-xs font-medium shadow-xs"
         >
           <Plus className="h-4 w-4" />
           <span>Write Article</span>

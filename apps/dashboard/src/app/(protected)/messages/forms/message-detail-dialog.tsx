@@ -77,14 +77,14 @@ function MessageDetailContent({
       <div className="border-border bg-muted/30 space-y-3 rounded-xl border p-4">
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="bg-primary/10 text-primary flex h-9 w-9 items-center justify-center rounded-full text-sm font-bold">
+            <div className="bg-primary/10 text-primary flex h-9 w-9 items-center justify-center rounded-full text-sm font-medium">
               <User className="h-4 w-4" />
             </div>
             <div>
-              <p className="text-foreground text-sm font-bold">{message.name}</p>
+              <p className="text-foreground text-sm font-medium">{message.name}</p>
               <a
                 href={`mailto:${message.email}`}
-                className="text-primary text-xs font-medium hover:underline"
+                className="text-primary text-xs font-normal hover:underline"
               >
                 {message.email}
               </a>
@@ -95,14 +95,14 @@ function MessageDetailContent({
             href={`mailto:${message.email}?subject=Re: ${encodeURIComponent(
               message.subject || "TechFirm Consultation"
             )}`}
-            className="bg-primary text-primary-foreground hover:bg-primary/90 inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-bold shadow-xs transition-colors"
+            className="bg-primary text-primary-foreground hover:bg-primary/90 inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium shadow-2xs transition-colors"
           >
             <Send className="h-3 w-3" />
             <span>Reply Email</span>
           </a>
         </div>
 
-        <div className="border-border/60 grid grid-cols-2 gap-2 border-t pt-2 text-xs">
+        <div className="border-border/60 grid grid-cols-2 gap-2 border-t pt-2 text-xs font-normal">
           {message.phone && (
             <div className="text-muted-foreground flex items-center gap-1.5">
               <Phone className="text-primary h-3.5 w-3.5" />
@@ -136,10 +136,10 @@ function MessageDetailContent({
 
       {/* Subject & message text */}
       <div className="space-y-1.5">
-        <Label className="text-foreground text-xs font-bold">
+        <Label className="text-foreground text-xs font-medium">
           Subject: {message.subject || "General Consultation Inquiry"}
         </Label>
-        <div className="border-border bg-card text-foreground rounded-xl border p-3.5 text-xs leading-relaxed whitespace-pre-wrap sm:text-sm">
+        <div className="border-border bg-card text-foreground rounded-xl border p-3.5 text-xs leading-relaxed font-normal whitespace-pre-wrap sm:text-sm">
           {message.message}
         </div>
       </div>
@@ -147,16 +147,16 @@ function MessageDetailContent({
       {/* Follow-up notes */}
       <form onSubmit={handleSave} className="border-border space-y-3.5 border-t pt-3.5">
         <div className="space-y-1.5">
-          <Label className="text-xs font-bold">Follow-Up Status</Label>
+          <Label className="text-xs font-medium">Follow-Up Status</Label>
           <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-4">
             {STATUS_OPTIONS.map((st) => (
               <button
                 key={st}
                 type="button"
                 onClick={() => setStatus(st)}
-                className={`cursor-pointer rounded-lg p-2 text-center text-xs font-bold tracking-wider uppercase transition-all ${
+                className={`cursor-pointer rounded-lg p-2 text-center text-xs font-medium tracking-wider uppercase transition-all ${
                   status === st
-                    ? "bg-primary text-primary-foreground shadow-xs"
+                    ? "bg-primary text-primary-foreground shadow-2xs"
                     : "bg-muted hover:bg-muted/80 text-muted-foreground hover:text-foreground"
                 }`}
               >
@@ -167,21 +167,21 @@ function MessageDetailContent({
         </div>
 
         <div className="space-y-1.5">
-          <Label className="text-xs font-bold">Internal Follow-Up Notes</Label>
+          <Label className="text-xs font-medium">Internal Follow-Up Notes</Label>
           <Textarea
             rows={3}
             placeholder="Log internal follow-up steps, call notes, or next actions..."
             value={replyNotes}
             onChange={(e) => setReplyNotes(e.target.value)}
-            className="text-xs"
+            className="text-xs font-normal"
           />
         </div>
 
         <DialogFooter className="border-border border-t pt-3.5">
-          <Button type="button" variant="outline" onClick={onClose} className="text-xs font-bold">
+          <Button type="button" variant="outline" onClick={onClose} className="text-xs font-medium">
             Close
           </Button>
-          <Button type="submit" disabled={updateMessage.isPending} className="text-xs font-bold">
+          <Button type="submit" disabled={updateMessage.isPending} className="text-xs font-medium">
             {updateMessage.isPending ? "Saving..." : "Save Status & Notes"}
           </Button>
         </DialogFooter>
@@ -197,11 +197,11 @@ export function MessageDetailDialog({ open, onOpenChange, message }: MessageDeta
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-xl">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
+          <DialogTitle className="flex items-center gap-2 text-base font-semibold">
             <MessageSquare className="text-primary h-5 w-5" />
             <span>Inquiry Details</span>
           </DialogTitle>
-          <DialogDescription>
+          <DialogDescription className="text-xs font-normal">
             Review customer message details, reply by email, and record internal follow-up notes.
           </DialogDescription>
         </DialogHeader>

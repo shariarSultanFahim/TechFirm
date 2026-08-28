@@ -20,7 +20,7 @@ export function getTeamColumns(
       accessorKey: "order",
       header: "Order",
       cell: ({ row }) => (
-        <span className="text-muted-foreground font-mono text-xs font-bold">
+        <span className="text-muted-foreground font-mono text-xs font-normal">
           #{row.original.order}
         </span>
       )
@@ -34,13 +34,15 @@ export function getTeamColumns(
           <div className="flex items-center gap-3">
             <Avatar className="border-border h-10 w-10 shrink-0 border">
               <AvatarImage src={m.photo} alt={m.name} />
-              <AvatarFallback className="text-xs font-bold">
+              <AvatarFallback className="text-xs font-medium">
                 {m.name.slice(0, 2).toUpperCase()}
               </AvatarFallback>
             </Avatar>
             <div>
-              <p className="text-foreground text-xs font-bold">{m.name}</p>
-              {m.experience && <p className="text-muted-foreground text-[11px]">{m.experience}</p>}
+              <p className="text-foreground text-xs font-medium">{m.name}</p>
+              {m.experience && (
+                <p className="text-muted-foreground text-[11px] font-normal">{m.experience}</p>
+              )}
             </div>
           </div>
         );
@@ -53,9 +55,9 @@ export function getTeamColumns(
         const m = row.original;
         return (
           <div>
-            <p className="text-foreground text-xs font-semibold">{m.role}</p>
+            <p className="text-foreground text-xs font-medium">{m.role}</p>
             {m.slug && (
-              <code className="text-muted-foreground bg-muted rounded-md px-1.5 py-0.5 text-[10px]">
+              <code className="text-muted-foreground bg-muted rounded-md px-1.5 py-0.5 font-mono text-[10px]">
                 /team/{m.slug}
               </code>
             )}
@@ -71,13 +73,13 @@ export function getTeamColumns(
         return (
           <div className="space-y-1">
             {m.email && (
-              <div className="text-muted-foreground flex items-center gap-1.5 text-[11px]">
+              <div className="text-muted-foreground flex items-center gap-1.5 text-[11px] font-normal">
                 <Mail className="text-primary h-3 w-3 shrink-0" />
                 <span>{m.email}</span>
               </div>
             )}
             {m.phone && (
-              <div className="text-muted-foreground flex items-center gap-1.5 text-[11px]">
+              <div className="text-muted-foreground flex items-center gap-1.5 text-[11px] font-normal">
                 <Phone className="text-primary h-3 w-3 shrink-0" />
                 <span>{m.phone}</span>
               </div>
@@ -126,12 +128,14 @@ export function getTeamColumns(
         return (
           <div className="flex max-w-xs flex-wrap gap-1">
             {skills.slice(0, 3).map((s) => (
-              <Badge key={s} variant="secondary" className="py-0 text-[10px]">
+              <Badge key={s} variant="secondary" className="py-0 text-[10px] font-medium">
                 {s}
               </Badge>
             ))}
             {skills.length > 3 && (
-              <span className="text-muted-foreground text-[10px]">+{skills.length - 3}</span>
+              <span className="text-muted-foreground text-[10px] font-normal">
+                +{skills.length - 3}
+              </span>
             )}
           </div>
         );

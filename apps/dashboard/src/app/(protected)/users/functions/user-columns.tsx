@@ -27,7 +27,7 @@ export function getUserColumns(
           .slice(0, 2);
 
         return (
-          <div className="bg-primary/10 text-primary flex h-8 w-8 items-center justify-center rounded-full text-xs font-bold">
+          <div className="bg-primary/10 text-primary flex h-8 w-8 items-center justify-center rounded-full text-xs font-medium">
             {initials}
           </div>
         );
@@ -40,8 +40,8 @@ export function getUserColumns(
         const u = row.original;
         return (
           <div>
-            <p className="text-foreground text-xs font-bold">{u.name}</p>
-            <p className="text-muted-foreground text-[11px]">{u.email}</p>
+            <p className="text-foreground text-xs font-medium">{u.name}</p>
+            <p className="text-muted-foreground text-[11px] font-normal">{u.email}</p>
           </div>
         );
       }
@@ -61,14 +61,14 @@ export function getUserColumns(
             title="Click to toggle role"
           >
             {isAdmin ? (
-              <Badge className="bg-primary text-primary-foreground hover:bg-primary/90 flex items-center gap-1 text-[10px] font-bold">
+              <Badge className="bg-primary text-primary-foreground hover:bg-primary/90 flex items-center gap-1 text-[10px] font-medium">
                 <ShieldCheck className="h-3 w-3" />
                 <span>Administrator</span>
               </Badge>
             ) : (
               <Badge
                 variant="secondary"
-                className="hover:bg-muted flex items-center gap-1 text-[10px] font-semibold"
+                className="hover:bg-muted flex items-center gap-1 text-[10px] font-medium"
               >
                 <User className="h-3 w-3" />
                 <span>Standard User</span>
@@ -84,7 +84,7 @@ export function getUserColumns(
       cell: ({ row }) => {
         const date = row.original.createdAt;
         return (
-          <div className="text-muted-foreground flex items-center gap-1.5 text-xs">
+          <div className="text-muted-foreground flex items-center gap-1.5 text-xs font-normal">
             <Calendar className="h-3 w-3" />
             <span>
               {date

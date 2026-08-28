@@ -20,7 +20,7 @@ export function getPlanColumns(
       accessorKey: "order",
       header: "Order",
       cell: ({ row }) => (
-        <span className="text-muted-foreground font-mono text-xs font-bold">
+        <span className="text-muted-foreground font-mono text-xs font-normal">
           #{row.original.order}
         </span>
       )
@@ -32,16 +32,18 @@ export function getPlanColumns(
         const plan = row.original;
         return (
           <div className="space-y-0.5">
-            <p className="text-foreground flex items-center gap-1.5 font-bold">
+            <p className="text-foreground flex items-center gap-1.5 text-xs font-medium">
               {plan.name}
               {plan.isPopular && (
-                <Badge className="bg-amber-500 px-1.5 py-0 text-[10px] font-bold text-white">
-                  POPULAR
+                <Badge variant="default" className="px-1.5 py-0 text-[10px] font-medium">
+                  Popular
                 </Badge>
               )}
             </p>
             {plan.description && (
-              <p className="text-muted-foreground line-clamp-1 text-[11px]">{plan.description}</p>
+              <p className="text-muted-foreground line-clamp-1 text-[11px] font-normal">
+                {plan.description}
+              </p>
             )}
           </div>
         );
@@ -53,11 +55,11 @@ export function getPlanColumns(
       cell: ({ row }) => {
         const plan = row.original;
         return (
-          <div>
-            <span className="text-foreground font-black">
+          <div className="flex items-center gap-1.5">
+            <span className="text-foreground text-xs font-semibold">
               {formatPlanPrice(plan.price, plan.billingPeriod)}
             </span>
-            <Badge variant="outline" className="ml-1.5 text-[10px] capitalize">
+            <Badge variant="outline" className="text-[10px] font-medium capitalize">
               {plan.billingPeriod}
             </Badge>
           </div>
@@ -72,12 +74,14 @@ export function getPlanColumns(
         return (
           <div className="flex max-w-xs flex-wrap gap-1">
             {features.slice(0, 2).map((f) => (
-              <Badge key={f} variant="secondary" className="py-0 text-[10px]">
+              <Badge key={f} variant="secondary" className="py-0 text-[10px] font-medium">
                 {f}
               </Badge>
             ))}
             {features.length > 2 && (
-              <span className="text-muted-foreground text-[10px]">+{features.length - 2} more</span>
+              <span className="text-muted-foreground text-[10px] font-normal">
+                +{features.length - 2} more
+              </span>
             )}
           </div>
         );
@@ -88,11 +92,11 @@ export function getPlanColumns(
       header: "Featured",
       cell: ({ row }) =>
         row.original.isPopular ? (
-          <span className="flex items-center gap-1 text-xs font-bold text-amber-500">
+          <span className="text-primary flex items-center gap-1 text-xs font-medium">
             <Sparkles className="h-3.5 w-3.5" /> Yes
           </span>
         ) : (
-          <span className="text-muted-foreground text-xs">No</span>
+          <span className="text-muted-foreground text-xs font-normal">No</span>
         )
     },
     {

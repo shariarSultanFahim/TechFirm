@@ -78,9 +78,9 @@ export function PortfolioTable({ onEdit, onOpenCreate }: PortfolioTableProps) {
                 setSelectedCategory(cat);
                 setPageIndex(0);
               }}
-              className={`cursor-pointer rounded-lg px-3 py-1.5 text-xs font-bold transition-colors ${
+              className={`cursor-pointer rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${
                 selectedCategory === cat
-                  ? "bg-background text-foreground shadow-xs"
+                  ? "bg-background text-foreground shadow-2xs"
                   : "text-muted-foreground hover:text-foreground"
               }`}
             >
@@ -97,7 +97,7 @@ export function PortfolioTable({ onEdit, onOpenCreate }: PortfolioTableProps) {
               setPageIndex(0);
             }}
             placeholder="Search projects by title, industry..."
-            className="text-xs"
+            className="text-xs font-normal"
           />
         </div>
       </div>
@@ -117,11 +117,11 @@ export function PortfolioTable({ onEdit, onOpenCreate }: PortfolioTableProps) {
         emptyState={
           <div className="text-muted-foreground flex flex-col items-center justify-center p-12 text-center">
             <Briefcase className="text-muted-foreground/30 mb-3 h-10 w-10" />
-            <p className="text-foreground font-bold">No case studies found</p>
-            <p className="mt-1 text-xs">
+            <p className="text-foreground text-sm font-medium">No case studies found</p>
+            <p className="mt-1 text-xs font-normal">
               Publish your client successes and enterprise case studies.
             </p>
-            <Button onClick={onOpenCreate} size="sm" className="mt-4 text-xs font-bold">
+            <Button onClick={onOpenCreate} size="sm" className="mt-4 text-xs font-medium">
               <Plus className="mr-1.5 h-3.5 w-3.5" /> Add Case Study
             </Button>
           </div>

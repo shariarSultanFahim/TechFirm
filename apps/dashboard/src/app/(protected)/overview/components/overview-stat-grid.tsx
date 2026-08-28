@@ -33,16 +33,16 @@ export function OverviewStatGrid({ cards }: OverviewStatGridProps) {
                 <Icon className="h-5 w-5" />
               </div>
               <span
-                className={`rounded-full px-2 py-0.5 text-[10px] font-black ${card.badgeColor}`}
+                className={`rounded-full px-2 py-0.5 text-[10px] font-medium ${card.badgeColor}`}
               >
                 {card.badge}
               </span>
             </div>
 
             <div>
-              <p className="text-muted-foreground text-xs font-bold">{card.title}</p>
+              <p className="text-muted-foreground text-xs font-medium">{card.title}</p>
               <div className="mt-1 flex items-baseline justify-between">
-                <p className="text-foreground text-2xl font-black">{card.count}</p>
+                <p className="text-foreground font-mono text-2xl font-bold">{card.count}</p>
                 <ArrowUpRight className="text-muted-foreground group-hover:text-primary h-4 w-4 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </div>
             </div>

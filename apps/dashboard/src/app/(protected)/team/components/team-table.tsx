@@ -64,7 +64,7 @@ export function TeamTable({ onEdit, onOpenCreate }: TeamTableProps) {
               setPageIndex(0);
             }}
             placeholder="Search by name, role, skill, email..."
-            className="text-xs"
+            className="text-xs font-normal"
           />
         </div>
       </div>
@@ -84,11 +84,11 @@ export function TeamTable({ onEdit, onOpenCreate }: TeamTableProps) {
         emptyState={
           <div className="text-muted-foreground flex flex-col items-center justify-center p-12 text-center">
             <Users className="text-muted-foreground/30 mb-3 h-10 w-10" />
-            <p className="text-foreground font-bold">No team members found</p>
-            <p className="mt-1 text-xs">
+            <p className="text-foreground text-sm font-medium">No team members found</p>
+            <p className="mt-1 text-xs font-normal">
               Showcase the leaders, engineers, and staff behind your company.
             </p>
-            <Button onClick={onOpenCreate} size="sm" className="mt-4 text-xs font-bold">
+            <Button onClick={onOpenCreate} size="sm" className="mt-4 text-xs font-medium">
               <Plus className="mr-1.5 h-3.5 w-3.5" /> Add Team Member
             </Button>
           </div>

@@ -74,7 +74,7 @@ export function TestimonialsTable({ onEdit, onOpenCreate }: TestimonialsTablePro
               setPageIndex(0);
             }}
             placeholder="Search reviews by name or text..."
-            className="text-xs"
+            className="text-xs font-normal"
           />
         </div>
       </div>
@@ -94,9 +94,11 @@ export function TestimonialsTable({ onEdit, onOpenCreate }: TestimonialsTablePro
         emptyState={
           <div className="text-muted-foreground flex flex-col items-center justify-center p-12 text-center">
             <MessageSquareQuote className="text-muted-foreground/30 mb-3 h-10 w-10" />
-            <p className="text-foreground font-bold">No testimonials found</p>
-            <p className="mt-1 text-xs">Start collecting and showcasing client reviews.</p>
-            <Button onClick={onOpenCreate} size="sm" className="mt-4 text-xs font-bold">
+            <p className="text-foreground text-sm font-medium">No testimonials found</p>
+            <p className="mt-1 text-xs font-normal">
+              Start collecting and showcasing client reviews.
+            </p>
+            <Button onClick={onOpenCreate} size="sm" className="mt-4 text-xs font-medium">
               <Plus className="mr-1.5 h-3.5 w-3.5" /> Add Testimonial
             </Button>
           </div>
