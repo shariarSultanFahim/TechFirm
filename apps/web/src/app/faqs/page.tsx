@@ -1,7 +1,8 @@
 "use client";
 
-import { Minus, Plus, Zap } from "lucide-react";
+import { Minus, Plus } from "lucide-react";
 import { useState } from "react";
+import { SectionHeader } from "@/components/widgets";
 
 interface FAQItem {
   id: string;
@@ -76,17 +77,13 @@ export default function FaqsPage() {
   return (
     <main className="w-full bg-white py-16 sm:py-20 lg:py-24">
       <div className="container max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header Badge & Title */}
-        <div className="flex flex-col items-center text-center mb-10 sm:mb-14">
-          <div className="inline-flex items-center gap-1.5 px-4 py-1 rounded-full bg-[#E0F7F6] text-[#0D9488] text-xs font-semibold uppercase tracking-wider mb-4 shadow-2xs">
-            <Zap className="w-3.5 h-3.5 fill-current text-[#0D9488]" />
-            <span>Our FAQ&apos;s</span>
-          </div>
-
-          <h1 className="text-3xl sm:text-4xl lg:text-[44px] font-extrabold tracking-tight text-[#141432] leading-tight">
-            Frequently Asked Questions
-          </h1>
-        </div>
+        {/* Section Header */}
+        <SectionHeader
+          align="center"
+          badge="OUR FAQ'S"
+          title="Frequently Asked Questions"
+          className="mb-10 sm:mb-14"
+        />
 
         {/* FAQ Accordion List */}
         <div className="flex flex-col space-y-3.5 w-full">

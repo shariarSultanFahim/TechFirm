@@ -1,16 +1,45 @@
-import { UnderDevelopment } from "@/components/widgets";
+import { notFound } from "next/navigation";
+import {
+  TeamMemberView,
+  getTeamMember,
+  teamMembersData
+} from "@/components/team";
 
-export const metadata = {
-  title: "Team Member — TechFirm",
-  description: "Team profile details."
-};
+export async function generateStaticParams() {
+  return teamMembersData.map((member) => ({
+    slug: member.id
+  }));
+}
 
-export default function TeamMemberPage() {
+export async function generateMetadata({
+  params
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const member = getTeamMember(slug);
+
+  return {
+    title: `${member.name} — TechFirm Leadership`,
+    description: member.bio
+  };
+}
+
+export default async function TeamMemberDetailsPage({
+  params
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const member = getTeamMember(slug);
+
+  if (!member) {
+    notFound();
+  }
+
   return (
-    <UnderDevelopment
-      title="Team Member Profile"
-      badge="LEADERSHIP"
-      description="Member biography and certifications will be published shortly."
-    />
+    <main className="w-full bg-white">
+      <TeamMemberView member={member} />
+    </main>
   );
 }
