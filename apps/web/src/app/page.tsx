@@ -5,7 +5,8 @@ import {
   ReviewsSection,
   ServicesSection,
   PricingSection,
-  FaqSection
+  FaqSection,
+  TechfarmSection
 } from "@/components/home";
 
 export default function HomePage() {
@@ -31,6 +32,9 @@ export default function HomePage() {
 
       {/* 7. Common Inquiries & Frequently Asked Questions */}
       <FaqSection />
+
+      {/* 8. Global Network & Community Map */}
+      <TechfarmSection />
     </main>
   );
 }
