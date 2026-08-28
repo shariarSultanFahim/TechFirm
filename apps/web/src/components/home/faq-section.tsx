@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
-import Image from "next/image";
-import { SectionHeader } from "@/components/widgets";
 import faqImg from "@/assets/faq/faq-img.png";
+import { SectionHeader } from "@/components/widgets";
+import Image from "next/image";
+import { useState } from "react";
 
 interface FAQItem {
   id: string;
@@ -44,7 +44,7 @@ const faqItems: FAQItem[] = [
   }
 ];
 
-export function FaqSection() {
+export function FaqSection({bgColor}: {bgColor?: string}) {
   // Default open the 5th item to match the reference screenshot
   const [openId, setOpenId] = useState<string | null>("who-benefit");
 
@@ -53,7 +53,7 @@ export function FaqSection() {
   };
 
   return (
-    <section className="relative w-full py-20 lg:py-28 overflow-hidden bg-white">
+    <section className="relative w-full py-20 lg:py-28 overflow-hidden bg-white" style={{backgroundColor: bgColor}}>
       <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           {/* Left Column: Heading & FAQ Accordion */}
