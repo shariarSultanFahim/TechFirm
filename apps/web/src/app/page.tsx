@@ -4,7 +4,8 @@ import {
   HostingPlanSection,
   ReviewsSection,
   ServicesSection,
-  PricingSection
+  PricingSection,
+  FaqSection
 } from "@/components/home";
 
 export default function HomePage() {
@@ -27,6 +28,9 @@ export default function HomePage() {
 
       {/* 6. Pricing Plans */}
       <PricingSection />
+
+      {/* 7. Common Inquiries & Frequently Asked Questions */}
+      <FaqSection />
     </main>
   );
 }
